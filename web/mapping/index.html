@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Cortical Mapping</title>
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/web/bower_components/Materialize/dist/css/materialize.css" media="screen,projection">
+</head>
+<body>
+	<nav class="light-blue lighten-1" role="navigation">
+		<div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Cortical Mapping</a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="/index.html">BCI2000 Web</a></li>
+			</ul>
+
+			<ul id="nav-mobile" class="side-nav">
+				<li><a href="/index.html">BCI2000 Web</a></li>
+			</ul>
+			<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+		</div>
+	</nav>
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col s12"> <!-- <div class="col s12 m6"> -->
+					<!-- Right Column -->
+					<div class="row">
+						<div class="col s12">
+							<ul class="tabs">
+								<li class="tab col s3"><a class="active" href="#auditory">Auditory</a></li>
+								<li class="tab col s3"><a href="#visual">Visual</a></li>
+							</ul>
+						</div>
+
+						<div id="auditory" class="col s12">
+							<div class="row">
+								<div class="col s12">
+									<ul class="tabs">
+										<li class="tab col s3"><a class="active" href="#audsounds">Sounds</a></li>
+										<li class="tab col s3"><a href="#audsyllables">Syllables</a></li>
+										<li class="tab col s3"><a href="#audwords">Words</a></li>
+										<li class="tab col s3"><a href="#audsentences">Sentences</a></li>
+									</ul>
+								</div>
+
+
+								<div id="audsounds" class="col s12">
+									<div class="row">
+
+										<div class="card grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Passive Low Level Auditory</span>
+												<p>Listen to the sounds and respond if you hear a repeat.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="#">Start</a>
+											</div>
+										</div>
+
+										<div class="card grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Name Sounds</span>
+												<p>Name the sound you hear.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="#">Start</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<div id="audsyllables" class="col s12">
+									<div class="row">
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Passive Syllables</span>
+												<p>Listen to the syllables and respond if you hear a repeat.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Auditory&stim=Syllable&task=Passive">Start</a>
+											</div>
+										</div>
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Repeat Syllables</span>
+												<p>Repeat the syllable you hear.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Auditory&stim=Syllable&task=Repetition">Start</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<div id="audwords" class="col s12">
+									<div class="row">
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Passive Words</span>
+												<p>Listen to the words and respond if you hear a repeat.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Auditory&stim=Word&task=Passive">Start</a>
+											</div>
+										</div>
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Repeat Words</span>
+												<p>Repeat the word you hear.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Auditory&stim=Word&task=Repetition">Start</a>
+											</div>
+										</div>
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Free Associate Words</span>
+												<p>Say a word associated with the word you hear.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Auditory&stim=Word&task=Association">Start</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<div id="audsentences" class="col s12">
+									<div class="row">
+
+										<div class="card grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Passive Sentences</span>
+												<p>Listen to a story and respond if you hear a repeated sentence</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="#">Start</a>
+											</div>
+										</div>
+
+										<div class="card grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Name the Object</span>
+												<p>Listen to a definition and name the object.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="#">Start</a>
+											</div>
+										</div>
+
+										<div class="card grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Repeat Sentences</span>
+												<p>Repeat the sentence you hear.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="#">Start</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+						<div id="visual" class="col s12">
+							<div class="row">
+								<div class="col s12">
+									<ul class="tabs">
+										<li class="tab col s3"><a class="active" href="#visshapes">Shapes</a></li>
+										<li class="tab col s3"><a href="#visobjects">Objects</a></li>
+										<li class="tab col s3"><a href="#vissyllables">Syllables</a></li>
+										<li class="tab col s3"><a href="#viswords">Words</a></li>
+										<li class="tab col s3"><a href="#vissentences">Sentences</a></li>
+									</ul>
+								</div>
+
+								<div id="visshapes" class="col s12">
+									<div class="row">
+
+										<div class="card grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Passive Low Level Visual</span>
+												<p>Look at the shapes and respond if you hear a repeat.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="#">Start</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<div id="visobjects" class="col s12">
+									<div class="row">
+
+										<div class="card grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Passive Objects</span>
+												<p>Look at the shapes and respond if you see a repeat.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="#">Start</a>
+											</div>
+										</div>
+
+										<div class="card grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Name Objects</span>
+												<p>Name the object depicted in the drawing.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="#">Start</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<div id="vissyllables" class="col s12">
+									<div class="row">
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Passive Syllables</span>
+												<p>Look at the syllables and respond if you see a repeat.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Visual&stim=Syllable&task=Passive">Start</a>
+											</div>
+										</div>
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Read Syllables</span>
+												<p>Read the syllable you see aloud.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Visual&stim=Syllable&task=Reading">Start</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<div id="viswords" class="col s12">
+									<div class="row">
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Passive Words</span>
+												<p>Look at the words and respond if you see a repeat.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Visual&stim=Word&task=Passive">Start</a>
+											</div>
+										</div>
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Read Words</span>
+												<p>Read the word you see aloud.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Visual&stim=Word&task=Reading">Start</a>
+											</div>
+										</div>
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Free Associate Words</span>
+												<p>Say a word associated with the word you see.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Visual&stim=Word&task=Association">Start</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<div id="vissentences" class="col s12">
+									<div class="row">
+
+										<div class="card grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Passive Sentences</span>
+												<p>Read the sentences on screen and respond if you see a repeat.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="#">Start</a>
+											</div>
+										</div>
+
+										<div class="card blue-grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Read Sentences</span>
+												<p>Read a short story aloud.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="task.html?mode=Visual&stim=Sentence&task=Reading">Start</a>
+											</div>
+										</div>
+
+										<div class="card grey darken-1">
+											<div class="card-content white-text">
+												<span class="card-title">Name the Object</span>
+												<p>Given a definition of an object, name the object aloud.</p>
+											</div>
+											<div class="card-action">
+												<a href="#">Practice</a>
+												<a href="#">Start</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="fixed-action-btn" style="bottom:45px; right:45px">
+						<a class="btn-floating btn-large waves-effect waves-light green">
+							<i class="material-icons">swap_horiz</i>
+						</a>
+					</div>
+				</a>
+				</div>
+			<!-- <div class="col s12 m6">
+
+				</div> -->
+			</div>
+		</div>
+	</div>
+
+	<div id="getstarted" class="modal">
+		<div class="modal-content">
+			<h1 class="header center orange-text">Welcome</h1>
+			<div class="row center">
+				<h5 class="header col s12 light">Let's find out how your brain works!</h5>
+			</div>
+			<p>
+				The program you are about to participate in is research software. 
+				You need to have signed a consent form to participate in this program. 
+				If you're reading this now, you've probably already agreed to participate in cognitive testing.
+				The results of this testing will be made available to your neurologist and neurosurgeon.
+				This testing will also benefit the research team who will use this data to advance our understanding of the human brain.
+			</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">I Understand</a>
+		</div>
+	</div>
+
+	<script src="/web/bower_components/jquery/dist/jquery.js"></script>
+	<script src="/web/bower_components/Materialize/dist/js/materialize.js"></script>
+	<script src="/web/bower_components/jdataview/dist/browser/jdataview.js"></script>
+	<script src="/web/bci2k.js"></script>
+
+	<script src="js/mapping.js"></script>
+
+	<script>
+		bci = new BCI2K.Connection();
+		bci.connect();
+	</script>
+
+</body>
+</html>

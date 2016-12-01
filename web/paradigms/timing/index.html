@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html>
+<head>
+	<title>BCI2000 Timing Test</title>
+	<link rel="stylesheet" type="text/css" href="timing.css">
+</head>
+<body>
+	<script src="../../bower_components/jquery/dist/jquery.js"></script>
+	<script src="../../bci2k.js"></script>
+	<script src="../../system/bci2kconfig.js"></script>
+
+	<canvas id="stim"></canvas>
+
+	<script>
+
+		var config = null;
+		BCI2K.CreateConfig( function( c ) {
+			c.startupConfig.pre = function() { return "Add Event StimulusCode 8 0; "; }
+			config = c;
+		}, { task: "CanvasTimingTest" }, true );
+
+		var bci = new BCI2K.Connection();
+		bci.connect();
+
+		( function applyConfig() {
+			if( bci.connected() && config ) {
+				console.log( config.script() );
+				bci.execute( config.script(), function( result ) { 
+					bci.execute( "Set Config; Wait for Resting; Start;" );
+					hide(); 
+				} );
+			} else setTimeout( applyConfig, 100 );
+		} )();
+
+		window.onbeforeunload = function() {
+			if( bci.connected() ) {
+				bci.resetSystem();
+			}
+		}
+
+		var canvas = document.getElementById( 'stim' );
+		var context = canvas.getContext( '2d' );
+
+		window.addEventListener( 'resize', resize, false );
+		function resize() {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			requestAnimationFrame( draw );
+		}
+
+		resize();
+
+		function draw( time ) {
+			context.clearRect( 0, 0, this.canvas.width, this.canvas.height );
+
+			if( showStim ) {
+				var cx = canvas.width / 2.0;
+				var cy = canvas.height / 2.0;
+				var size = canvas.height * 0.2;
+				context.fillStyle = '#FFFFFF';
+				context.fillRect( 
+					0, // x
+					canvas.height - size, // y
+					size, // width
+					size // height
+				);
+			}
+		}
+
+		var showStim = false;
+		function show() {
+			showStim = true;
+			requestAnimationFrame( draw );
+			setTimeout( hide, 1000 );
+			bci.execute( "Set Event StimulusCode 1" );
+		}
+
+		function hide() {
+			showStim = false;
+			requestAnimationFrame( draw );
+			setTimeout( show, 1000 );
+			bci.execute( "Set Event StimulusCode 0" );
+		}
+
+	</script>
+
+</body>
+</html>

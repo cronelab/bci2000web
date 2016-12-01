@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html>
+<head>
+    <title>BCI2000 Web</title>
+    <link rel="stylesheet" type="text/css" href="bower_components/Materialize/dist/css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+
+</head>
+<body>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/Materialize/dist/js/materialize.js"></script>
+    <script src="bower_components/jdataview/dist/browser/jdataview.js"></script>
+    <script src="bci2k.js"></script>
+
+    <script>
+        $( document ).ready( function() {
+            $( '.modal-trigger' ).leanModal();
+        } );
+
+        bci = new BCI2K.Connection();
+        var systemState = null;
+        function getState() {
+            bci.execute( 'Get System State', function( result ) {
+                systemState = $.trim( result.output );
+                $( '#systemStatus' ).text( 'System State: ' + systemState );
+                var color = 'orange';
+                if( systemState == 'Running' ) color = 'red';
+                else if( systemState == 'Idle') color = 'green';
+                $( '#systemStatus' ).css( 'color', color );
+                $( '#systemStatus' ).css( 'font-weight', 'bold' );
+            } );
+            setTimeout( getState, 1000 );
+        }
+
+        bci.onconnect = function( event ) {
+            getState();
+            bci.getVersion( function( version ) {  
+                $( '#systemVersion' ).text( 'Version: ' + version );
+            } );
+        }
+        bci.ondisconnect = function( event ) {
+            console.log( "BCI2000 connection closed" );
+        }
+
+        function checkReset() {
+            if( systemState == null ) return;
+            else if( systemState == 'Running' )
+                $( '#resetPrompt' ).openModal();
+            else doReset();
+                
+        }
+        function doReset() {
+            bci.resetSystem();
+        }
+
+        function runGO(){
+            var go = $("#GO").val();
+            if( go.length == 0 ) {
+                alert( "You must enter task name for generic go task" );
+            } else {
+                window.location = "paradigms/go/index.html?go=" + encodeURIComponent( go );
+            }
+        }
+
+        function runManual() {
+            var manualName = $("#manualName").val();
+            if( manualName.length == 0 ) {
+                alert( "You must enter a name for the recording" );
+            } else {
+                window.location = "paradigms/manual/index.html" + 
+                    "?name=" + encodeURIComponent( encodeURIComponent( manualName ) ) + "&block=0";
+            }
+        }
+
+        bci.connect();
+    </script>
+
+    <div id="controls" class="z-depth-2">
+        <center><img src="images/BCI2000.gif" ></center>
+        <br>
+
+        <div class="divider"></div>
+        <div class="section">
+            <h5>Local Config</h5>
+            <div class="row">
+                <p id="subjectID">Subject: ... </p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a class="btn skinny" onclick="editLocalConfig()">Edit</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="section">
+            <h5>System</h5>
+            <div class="row">
+                <p id="systemStatus">System State: ...</p>
+                <p id="systemVersion">Version: ...</p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a class="btn skinny" onclick="checkReset()">Reset System</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="section">
+            <h5>Other Stuff</h5>
+            <div class="row">
+                <div class="col">
+                    <a class="btn skinny" href="mapping">Mapping</a>
+                    <a class="btn skinny" href="replay">Replay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <div class="nav-wrapper">
+            <div class="col-right s12">
+                <a href="index.html" class="breadcrumb">Web Paradigms</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="content">
+
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="card teal">
+            <div class="card-content white-text">
+              <span class="card-title">Timing</span>
+              <p>Test visual timing of the system.</p>
+            </div>
+            <div class="card-action">
+              <a href="paradigms/timing/index.html" class="btn skinny white-text">Start</a>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="card teal">
+            <div class="card-content white-text">
+              <span class="card-title">Manual Recording</span>
+              <p>Manually record a data file.</p>
+            </div>
+            <div class="card-action">
+              <input class="white-text" placeholder="Task Name" id="manualName" type="text">
+              <div class="btn skinny white-text" onclick="runManual()">Start Recording</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav>
+        <div class="nav-wrapper">
+            <div class="col-right s12">
+                <a href="index.html" class="breadcrumb">Local Paradigms</a>
+            </div>
+        </div>
+    </nav>
+		
+    <div class="row">
+      <div class="col s12 m6">
+        <div class="card teal lighten-2">
+          <div class="card-content white-text">
+            <span class="card-title">Generic GO Task</span>
+            <p>Deliver a Simple GO Cue for as long as necessary</p>
+          </div>
+          <div class="card-action">
+            <input class="white-text" placeholder="Enter Task Label (e.g. ButtonPress)" id="GO" type="text">
+            <div class="btn skinny white-text" onclick="runGO()">Run Generic Go Task</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="resetPrompt" class="modal">
+    <div class="modal-content">
+      <h4>Are you sure?</h4>
+      <p>
+          The BCI2000 system state is currently <b>Running</b>. 
+          This means that BCI2000 is currently recording and saving data. 
+          There could be an experiment running.
+          Are you sure you want to reset the system?
+      </p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="doReset()">Restart System</a>
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+    </div>
+  </div>
+  
+</body>
+</html>

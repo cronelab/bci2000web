@@ -1,0 +1,4 @@
+{
+	"sourceConfig": "new BCI2K.Biosemi2Config( 'BioSemi64CH.prm' );",
+	"subject": "EEGSubject"
+}

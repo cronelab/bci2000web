@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html>
+<head>
+	<title>BCI2000Web: Manual Recording</title>
+	<link rel="stylesheet" type="text/css" href="../../system/simpletask.css">
+</head>
+<body>
+	<script src="../../bower_components/jquery/dist/jquery.js"></script>
+	<script src="../../bower_components/jdataview/dist/browser/jdataview.js"></script>
+	<script src="../../bci2k.js"></script>
+	<script src="../../system/bci2kconfig.js"></script>
+	<script src="../../system/util.js"></script>
+
+	<script>
+
+		var query = parseQuery( window.location.search );
+		var name = decodeURIComponent( query.name );
+
+		var config = null;
+
+		BCI2K.CreateConfig( function( c ) {
+
+			// Load a standard high gamma signal processing parameter file
+			// Also set up trial segmentation
+			c.procConfig = new BCI2K.ProcConfig( 'SpectralSignalProcessingMod' );
+			c.procConfig.post = function() {
+				var ret = "Load Parameterfile ../parms.ecog/SpectralSigProc.prm; ";
+				ret += "Set Parameter WSSpectralOutputServer *:20203; ";
+				return ret;
+			}
+
+			c.appConfig.post = function() {
+				var ret = "Set Parameter WSConnectorServer *:20323; ";
+				ret += "Set Parameter WSSourceServer *:20100; ";
+				return ret;
+			}
+			
+			document.title = "BCI2000Web: " + name;
+
+			config = c;
+			console.log( config.script() );
+		}, { task: name, session: query.block }, true );
+		
+	</script>
+
+	<canvas id="stim"></canvas>
+	<script src="../../system/simpletask.js"></script>
+
+</body>
+</html>
