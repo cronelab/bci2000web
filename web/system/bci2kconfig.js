@@ -186,7 +186,7 @@ BCI2K.CreateConfig = function( callback, input, prompt ) {
 		if( data.appConfig === undefined ) data.appConfig = input.appConfig;
 		if( data.startPort === undefined ) data.startPort = input.startPort || 4000;
 		doPrompt( data );
-	} ).error( function( data ) {
+	} ).fail( function( data ) {
 		doPrompt( input );
 	} );
 }

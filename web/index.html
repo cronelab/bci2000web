@@ -3,29 +3,19 @@
 
 <html>
 <head>
-    <title>BCI2000 Web</title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/normalize.css">
-
+    <title>BCI2000 Browser</title>
+    <link rel="stylesheet" type="text/css" href="node_modules/materialize-css/dist/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="bci2kbrowser.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/normalize-css/normalize.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
-    <script>
-        requirejs.config( {
-            paths: {
-                jdataview: 'https://jdataview.github.io/dist/jdataview.js'
-            }
-        } );
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-    <script src="https://cronelab.github.io/bci2k.js/bci2k.js"></script>
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+    <script src="node_modules/bci2k/dist/bci2k.js"></script>
 
     <script>
         $( document ).ready( function() {
-            $( '.modal-trigger' ).leanModal();
+            $( '.modal' ).modal();
         } );
 
         bci = new BCI2K.Connection();
@@ -56,7 +46,7 @@
         function checkReset() {
             if( systemState == null ) return;
             else if( systemState == 'Running' )
-                $( '#resetPrompt' ).openModal();
+                $( '#resetPrompt' ).modal( 'open' );
             else doReset();
                 
         }
@@ -64,30 +54,11 @@
             bci.resetSystem();
         }
 
-        function runGO(){
-            var go = $("#GO").val();
-            if( go.length == 0 ) {
-                alert( "You must enter task name for generic go task" );
-            } else {
-                window.location = "paradigms/go/index.html?go=" + encodeURIComponent( go );
-            }
-        }
-
-        function runManual() {
-            var manualName = $("#manualName").val();
-            if( manualName.length == 0 ) {
-                alert( "You must enter a name for the recording" );
-            } else {
-                window.location = "paradigms/manual/index.html" + 
-                    "?name=" + encodeURIComponent( encodeURIComponent( manualName ) ) + "&block=0";
-            }
-        }
-
         bci.connect();
     </script>
 
     <div id="controls" class="z-depth-2">
-        <center><img src="images/BCI2000.gif" ></center>
+        <center><img src="BCI2000.gif" ></center>
         <br>
 
         <div class="divider"></div>
@@ -160,6 +131,17 @@
                         <input class="white-text" placeholder="Task Name" id="manualName" type="text">
                         <div class="btn skinny white-text" onclick="runManual()">Start Recording</div>
                     </div>
+                    <script>
+                        function runManual() {
+                            var manualName = $("#manualName").val();
+                            if( manualName.length == 0 ) {
+                                alert( "You must enter a name for the recording" );
+                            } else {
+                                window.location = "paradigms/manual/index.html" + 
+                                    "?name=" + encodeURIComponent( encodeURIComponent( manualName ) ) + "&block=0";
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -185,6 +167,16 @@
                         <input class="white-text" placeholder="Enter Task Label (e.g. ButtonPress)" id="GO" type="text">
                         <div class="btn skinny white-text" onclick="runGO()">Run Generic Go Task</div>
                     </div>
+                    <script>
+                        function runGO(){
+                            var go = $("#GO").val();
+                            if( go.length == 0 ) {
+                                alert( "You must enter task name for generic go task" );
+                            } else {
+                                window.location = "paradigms/go/index.html?go=" + encodeURIComponent( go );
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div>

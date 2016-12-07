@@ -1,4 +1,5 @@
 localconfig.json
+node_modules/
 bower_components/
 patients/
 wpad.dat

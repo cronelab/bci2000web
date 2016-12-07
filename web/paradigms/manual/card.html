@@ -1,0 +1,21 @@
+<div class="card-teal">
+    <div class="card-content white-text">
+        <span class="card-title">Manual Recording</span>
+        <p>Manually record a data file.</p>
+    </div>
+    <div class="card-action">
+        <input class="white-text" placeholder="Task Name" id="manualName" type="text">
+        <div class="btn skinny white-text" onclick="runManual()">Start Recording</div>
+    </div>
+    <script>
+        function runManual() {
+            var manualName = $("#manualName").val();
+            if( manualName.length == 0 ) {
+                alert( "You must enter a name for the recording" );
+            } else {
+                window.location = "paradigms/manual/index.html" + 
+                    "?name=" + encodeURIComponent( encodeURIComponent( manualName ) ) + "&block=0";
+            }
+        }
+    </script>
+</div>
