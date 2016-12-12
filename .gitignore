@@ -37,3 +37,4 @@ GettingStarted.html
 *.asv
 
 wpad.dat
+node_modules/

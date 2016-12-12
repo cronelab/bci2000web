@@ -38,6 +38,7 @@
             bci.getVersion( function( version ) {  
                 $( '#systemVersion' ).text( 'Version: ' + version );
             } );
+            //bci.execute( '')
         }
         bci.ondisconnect = function( event ) {
             console.log( "BCI2000 connection closed" );

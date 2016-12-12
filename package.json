@@ -1,0 +1,29 @@
+{
+  "name": "bci2000web",
+  "version": "1.0.0",
+  "description": "Websocket based remote control for Operator",
+  "main": "bci2000web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cronelab/bci2000web.git"
+  },
+  "keywords": [
+    "bci2000",
+    "websocket"
+  ],
+  "author": "griffin.milsap@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cronelab/bci2000web/issues"
+  },
+  "homepage": "https://github.com/cronelab/bci2000web#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "express-ws": "^2.0.0",
+    "telnet-client": "^0.12.3",
+    "yargs": "^6.5.0"
+  }
+}
