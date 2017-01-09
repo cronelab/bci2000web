@@ -19,6 +19,5 @@
     "d3": "^4.4.0",
     "jquery": "^3.1.1",
     "materialize-css": "^0.97.8",
-    "normalize-css": "^2.3.1",
-  }
+    "normalize-css": "^2.3.1"  }
 }
