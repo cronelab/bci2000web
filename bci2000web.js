@@ -17,7 +17,7 @@ var argv = require( 'yargs' )
 		describe: 'Specify BCI2000 root directory',
 		type: 'string',
 		nargs: 1,
-		default: 'C:\\bci2000',
+		default: './',
 	} )
 
 	.option( 'p', {
