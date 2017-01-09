@@ -52,19 +52,38 @@ var telnet_port = parseInt( argv.telnet );
 var web_port = parseInt( argv.port );
 
 // Static web server
+const path = require( 'path' );
+const fs = require( 'fs' );
 var express = require( 'express' );
 var app = express();
 var expressWs = require( 'express-ws' )( app );
 
+app.set( 'view engine', 'ejs' );
 app.use( express.static( './' ) );
+
+function findCards( currentDirPath ) {
+	cards = [];
+    fs.readdirSync( currentDirPath ).forEach( function( name ) {
+        var filePath = path.join( currentDirPath, name );
+        var stat = fs.statSync( filePath );
+        if( stat.isFile() && path.basename( filePath ) == 'card.ejs' )
+        	cards.push( path.resolve( filePath ) );
+        else if( stat.isDirectory() ) cards = cards.concat( findCards( filePath ) );
+    });
+    return cards;
+}
 
 app.listen( web_port, function() {
 	console.log( "BCI2000Web serving static files on port " + web_port );
 } );
 
+app.set( 'views', path.join( __dirname, '/web' ) )
+app.get( '/web/index.html', function( req, res ) {
+	cards = findCards( './web/paradigms' );
+	res.render( 'index', { cards: cards } );
+} );
+
 // Fork Operator.exe as a child process
-const path = require( 'path' );
-const fs = require( 'fs' );
 const spawn = require( 'child_process' ).spawn;
 
 var working_directory = path.join( bci2kdir, 'prog' )
@@ -122,7 +141,6 @@ connection.on( 'ready', function( prompt ) {
 } );
 
 connection.on( 'timeout', function() {
-	console.log( 'Command to BCI2000 Operator timed out, ya dingus.' );
 	executing = null;
 } );
 
@@ -149,7 +167,7 @@ var executing = null;
 	if( command_queue.length && operator.telnet && !executing ) {
 		executing = command_queue.shift();
 		try { executing.ws.send( [ 'S', executing.id ].join( ' ' ).trim() ); }
-		catch( e ) { /* client stopped caring */ )}
+		catch( e ) { /* client stopped caring */ }
 		operator.telnet.exec( executing.contents, function( err, response ) {
 			var ws = executing.ws;
 			var id = executing.id;
