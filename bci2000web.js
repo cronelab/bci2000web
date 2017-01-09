@@ -47,12 +47,12 @@ var argv = require( 'yargs' )
 	.epilog( 'Copyright Cronelab 2016, Licensed under MIT' )
 	.argv;
 
-var bci2kdir = argv.bci2kdir;
+const path = require( 'path' );
+var bci2kdir = path.resolve( argv.bci2kdir );
 var telnet_port = parseInt( argv.telnet );
 var web_port = parseInt( argv.port );
 
 // Static web server
-const path = require( 'path' );
 const fs = require( 'fs' );
 var express = require( 'express' );
 var app = express();
