@@ -113,15 +113,6 @@ operator.on( 'close', function( data ) {
 	console.log( 'Operator.exe exited with code ' + code );
 } );
 
-// JS should totes have string trim...
-if( typeof( String.prototype.trim ) === "undefined" )
-{
-    String.prototype.trim = function() 
-    {
-        return String( this ).replace( /^\s+|\s+$/g, '' );
-    };
-}
-
 // Connect to Operator.exe via telnet
 var telnet = require( 'telnet-client' );
 var connection = new telnet();

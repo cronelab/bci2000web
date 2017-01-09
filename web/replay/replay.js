@@ -4,7 +4,8 @@ function getReplayFiles() {
 	bci.execute( "LIST DIRECTORIES ../data/", getPatientTasks );
 
 	function getPatientTasks( result ) {
-		patients = result.output.split( ' \n' );
+		patients = result.output.trim().split( '\n' );
+		console.log( patients );
 		for( var i = 0; i < patients.length; i++ ) {
 			if( patients[i] == "" ) continue;
 			var query = "LIST DIRECTORIES ../data/" + patients[i];
@@ -14,7 +15,8 @@ function getReplayFiles() {
 
 	function parsePatientTasks( patient ) {
 		return function( result ) {
-			tasks = result.output.split( ' \n' );
+			tasks = result.output.trim().split( '\n' );
+			console.log( tasks );
 			for( var i = 0; i < tasks.length; i++ ) {
 				var query = "LIST FILES ../data/" + patient + "/" + tasks[i] + " *.dat";
 				bci.execute( query, findTaskFiles( patient, tasks[i] ) );
@@ -26,7 +28,8 @@ function getReplayFiles() {
 	function findTaskFiles( patient, task ) {
 		return function( result ) {
 			replayFiles[ patient ][ task ] = []
-			var files = result.output.split( ' \n' );
+			var files = result.output.trim().split( '\n' );
+			console.log( files );
 			for( var i = 0; i < files.length; i++ )
 				if( files[i] != "" )
 					replayFiles[ patient ][ task ].push( files[i] );

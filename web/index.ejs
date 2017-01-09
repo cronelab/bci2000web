@@ -38,7 +38,6 @@
             bci.getVersion( function( version ) {  
                 $( '#systemVersion' ).text( 'Version: ' + version );
             } );
-            //bci.execute( '')
         }
         bci.ondisconnect = function( event ) {
             console.log( "BCI2000 connection closed" );
@@ -94,7 +93,6 @@
             <h5>Other Stuff</h5>
             <div class="row">
                 <div class="col">
-                    <a class="btn skinny" href="mapping">Mapping</a>
                     <a class="btn skinny" href="replay">Replay</a>
                 </div>
             </div>
