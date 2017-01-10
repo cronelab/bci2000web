@@ -98,7 +98,7 @@ console.log( "Launching ", operator_path )
 
 const operator = spawn( operator_path, [ 
 	'--Telnet', '*:' + telnet_port.toString(),
-	'--StartupIdle', '--Title', 'BCI2000Web', '--Hide'
+	'--StartupIdle', '--Title', 'BCI2000Web'//, '--Hide'
 	], { cwd: working_directory } );
 
 operator.stdout.on( 'data', function( data ) {

@@ -1,22 +1,18 @@
 var bci = new BCI2K.Connection();
 bci.connect();
 
-
 var trialConnection = null;
 ( function applyConfig() {
 	if( bci.connected() && config ) {
-		bci.execute( config.script(), function( result ) { 
-
-			bci.tap( "SpectralOutput", function( dataConnection ) {
-				trialConnection = dataConnection;
-				trialConnection.onStateVector = onStateVector;
-				setTimeout( updateState, 500 );
-				setTimeout( getNumTrials, 400 );
-			} );
-
-			bci.execute( "Set Config; Wait for Resting; Start" )
-			
-		} );
+		var script = config.script() + 'Set Config; Wait for Resting; ';
+		bci.execute( script )
+			.then( function() { 
+				bci.tap( "SpectralOutput" )
+					.then( setupSpectralConnection )
+					.catch( function( reason ) {
+						console.log( 'Could not tap SpectralOutput: ' + reason )
+					} );
+			} ).then( function() { bci.start(); } )
 	} else setTimeout( applyConfig, 100 );
 } )();
 
@@ -28,15 +24,17 @@ window.onbeforeunload = function() {
 
 var trials = 0;
 var curCode = null;
-function onStateVector( states ) {
-	// Detect changes in StimulusCode
-	if( states.hasOwnProperty( "StimulusCode " ) && states.StimulusCode[0] != curCode ) {
-		curCode = states.StimulusCode[0];
-		if( curCode ) {
-			trials++;
-			requestAnimationFrame( draw );
+var setupSpectralConnection = function( dataConnection ) {
+	dataConnection.onStateVector = function( states ) {
+		if( states.hasOwnProperty( "StimulusCode" ) && states.StimulusCode[0] != curCode ) {
+			curCode = states.StimulusCode[0];
+			if( curCode ) {
+				trials++;
+				requestAnimationFrame( draw );
+			}
 		}
 	}
+	setTimeout( updateState, 500 );
 }
 
 var canvas = document.getElementById( 'stim' );
@@ -77,12 +75,4 @@ function updateState() {
 	} );
 	setTimeout( updateState, 1000 );
 	requestAnimationFrame( draw );
-}
-
-// There's a bug here...
-var totalTrials = "?";
-function getNumTrials() {
-// 	bci.execute( "Get Parameter Sequence", function( result ) {
-// 		//totalTrials = result.output.split( " " ).length.toString();
-// 	} );
 }

@@ -41,7 +41,7 @@
 			c.appConfig = new BCI2K.AppConfig( 'StimulusPresentationCronelab' );
 			c.appConfig.post = function() {
 				ret = "Load Parameterfile ../parms.ecog/go.prm; ";
-				ret += "Load Parameterfile ../batch.ecog/screen_setup.prm; ";
+				ret += "Load Parameterfile ../parms.ecog/screen_setup.prm; ";
 				ret += "Set Parameter WSConnectorServer *:20323; ";
 				ret += "Set Parameter WSSourceServer *:20100; ";
 				ret += "Sleep 1; ";
