@@ -1,0 +1,30 @@
+Filtering:Windowing:WindowingFilter int WindowLength= 128ms 0.5s % % // Length of window
+Filtering:Windowing:WindowingFilter int Detrend= 0 0 0 2 // Detrend data? 0: no, 1: mean, 2: linear (enumeration)
+Filtering:Windowing:WindowingFilter int WindowFunction= 2 0 0 3 // Window function 0: Rectangular, 1: Hamming, 2: Hann, 3: Blackman (enumeration)
+Filtering:AR%20Spectral%20Estimator:ARSpectrum int ModelOrder= 16 16 0 % // AR model order
+Filtering:AR%20Spectral%20Estimator:ARSpectrum int EvaluationsPerBin= 15 15 1 % // Number of uniformly spaced evaluation points entering into a single bin value
+Filtering:Spectral%20Estimation:FFTSpectrum float FirstBinCenter= 70Hz 0Hz % % // Center of first frequency bin (in Hz)
+Filtering:Spectral%20Estimation:FFTSpectrum float LastBinCenter= 110Hz 30Hz % % // Center of last frequency bin (in Hz)
+Filtering:Spectral%20Estimation:FFTSpectrum float BinWidth= 10Hz 3Hz % % // Width of spectral bins (in Hz)
+Filtering:Spectral%20Estimation:FFTSpectrum int OutputType= 1 0 0 2 // 0: Spectral Amplitude, 1: Spectral Power, 2: Coefficients (enumeration)
+Filtering:Spectral%20Estimation:SpectralEstimatorChoice int SpectralEstimator= 1 1 0 2 // Choice of spectral estimation algorithm, 0: None, 1: AR, 2: FFT (enumeration)
+Filtering:SpatialFilter:FilePlaybackADC int SpatialFilterType= 0 2 0 3 // spatial filter type 0: none, 1: full matrix, 2: sparse matrix, 3: common average reference (CAR) (enumeration)
+Filtering:SpatialFilter:SpatialFilter matrix SpatialFilter= 4 4 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 % % // columns represent input channels, rows represent output channels
+Filtering:SpatialFilter:SpatialFilter intlist SpatialFilterCAROutput= 0 // when using CAR filter type: list of output channels, or empty for all channels
+Filtering:SpatialFilter:SpatialFilter int SpatialFilterMissingChannels= 1 0 0 1 // how to handle missing channels 0: ignore, 1: report error (enumeration)
+Filtering:LPFilter float LPTimeConstant= 0.2s 16s 0 % // time constant for the low pass filter
+Filtering:ExpressionFilter string StartRunExpression= % // expression executed on StartRun
+Filtering:ExpressionFilter string StopRunExpression= % // expression executed on StopRun
+Filtering:ExpressionFilter matrix Expressions= 0 1 // expressions used to compute the output of the ExpressionFilter (rows are channels; empty matrix for none)
+Filtering:LinearClassifier matrix Classifier= 1 { input%20channel input%20element%20(bin) output%20channel weight } 1 1 1 1 // Linear classification matrix in sparse representation
+Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC float HighPassCorner= 70Hz 0Hz % % // High pass corner frequency
+Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC int HighPassOrder= 2 2 0 % // High pass order
+Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC float LowPassCorner= 110Hz 0Hz % % // Low pass corner frequency
+Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC int LowPassOrder= 4 4 0 % // Low pass order
+Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC float NotchCenter= 60Hz 60Hz % % // Notch center frequency
+Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC int NotchOrder= 4 4 0 % // Notch order
+Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC float FilterGain= 1.0 1.0 0 % // Overall filter gain
+Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC int Downsample= 1 1 0 1 // Downsample to >= 4*LowPassCorner (boolean)
+Filtering:IIR%20Filter:IIRBandpass:FilePlaybackADC int Rectification= 0 0 0 2 // Rectify output: 0 No Rectification, 1 Half-Wave, 2 Full-Wave (enumeration)
+
+
