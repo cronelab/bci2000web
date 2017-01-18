@@ -63,7 +63,7 @@ function draw( time ) {
 	if( state.search( "Suspended" ) >= 0 )
 		context.fillText( 'Click "Back" to Finish Paradigm', cx, cy + 50 );
 	else {
-		if( trials == 0 ) context.fillText( "Running...", cx, cy + 50 );
+		if( trials == 0 ) context.fillText( "Getting Ready...", cx, cy + 50 );
 		else context.fillText( 'Trials: ' + trials.toString(), cx, cy + 50 );
 	}
 }
