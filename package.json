@@ -4,6 +4,7 @@
   "description": "Websocket based remote control for Operator",
   "main": "bci2000web.js",
   "scripts": {
+    "start": "node bci2000web",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -37,6 +37,13 @@ var argv = require( 'yargs' )
 		default: '3999'
 	} )
 
+	.option( 'w', {		// TODO Dammit you already took v
+		alias: 'verbose',
+		describe: 'Print all the things!',
+		type: 'boolean',
+		default: false
+	} )
+
 	.alias( 'v', 'version' )
 	.version( function() { return require( './package' ).version; } )
 	.describe( 'v', 'Show version information' )
@@ -49,10 +56,12 @@ var argv = require( 'yargs' )
 
 const path = require( 'path' );
 var bci2kdir = path.resolve( argv.bci2kdir );
-var telnet_port = parseInt( argv.telnet );
-var web_port = parseInt( argv.port );
+var telnetPort = parseInt( argv.telnet );
+var webPort = parseInt( argv.port );
 
-// Static web server
+
+// Set up EJS-rendering web server
+
 const fs = require( 'fs' );
 var express = require( 'express' );
 var app = express();
@@ -73,8 +82,8 @@ function findCards( currentDirPath ) {
     return cards;
 }
 
-app.listen( web_port, function() {
-	console.log( "BCI2000Web serving static files on port " + web_port );
+app.listen( webPort, function() {
+	console.log( "BCI2000Web serving static files on port " + webPort );
 } );
 
 app.set( 'views', path.join( __dirname, '/web' ) )
@@ -83,90 +92,319 @@ app.get( '/web/index.html', function( req, res ) {
 	res.render( 'index', { cards: cards } );
 } );
 
-// Fork Operator.exe as a child process
-const spawn = require( 'child_process' ).spawn;
 
-var working_directory = path.join( bci2kdir, 'prog' )
-var operator_path = path.join( working_directory, 'Operator.exe' )
+// Set up the operator chain
 
-if( !fs.existsSync( operator_path ) ) {
-	console.error( operator_path, "does not exist.  Use the -bci2kdir flag." );
-	process.exit( 1 );
-}
+var checkForOperator = function( checkPaths ) {
 
-console.log( "Launching ", operator_path )
+	// TODO Allow for patterns on checkPaths
 
-const operator = spawn( operator_path, [ 
-	'--Telnet', '*:' + telnet_port.toString(),
-	'--StartupIdle', '--Title', 'BCI2000Web' //, '--Hide'
-	], { cwd: working_directory } );
+	// Turns a path into a Promise which resolves when the path is determined
+	// to be a file. The Promise resolves to the Path of the file to use
+	var checkerForPath = function( thePath ) {
 
-operator.stdout.on( 'data', function( data ) {
-	console.log( 'Operator.exe: ' + data  );
-} );
+		return new Promise( function( resolve, reject ) {
 
-operator.stderr.on( 'data', function( data ) {
-	console.log( 'Operator.exe ERROR: ' + data );
-} );
+			fs.stat( thePath, function( err, stats ) {
 
-operator.on( 'close', function( data ) {
-	console.log( 'Operator subprocess closed... Operator may already be running?' );
-} );
+				if ( err ) {
+					reject( 'Error checking file', thePath,':', JSON.stringify( err ) );
+					return;
+				}
 
-// Connect to Operator.exe via telnet
-var telnet = require( 'telnet-client' );
-var connection = new telnet();
+				if ( !stats.isFile() ) {
+					reject( thePath, 'is not a file.' );
+					return;
+				}
+				
+				// TODO Check if executable
 
-var telnet_params = { 
-	host: '127.0.0.1',
-	port: telnet_port,
-	timeout: 3000,
-	shellPrompt: '>',
-	echoLines: 0,
-	execTimeout: 100,
+				resolve( thePath );
+
+			} );
+
+		} );
+
+	};
+
+	// Map paths to Promises
+	var checkers = checkPaths.map( checkerForPath );
+
+	// Keep running the next checker each time we fail, until we succeed
+	// Our initial condition is a rejection (otherwise we short-circuit)
+	return checkers.reduce( function( cur, next ) {
+
+		return cur.catch( function( reason ) {
+			
+			if ( argv.verbose ) {
+				console.log( reason );
+			}
+
+			return next;
+
+		} );
+
+	}, Promise.reject( 'YOU FAIL' ) )
+		.catch( function( reason ) {
+
+			return Promise.reject( 'Could not find Operator' );
+
+		} );
+
 };
 
-operator.telnet = null;
-connection.on( 'ready', function( prompt ) {
-	operator.telnet = connection;
-} );
+var launchOperator = function( operatorPath, telnetPort ) {
 
-connection.on( 'timeout', function() {
-	executing = null;
-} );
+	var operatorArgs = [
+		// '--Hide',
+		'--Telnet', '*:' + telnetPort,
+		'--StartupIdle',
+		'--Title', '--BCI2000Web'
+	];
 
-connection.connect( telnet_params );
+	var spawnParams = {
+		cwd: path.dirname( operatorPath )
+	};
 
-var command_queue = [];
+	if ( argv.verbose ) {
+		console.log( 'Launching', operatorPath );
+	}
+	var operator = spawn( operatorPath, operatorArgs, spawnParams );
 
-app.ws( '/', function( ws, req ) {
-	ws.on( 'message', function( msg ) {
-		var preamble = msg.split( ' ' );
-		var msg = Object();
-		msg.opcode = preamble.shift();
-		msg.id = preamble.shift();
-		msg.contents = preamble.join( ' ' );
-		msg.ws = ws;
-
-		if( msg.opcode == 'E' )
-			command_queue.push( msg );
+	operator.stdout.on( 'data', function( data ) {
+		if ( argv.verbose ) {
+			console.log( 'Operator.exe: ' + data  );
+		}
 	} );
-} );
 
-var executing = null;
-( function sync_communications() {
-	if( command_queue.length && operator.telnet && !executing ) {
-		executing = command_queue.shift();
-		try { executing.ws.send( [ 'S', executing.id ].join( ' ' ).trim() ); }
-		catch( e ) { /* client stopped caring */ }
-		operator.telnet.exec( executing.contents, function( err, response ) {
-			var ws = executing.ws;
-			var id = executing.id;
-			executing = null;
-			try {
-				ws.send( [ 'O', id, response ].join( ' ' ).trim() );
-				ws.send( [ 'D', id ].join( ' ' ).trim() );
-			} catch( e ) { /* client stopped caring */ }
+	operator.stderr.on( 'data', function( data ) {
+		if ( argv.verbose ) {
+			console.log( 'Operator.exe ERROR: ' + data );
+		}
+	} );
+
+	operator.on( 'close', function( data ) {
+		console.log( 'Operator subprocess closed... Operator may already be running?' );
+	} );
+
+
+	// TODO There are fail cases that should be handled ...
+	return Promise.resolve( operator );
+
+};
+
+var telnet = require( 'telnet-client' );
+
+var connectTelnet = function( operator, telnetPort ) {
+
+	return new Promise( function( resolve, rejec ) {
+
+		// Cache new parameters in the operator process object
+
+		operator.telnet 		= null;
+		operator.commandQueue 	= [];
+		operator.executing 		= null;
+
+
+		// Prepare telnet connection
+
+		var connection = new telnet();
+
+		connection.on( 'ready', function( prompt ) {
+			operator.telnet = connection;
+			resolve( connection );
 		} );
-	} setTimeout( sync_communications, 20 );
-} )();
+
+		connection.on( 'timeout', function() {
+			operator.executing = null;
+		} );
+
+		// Connect to telnet
+
+		var telnetParams = { 
+			host: '127.0.0.1',
+			port: telnetPort,
+			timeout: 3000,
+			shellPrompt: '>',
+			echoLines: 0,
+			execTimeout: 100,
+		};
+
+		connection.connect( telnetParams );
+
+
+		// Set up WebSocket handler
+
+		app.ws( '/', function( ws, req ) {
+
+			ws.on( 'message', function( msg ) {
+
+				var preamble = msg.split( ' ' );
+				
+				var msg = {};
+				msg.opcode = preamble.shift();
+				msg.id = preamble.shift();
+				msg.contents = preamble.join( ' ' );
+				msg.ws = ws;
+
+				if ( msg.opcode == 'E' ) {
+					operator.commandQueue.push( msg );
+				}
+
+			} );
+
+		} );
+
+
+		// Start command execution loop
+
+		( function syncCommunications() {
+
+			if ( operator.commandQueue.length && operator.telnet && !operator.executing ) {
+				
+				operator.executing = operator.commandQueue.shift();
+
+				try {
+					operator.executing.ws.send( [ 'S', operator.executing.id ].join( ' ' ).trim() );
+				} catch ( e ) {
+					/* client stopped caring */
+				}
+
+				operator.telnet.exec( operator.executing.contents, function( err, response ) {
+
+					var ws = operator.executing.ws;
+					var id = operator.executing.id;
+					
+					operator.executing = null;
+
+					try {
+						ws.send( [ 'O', id, response ].join( ' ' ).trim() );
+						ws.send( [ 'D', id ].join( ' ' ).trim() );
+					} catch ( e ) {
+						/* client stopped caring */
+					}
+
+				} );
+
+			}
+
+			setTimeout( syncCommunications, 20 );
+
+		} )();
+
+	} );
+
+};
+
+
+// Run the operator chain
+
+var checkPaths = [
+	path.join( bci2kdir, 'prog', 'Operator.exe' )
+];
+
+checkForOperator( checkPaths )
+	.then( function( operatorPath ) {
+		return launchOperator( operatorPath, telnetPort )
+	} )
+	.then( function( operator ) {
+		return connectTelnet( operator, telnetPort );
+	} )
+	.then( function( telnetConnection ) {
+		console.log( 'Operator telnet connection ready' );
+		/* Do things */
+	} )
+	.catch( function( reason ) {
+		console.log( reason );
+	} );
+
+
+// OLD WAY
+
+// // Fork Operator.exe as a child process
+// const spawn = require( 'child_process' ).spawn;
+
+// var working_directory = path.join( bci2kdir, 'prog' )
+// var operator_path = path.join( working_directory, 'Operator.exe' )
+
+// if( !fs.existsSync( operator_path ) ) {
+// 	console.error( operator_path, "does not exist.  Use the -bci2kdir flag." );
+// 	process.exit( 1 );
+// }
+
+// console.log( "Launching ", operator_path )
+
+// const operator = spawn( operator_path, [ 
+// 	'--Telnet', '*:' + telnet_port.toString(),
+// 	'--StartupIdle', '--Title', 'BCI2000Web' //, '--Hide'
+// 	], { cwd: working_directory } );
+
+// operator.stdout.on( 'data', function( data ) {
+// 	console.log( 'Operator.exe: ' + data  );
+// } );
+
+// operator.stderr.on( 'data', function( data ) {
+// 	console.log( 'Operator.exe ERROR: ' + data );
+// } );
+
+// operator.on( 'close', function( data ) {
+// 	console.log( 'Operator subprocess closed... Operator may already be running?' );
+// } );
+
+// Connect to Operator.exe via telnet
+// var telnet = require( 'telnet-client' );
+// var connection = new telnet();
+
+// var telnet_params = { 
+// 	host: '127.0.0.1',
+// 	port: telnet_port,
+// 	timeout: 3000,
+// 	shellPrompt: '>',
+// 	echoLines: 0,
+// 	execTimeout: 100,
+// };
+
+// operator.telnet = null;
+// connection.on( 'ready', function( prompt ) {
+// 	operator.telnet = connection;
+// } );
+
+// connection.on( 'timeout', function() {
+// 	executing = null;
+// } );
+
+// connection.connect( telnet_params );
+
+// var command_queue = [];
+
+// app.ws( '/', function( ws, req ) {
+// 	ws.on( 'message', function( msg ) {
+// 		var preamble = msg.split( ' ' );
+// 		var msg = Object();
+// 		msg.opcode = preamble.shift();
+// 		msg.id = preamble.shift();
+// 		msg.contents = preamble.join( ' ' );
+// 		msg.ws = ws;
+
+// 		if( msg.opcode == 'E' )
+// 			command_queue.push( msg );
+// 	} );
+// } );
+
+// var executing = null;
+// ( function sync_communications() {
+// 	if( command_queue.length && operator.telnet && !executing ) {
+// 		executing = command_queue.shift();
+// 		try { executing.ws.send( [ 'S', executing.id ].join( ' ' ).trim() ); }
+// 		catch( e ) { /* client stopped caring */ }
+// 		operator.telnet.exec( executing.contents, function( err, response ) {
+// 			var ws = executing.ws;
+// 			var id = executing.id;
+// 			executing = null;
+// 			try {
+// 				ws.send( [ 'O', id, response ].join( ' ' ).trim() );
+// 				ws.send( [ 'D', id ].join( ' ' ).trim() );
+// 			} catch( e ) { /* client stopped caring */ }
+// 		} );
+// 	} setTimeout( sync_communications, 20 );
+// } )();
