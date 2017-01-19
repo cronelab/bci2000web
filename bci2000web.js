@@ -153,6 +153,8 @@ var checkForOperator = function( checkPaths ) {
 
 };
 
+var spawn = require( 'child_process' ).spawn;
+
 var launchOperator = function( operatorPath, telnetPort ) {
 
 	var operatorArgs = [
