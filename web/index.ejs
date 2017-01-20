@@ -1,127 +1,250 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
 
-<html>
+<html lang="en">
+
 <head>
-    <title>BCI2000 Browser</title>
-    <link rel="stylesheet" type="text/css" href="node_modules/materialize-css/dist/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="bci2kbrowser.css">
-    <link rel="stylesheet" type="text/css" href="node_modules/normalize-css/normalize.css">
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>BCI2000 Browser</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="index.css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
 </head>
+
 <body>
-	<script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
-    <script src="node_modules/bci2k/dist/bci2k.js"></script>
 
-    <script>
-        $( document ).ready( function() {
-            $( '.modal' ).modal();
-        } );
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">BCI2000</a>
+      </div>
+    </div>
+  </nav>
 
-        bci = new BCI2K.Connection();
-        var systemState = null;
-        function getState() {
-            bci.execute( 'Get System State', function( result ) {
-                systemState = $.trim( result.output );
-                $( '#systemStatus' ).text( 'System State: ' + systemState );
-                var color = 'orange';
-                if( systemState == 'Running' ) color = 'red';
-                else if( systemState == 'Idle') color = 'green';
-                $( '#systemStatus' ).css( 'color', color );
-                $( '#systemStatus' ).css( 'font-weight', 'bold' );
-            } );
-            setTimeout( getState, 1000 );
-        }
+  <div class="container">
 
-        bci.onconnect = function( event ) {
-            getState();
-            bci.getVersion( function( version ) {  
-                $( '#systemVersion' ).text( 'Version: ' + version );
-            } );
-        }
-        bci.ondisconnect = function( event ) {
-            console.log( "BCI2000 connection closed" );
-        }
+    <div class="row">
 
-        function checkReset() {
-            if( systemState == null ) return;
-            else if( systemState == 'Running' )
-                $( '#resetPrompt' ).modal( 'open' );
-            else doReset();
-                
-        }
-        function doReset() {
-            bci.resetSystem();
-        }
+      <div class="col-md-3 col-sm-4">
 
-        bci.connect();
-    </script>
-
-    <div id="controls" class="z-depth-2">
-        <center><img src="BCI2000.gif" ></center>
-        <br>
-
-        <div class="divider"></div>
-        <div class="section">
-            <h5>Local Config</h5>
-            <div class="row">
-                <p id="subjectID">Subject: ... </p>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <a class="btn skinny" onclick="editLocalConfig()">Edit</a>
-                </div>
-            </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">System</h3>
+          </div>
+          <div class="list-group">
+            <li id="state-label" class="list-group-item bigger text-center text-muted">
+              <strong>Not Connected</strong>
+            </li>
+            <li id="info-label" class="list-group-item hidden">
+                <span id="version-label"></span><br />
+            </li>
+            <a id="reset-button" class="list-group-item list-group-item-danger disabled" onclick="checkReset()">
+              <span class="glyphicon glyphicon-repeat"></span> <strong>Reset</strong>
+            </a>
+          </div>
         </div>
 
-        <div class="divider"></div>
-        <div class="section">
-            <h5>System</h5>
-            <div class="row">
-                <p id="systemStatus">System State: ...</p>
-                <p id="systemVersion">Version: ...</p>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <a class="btn skinny" onclick="checkReset()">Reset System</a>
-                </div>
-            </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              Local config <span class="pull-right"><a class="edit-localconfig"><span class="glyphicon glyphicon-pencil"></span></a></span>
+            </h3>
+          </div>
+          <ul id="localconfig-list" class="list-group">
+            <li class="list-group-item">
+                <strong>subject</strong>: ...
+            </li>
+            <li class="list-group-item">
+                <strong>something</strong>: ...
+            </li>
+          </ul>
         </div>
 
-        <div class="divider"></div>
-        <div class="section">
-            <h5>Other Stuff</h5>
-            <div class="row">
-                <div class="col">
-                    <a class="btn skinny" href="replay">Replay</a>
-                </div>
-            </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Utilities</h3>
+          </div>
+          <div id="new-subject-options" class="panel-heading hidden">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">ID</span>
+              <input id="new-subject-id" type="text" class="form-control" placeholder="PYXXNXXX">
+              <span class="input-group-btn">
+                <button id="new-subject-ok" class="btn btn-default" type="button"><span class="glyphicon glyphicon-ok"></span></button>
+              </span>
+            </div><!-- /input-group -->
+          </div>
+          <ul id="localconfig-list" class="list-group">
+            <a href="replay" class="list-group-item bigger">
+                <span class="glyphicon glyphicon-play"></span> Replay
+            </a>
+          </ul>
         </div>
+
+      </div>
+
+      <div class="col-md-4 col-sm-3">
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Paradigms</h3>
+          </div>
+          <ul id="paradigms-list" class="list-group">
+
+            <% cards.forEach( function( card ) { %>
+
+              <a id="paradigm-link-<%- card.name; %>" href="#<%- card.name; %>" class="list-group-item" onclick="selectParadigm('<%- card.name %>')">
+                <%- card.name; %>
+              </a>
+
+            <% } ); %>
+
+          </ul>
+        </div>
+
+      </div>
+
+      <div id="paradigms-container" class="col-md-5 col-sm-5">
+
+        <% cards.forEach( function( card ) { %>
+
+          <div id="paradigm-<%- card.name; %>" class="panel panel-primary hidden">
+            <%- include( card.path, {
+              cardRoot: card.root
+            } ); %>
+          </div>
+
+        <% } ) %>
+
+      </div>
+
     </div>
 
-    <div id="content">
-        <% cards.forEach( function( card ){ %>
-            <div class="row">
-                <%- include( card ); %>
-            </div>
-        <% }); %>
-    </div>
+  </div> <!-- /container -->
 
-    <div id="resetPrompt" class="modal">
-        <div class="modal-content">
-            <h4>Are you sure?</h4>
-            <p>
-                The BCI2000 system state is currently <b>Running</b>. 
-                This means that BCI2000 is currently recording and saving data. 
-                There could be an experiment running.
-                Are you sure you want to reset the system?
-            </p>
+  <div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Are you sure?</h4>
+        </div>
+        <div class="modal-body">
+          <p>The BCI2000 system state is currently <strong>Running</strong>. This means that BCI2000 is currently recording and saving data. There could be an experiment running.</p>
+          <p>Are you sure you want to reset the system?</p>
         </div>
         <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="doReset()">Restart System</a>
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="doReset()">Reset system</button>
         </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <footer class="footer">
+    <div class="container">
+      <p class="text-muted">Fork me on <a href="http://github.com/cronelab/bci2000web">GitHub</a>. Powered by <a href="#">Bootstrap</a> and <a href="#">node.js</a>.</p>
     </div>
-  
+  </footer>
+
+
+  <!-- ===================================================== -->
+  <!-- Scripts -->
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="node_modules/bci2k/dist/bci2k.js"></script>
+
+  <script>
+    
+    var bci = new BCI2K.Connection();
+    var systemState = null;
+
+    function selectParadigm( cardName ) {
+
+        // Hide all paradigms
+        $( '#paradigms-list' ).children().removeClass( 'active' );
+        $( '#paradigms-container' ).children().addClass( 'hidden' );
+
+        // Show this paradigm
+        $( '#paradigm-link-' + cardName ).addClass( 'active' );
+        $( '#paradigm-' + cardName ).removeClass( 'hidden' );
+
+    };
+
+    function getState() {
+        bci.execute( 'Get System State', function( result ) {
+
+            systemState = $.trim( result.output );
+
+            $( '.state-label' ).html( '<strong>' + systemState + '</strong>' );
+
+            var stateClasses = {
+                Running: 'text-success',
+                Suspended: 'text-warning',
+                Idle: 'text-info'
+            };
+
+            // Clear existing classes
+            Object.keys( stateClasses ).forEach( function( stateClass ) {
+                $( '.state-label' ).removeClass( stateClass );
+            } );
+
+            var curStateClass = stateClasses[systemState];
+
+            if ( curStateClass ) {
+                $( '.state-label' ).addClass( curStateClass );
+            }
+
+        } );
+        setTimeout( getState, 1000 );
+    }
+
+    bci.onconnect = function( event ) {
+        console.log( 'BCI2000 connected' );
+        getState();
+        /*
+        bci.getVersion( function( version ) {  
+            $( '#systemVersion' ).text( 'Version: ' + version );
+        } );
+        */
+    }
+
+    bci.ondisconnect = function( event ) {
+        console.log( "BCI2000 connection closed" );
+    }
+
+    function checkReset() {
+
+        if( systemState == null ) {
+            return;
+        } else if( systemState == 'Running' ) {
+            $( '#resetPrompt' ).modal( 'open' );
+        } else {
+          doReset();
+        }
+            
+    }
+    function doReset() {
+        bci.resetSystem();
+    }
+
+    bci.connect();
+
+  </script>
+
 </body>
+
 </html>

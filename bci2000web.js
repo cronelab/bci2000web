@@ -71,15 +71,24 @@ app.set( 'view engine', 'ejs' );
 app.use( express.static( './' ) );
 
 function findCards( currentDirPath ) {
-	cards = [];
+
+	var cards = [];
+
     fs.readdirSync( currentDirPath ).forEach( function( name ) {
+
         var filePath = path.join( currentDirPath, name );
         var stat = fs.statSync( filePath );
-        if( stat.isFile() && path.basename( filePath ) == 'card.ejs' )
+
+        if ( stat.isFile() && path.basename( filePath ) == 'card.ejs' ) {
         	cards.push( path.resolve( filePath ) );
-        else if( stat.isDirectory() ) cards = cards.concat( findCards( filePath ) );
+        } else if ( stat.isDirectory() ) {
+        	cards = cards.concat( findCards( filePath ) );
+        } 
+
     });
+
     return cards;
+
 }
 
 app.listen( webPort, function() {
@@ -87,9 +96,33 @@ app.listen( webPort, function() {
 } );
 
 app.set( 'views', path.join( __dirname, '/web' ) )
+
 app.get( '/web/index.html', function( req, res ) {
-	cards = findCards( './web/paradigms' );
-	res.render( 'index', { cards: cards } );
+
+	var cardPaths = findCards( './web/paradigms' );
+
+	var cards = cardPaths.map( function( cardPath ) {
+
+		var cardDir = path.dirname( cardPath );
+		var cardDirParts = cardDir.split( path.sep );
+
+		// TODO Super hacky right now
+		cardRoot = cardDirParts.slice( cardDirParts.length - 2 ).join( '/' );
+
+		var cardName = cardDirParts[cardDirParts.length - 1];
+
+		return {
+			name: cardName,
+			path: cardPath,
+			root: cardRoot
+		};
+
+	} );
+
+	res.render( 'index', {
+		cards: cards
+	} );
+
 } );
 
 
@@ -319,94 +352,3 @@ checkForOperator( checkPaths )
 	.catch( function( reason ) {
 		console.log( reason );
 	} );
-
-
-// OLD WAY
-
-// // Fork Operator.exe as a child process
-// const spawn = require( 'child_process' ).spawn;
-
-// var working_directory = path.join( bci2kdir, 'prog' )
-// var operator_path = path.join( working_directory, 'Operator.exe' )
-
-// if( !fs.existsSync( operator_path ) ) {
-// 	console.error( operator_path, "does not exist.  Use the -bci2kdir flag." );
-// 	process.exit( 1 );
-// }
-
-// console.log( "Launching ", operator_path )
-
-// const operator = spawn( operator_path, [ 
-// 	'--Telnet', '*:' + telnet_port.toString(),
-// 	'--StartupIdle', '--Title', 'BCI2000Web' //, '--Hide'
-// 	], { cwd: working_directory } );
-
-// operator.stdout.on( 'data', function( data ) {
-// 	console.log( 'Operator.exe: ' + data  );
-// } );
-
-// operator.stderr.on( 'data', function( data ) {
-// 	console.log( 'Operator.exe ERROR: ' + data );
-// } );
-
-// operator.on( 'close', function( data ) {
-// 	console.log( 'Operator subprocess closed... Operator may already be running?' );
-// } );
-
-// Connect to Operator.exe via telnet
-// var telnet = require( 'telnet-client' );
-// var connection = new telnet();
-
-// var telnet_params = { 
-// 	host: '127.0.0.1',
-// 	port: telnet_port,
-// 	timeout: 3000,
-// 	shellPrompt: '>',
-// 	echoLines: 0,
-// 	execTimeout: 100,
-// };
-
-// operator.telnet = null;
-// connection.on( 'ready', function( prompt ) {
-// 	operator.telnet = connection;
-// } );
-
-// connection.on( 'timeout', function() {
-// 	executing = null;
-// } );
-
-// connection.connect( telnet_params );
-
-// var command_queue = [];
-
-// app.ws( '/', function( ws, req ) {
-// 	ws.on( 'message', function( msg ) {
-// 		var preamble = msg.split( ' ' );
-// 		var msg = Object();
-// 		msg.opcode = preamble.shift();
-// 		msg.id = preamble.shift();
-// 		msg.contents = preamble.join( ' ' );
-// 		msg.ws = ws;
-
-// 		if( msg.opcode == 'E' )
-// 			command_queue.push( msg );
-// 	} );
-// } );
-
-// var executing = null;
-// ( function sync_communications() {
-// 	if( command_queue.length && operator.telnet && !executing ) {
-// 		executing = command_queue.shift();
-// 		try { executing.ws.send( [ 'S', executing.id ].join( ' ' ).trim() ); }
-// 		catch( e ) { /* client stopped caring */ }
-// 		operator.telnet.exec( executing.contents, function( err, response ) {
-// 			var ws = executing.ws;
-// 			var id = executing.id;
-// 			executing = null;
-// 			try {
-// 				ws.send( [ 'O', id, response ].join( ' ' ).trim() );
-// 				ws.send( [ 'D', id ].join( ' ' ).trim() );
-// 			} catch( e ) { /* client stopped caring */ }
-// 		} );
-// 	} setTimeout( sync_communications, 20 );
-// } )();

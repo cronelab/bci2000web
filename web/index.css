@@ -1,0 +1,137 @@
+/* webfm - index.css
+-- Custom index styles */
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.footer .container {
+  margin-top: 20px;
+}
+
+
+/* Hide file upload elements
+-------------------------------------------------- */
+.upload-input {
+  display: none !important;
+}
+
+
+/* Other styles
+-------------------------------------------------- */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 75px;
+  padding-bottom: 20px;
+}
+
+.navbar-brand {
+  font-size: 28px;
+}
+
+.list-group-item.bigger {
+  font-size: 18px;
+}
+
+.list-group-item.bigger .badge {
+  margin-top: 1px;
+  font-size: 16px;
+}
+
+/*
+.list-group-item .badge {
+  margin-top: 1px;
+  font-size: 16px;
+}
+*/
+
+
+/* Re-color navbars
+-------------------------------------------------- */
+.navbar-default {
+  background-color: #ff809d;
+  border-color: #d0103c;
+}
+.navbar-default .navbar-brand {
+  color: #f9ebee;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #6efbb7;
+}
+.navbar-default .navbar-text {
+  color: #f9ebee;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #f9ebee;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #6efbb7;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #6efbb7;
+  background-color: #d0103c;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #6efbb7;
+  background-color: #d0103c;
+}
+.navbar-default .navbar-toggle {
+  border-color: #d0103c;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #d0103c;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #f9ebee;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #f9ebee;
+}
+.navbar-default .navbar-link {
+  color: #f9ebee;
+}
+.navbar-default .navbar-link:hover {
+  color: #6efbb7;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #f9ebee;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #6efbb7;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #6efbb7;
+    background-color: #d0103c;
+  }
+}
