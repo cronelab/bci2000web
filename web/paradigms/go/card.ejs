@@ -1,27 +1,29 @@
-<div class="panel-heading">
-  <h3 class="panel-title">Generic GO Task</h3>
-</div>
-<div class="panel-body">
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Generic GO Task</h3>
+  </div>
+  <div class="panel-body">
 
-  <p>Deliver a Simple GO Cue for as long as necessary.</p>
+    <p>Deliver a Simple GO Cue for as long as necessary.</p>
 
-  <div class="input-group">
-    <span class="input-group-addon">Task Label</span>
-    <input id="go-taskLabel" type="text" class="form-control" placeholder="e.g., ButtonPress">
-    <span class="input-group-btn">
-      <button class="btn btn-info" type="button" onclick="runGoTask()">Run</button>
-    </span>
-  </div><!-- /input-group -->
+    <div class="input-group">
+      <span class="input-group-addon">Task Label</span>
+      <input id="go-taskLabel" type="text" class="form-control" placeholder="e.g., ButtonPress">
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="button" onclick="runGoTask()">Run</button>
+      </span>
+    </div><!-- /input-group -->
 
-  <script>
-    function runGoTask() {
-        var taskLabel = $( '#go-taskLabel' ).val();
-        if ( taskLabel.length == 0 ) {
-            alert( 'You must enter a task name for the Generic Go Task.' );
-        } else {
-            window.location = "<%- cardRoot; %>/index.html?go=" + encodeURIComponent( taskLabel );
-        }
-    }
-  </script>
+    <script>
+      function runGoTask() {
+          var taskLabel = $( '#go-taskLabel' ).val();
+          if ( taskLabel.length == 0 ) {
+              alert( 'You must enter a task name for the Generic Go Task.' );
+          } else {
+              window.location = "<%- cardRoot; %>/index.html?go=" + encodeURIComponent( taskLabel );
+          }
+      }
+    </script>
 
+  </div>
 </div>

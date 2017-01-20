@@ -121,7 +121,7 @@
 
         <% cards.forEach( function( card ) { %>
 
-          <div id="paradigm-<%- card.name; %>" class="panel panel-primary hidden">
+          <div id="paradigm-<%- card.name; %>" class="hidden">
             <%- include( card.path, {
               cardRoot: card.root
             } ); %>
