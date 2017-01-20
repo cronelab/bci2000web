@@ -29,6 +29,8 @@ build/
 batch/
 parms/
 binaries/
+data/
+prog/
 prog.archive/
 BCI2000_Help.html
 GettingStarted.html
@@ -38,3 +40,5 @@ GettingStarted.html
 
 wpad.dat
 node_modules/
+INSTALL.BAT
+START.BAT
