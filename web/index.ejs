@@ -135,7 +135,7 @@
 
   </div> <!-- /container -->
 
-  <div class="modal fade" tabindex="-1" role="dialog">
+  <div id="reset-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -198,8 +198,8 @@
             };
 
             // Clear existing classes
-            Object.keys( stateClasses ).forEach( function( stateClass ) {
-                $( '#state-label' ).removeClass( stateClass );
+            Object.keys( stateClasses ).forEach( function( key ) {
+                $( '#state-label' ).removeClass( stateClasses[key] );
             } );
 
             var curStateClass = stateClasses[systemState];
@@ -237,7 +237,7 @@
         if( systemState == null ) {
             return;
         } else if( systemState == 'Running' ) {
-            $( '#resetPrompt' ).modal( 'open' );
+            $( '#reset-modal' ).modal();
         } else {
           doReset();
         }
