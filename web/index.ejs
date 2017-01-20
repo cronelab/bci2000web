@@ -189,7 +189,7 @@
 
             systemState = $.trim( result.output );
 
-            $( '.state-label' ).html( '<strong>' + systemState + '</strong>' );
+            $( '#state-label' ).html( '<strong>' + systemState + '</strong>' );
 
             var stateClasses = {
                 Running: 'text-success',
@@ -199,13 +199,13 @@
 
             // Clear existing classes
             Object.keys( stateClasses ).forEach( function( stateClass ) {
-                $( '.state-label' ).removeClass( stateClass );
+                $( '#state-label' ).removeClass( stateClass );
             } );
 
             var curStateClass = stateClasses[systemState];
 
             if ( curStateClass ) {
-                $( '.state-label' ).addClass( curStateClass );
+                $( '#state-label' ).addClass( curStateClass );
             }
 
         } );
@@ -213,17 +213,23 @@
     }
 
     bci.onconnect = function( event ) {
+        
         console.log( 'BCI2000 connected' );
         getState();
+
+        $( '#reset-button' ).removeClass( 'disabled' );
+
         /*
         bci.getVersion( function( version ) {  
             $( '#systemVersion' ).text( 'Version: ' + version );
         } );
         */
+
     }
 
     bci.ondisconnect = function( event ) {
         console.log( "BCI2000 connection closed" );
+        $( '#reset-button' ).addClass( 'disabled' );
     }
 
     function checkReset() {
