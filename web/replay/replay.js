@@ -95,11 +95,11 @@ function launchSession( patient, task, file ) {
 	
 	// TODO This got killed a while ago.
 	// script += "Set Parameter TrialTrigger StimulusCode!=0; ";
-	
+
 	script += "Set Parameter WSSpectralOutputServer *:20203; ";
 	script += "Set Parameter WSConnectorServer *:20323; ";
 	script += "Set Parameter WSSourceServer *:20100; ";
-	script += "Set Parameter SampleBlockSize 50; ";
+	script += "Set Parameter SampleBlockSize 100; ";
 	script += "Set Config; ";
 	script += "Wait for Resting; ";
 	script += "Start; ";
