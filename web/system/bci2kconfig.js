@@ -53,7 +53,7 @@ BCI2K.NKConfig.prototype.post = function() {
 	if( this.address !== undefined ) {
 		ret_ += "Set Parameter DeviceAddress "
 			+ this.address.toString() + "; ";
-		ret_ += "Set Parameter SampleBlockSize 50; ";
+		ret_ += "Set Parameter SampleBlockSize 100; ";
 	}
 	return ret_;
 }
