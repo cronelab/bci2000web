@@ -25,6 +25,8 @@
     "ejs": "^2.5.5",
     "express": "^4.14.0",
     "express-ws": "^2.0.0",
+    "github-api-node": "^0.11.2",
+    "prompt": "^1.0.0",
     "telnet-client": "^0.12.3",
     "yargs": "^6.5.0"
   }
