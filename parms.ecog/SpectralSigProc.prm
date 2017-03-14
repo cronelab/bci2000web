@@ -9,9 +9,6 @@ Filtering:Spectral%20Estimation:FFTSpectrum float BinWidth= 10Hz 3Hz % % // Widt
 Filtering:Spectral%20Estimation:FFTSpectrum int OutputType= 1 0 0 2 // 0: Spectral Amplitude, 1: Spectral Power, 2: Coefficients (enumeration)
 Filtering:Spectral%20Estimation:SpectralEstimatorChoice int SpectralEstimator= 1 1 0 2 // Choice of spectral estimation algorithm, 0: None, 1: AR, 2: FFT (enumeration)
 Filtering:SpatialFilter:FilePlaybackADC int SpatialFilterType= 0 2 0 3 // spatial filter type 0: none, 1: full matrix, 2: sparse matrix, 3: common average reference (CAR) (enumeration)
-Filtering:SpatialFilter:SpatialFilter matrix SpatialFilter= 4 4 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 % % // columns represent input channels, rows represent output channels
-Filtering:SpatialFilter:SpatialFilter intlist SpatialFilterCAROutput= 0 // when using CAR filter type: list of output channels, or empty for all channels
-Filtering:SpatialFilter:SpatialFilter int SpatialFilterMissingChannels= 1 0 0 1 // how to handle missing channels 0: ignore, 1: report error (enumeration)
 Filtering:LPFilter float LPTimeConstant= 0.2s 16s 0 % // time constant for the low pass filter
 Filtering:ExpressionFilter string StartRunExpression= % // expression executed on StartRun
 Filtering:ExpressionFilter string StopRunExpression= % // expression executed on StopRun
@@ -26,5 +23,4 @@ Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC int NotchOrder= 4 4 0 % // 
 Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC float FilterGain= 1.0 1.0 0 % // Overall filter gain
 Filtering:IIR%20Bandpass:IIRBandpass:FilePlaybackADC int Downsample= 1 1 0 1 // Downsample to >= 4*LowPassCorner (boolean)
 Filtering:IIR%20Filter:IIRBandpass:FilePlaybackADC int Rectification= 0 0 0 2 // Rectify output: 0 No Rectification, 1 Half-Wave, 2 Full-Wave (enumeration)
-
 
