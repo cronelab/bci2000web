@@ -78,6 +78,25 @@ BCI2K.BlackrockConfig.prototype.post = function() {
 	return ret_;
 }
 
+// Grapevine Configuration
+BCI2K.GrapevineConfig = function( samplingRate ) {
+	BCI2K.SourceConfig.call( this, "Grapevine" );
+	this.samplingRate = samplingRate;
+}
+
+BCI2K.GrapevineConfig.prototype = new BCI2K.SourceConfig();
+BCI2K.GrapevineConfig.prototype.constructor = BCI2K.GrapevineConfig;
+BCI2K.GrapevineConfig.prototype.post = function() {
+	var ret_ = "";
+	if( this.samplingRate !== undefined ) {
+		ret_ += "Set Parameter SamplingRate "
+			+ this.samplingRate.toString() + "; ";
+		if( this.samplingRate == 1000 )
+			ret_ += "Set Parameter SampleBlockSize 48; ";
+	}
+	return ret_;
+}
+
 // Biosemi 2 Configuration
 BCI2K.Biosemi2Config = function( prm ) {
 	BCI2K.SourceConfig.call( this, "Biosemi2" );
