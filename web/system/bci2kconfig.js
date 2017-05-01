@@ -53,7 +53,7 @@ BCI2K.NKConfig.prototype.post = function() {
 	if( this.address !== undefined ) {
 		ret_ += "Set Parameter DeviceAddress "
 			+ this.address.toString() + "; ";
-		ret_ += "Set Parameter SampleBlockSize 50; ";
+		ret_ += "Set Parameter SampleBlockSize 100; ";
 	}
 	return ret_;
 }
@@ -75,6 +75,25 @@ BCI2K.BlackrockConfig.prototype.post = function() {
 	if( this.samplingRate !== undefined )
 		ret_ += "Set Parameter SamplingRate "
 			+ this.samplingRate.toString() + "; ";
+	return ret_;
+}
+
+// Grapevine Configuration
+BCI2K.GrapevineConfig = function( samplingRate ) {
+	BCI2K.SourceConfig.call( this, "Grapevine" );
+	this.samplingRate = samplingRate;
+}
+
+BCI2K.GrapevineConfig.prototype = new BCI2K.SourceConfig();
+BCI2K.GrapevineConfig.prototype.constructor = BCI2K.GrapevineConfig;
+BCI2K.GrapevineConfig.prototype.post = function() {
+	var ret_ = "";
+	if( this.samplingRate !== undefined ) {
+		ret_ += "Set Parameter SamplingRate "
+			+ this.samplingRate.toString() + "; ";
+		if( this.samplingRate == 1000 )
+			ret_ += "Set Parameter SampleBlockSize 48; ";
+	}
 	return ret_;
 }
 
