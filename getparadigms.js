@@ -170,10 +170,16 @@ var handleRepo = function( repo, operation ) {
 
         git.on( 'close', function( code ) {
 
+            var finishUp = function() {
+                console.log();
+                resolve( code );
+            }
+
             checkNPM( repo.path ).then( function( isModule ) {
 
                 if ( !isModule ) {
-                    return Promise.resolve( 0 );
+                    finishUp();
+                    return;
                 }
 
                 console.log( '* Updating Node module' );
@@ -184,13 +190,9 @@ var handleRepo = function( repo, operation ) {
                 } );
 
                 npm.on( 'close', function( code ) {
-                    return Promise.resolve( code );
+                    finishUp();
                 } );
 
-            } ).then( function() {
-                console.log();
-                // TODO Check what the codes are
-                resolve( code );
             } );
 
         } );
