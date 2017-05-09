@@ -104,6 +104,42 @@ var checkOperation = function( repoPath ) {
 
 };
 
+var checkNPM = function( repoPath ) {
+
+    return new Promise( function( resolve, reject ) {
+
+        // Check if this repo is also a NPM module
+        fs.stat( path.join( repoPath, 'package.json' ), function( err, stats ) {
+
+            if ( err ) {
+                if ( err.code == 'ENOENT' ) {
+                    // File doesn't exist, not a module
+                    resolve( false );
+                    return;
+                } else {
+                    // TODO Should reject, but that'll break the chain
+                    resolve( false );
+                    // reject( JSON.stringify( 'Error retrieving package.json path stats: ' + err.code ) );
+                    return;
+                }
+            }
+
+            if ( stats.isFile() ) {
+                // File *does* exist, so module
+                resolve( true );
+                return;
+            }
+
+            // Something weird
+            resolve( false );
+            return;
+
+        } );
+
+    } );
+
+};
+
 var handleRepo = function( repo, operation ) {
 
     return new Promise( function( resolve, reject ) {
@@ -134,10 +170,28 @@ var handleRepo = function( repo, operation ) {
 
         git.on( 'close', function( code ) {
 
-            console.log();
+            checkNPM( repo.path ).then( function( isModule ) {
 
-            // TODO Check what the codes are
-            resolve( code );
+                if ( !isModule ) {
+                    return Promise.resolve( 0 );
+                }
+
+                console.log( '* Updating Node module' );
+
+                var npm = childProcess.spawn( 'npm', ['install'], {
+                    cwd: repo.path,
+                    stdio: 'inherit'
+                } );
+
+                npm.on( 'close', function( code ) {
+                    return Promise.resolve( code );
+                } );
+
+            } ).then( function() {
+                console.log();
+                // TODO Check what the codes are
+                resolve( code );
+            } );
 
         } );
 
