@@ -175,6 +175,7 @@ var handleRepo = function( repo, operation ) {
                 resolve( code );
             }
 
+            /*
             checkNPM( repo.path ).then( function( isModule ) {
 
                 if ( !isModule ) {
@@ -194,6 +195,10 @@ var handleRepo = function( repo, operation ) {
                 } );
 
             } );
+            */
+
+            // TODO Above code is broken on some Windows versions
+            finishUp();
 
         } );
 

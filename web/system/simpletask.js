@@ -6,6 +6,13 @@ var trialConnection = null;
 	if( bci.connected() && config ) {
 		var script = config.script() + 'Set Config; Wait for Resting; ';
 		bci.execute( script )
+			.then( function() {
+				return new Promise( function( resolve, reject ) {
+					setTimeout( function() {
+						resolve();
+					}, 1000 );
+				} );
+			} )
 			.then( function() { 
 				bci.tap( "SpectralOutput" )
 					.then( setupSpectralConnection )
