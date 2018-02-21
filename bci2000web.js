@@ -28,7 +28,6 @@ var argv = require( 'yargs' )
 		default: '80',
 	} )
 
-
 	.option( 't', {
 		alias: 'telnet',
 		describe: 'Specify the telnet port manually',
@@ -37,7 +36,14 @@ var argv = require( 'yargs' )
 		default: '3999'
 	} )
 
-	.option( 'w', {		// TODO Dammit you already took v
+	.option( 'x', {
+		alias: 'hide',
+		describe: 'Hide BCI2000 window',
+		type: 'boolean',
+		default: false
+	} )
+
+	.option( 'w', {
 		alias: 'verbose',
 		describe: 'Print all the things!',
 		type: 'boolean',
@@ -59,6 +65,9 @@ var bci2kdir = path.resolve( argv.bci2kdir );
 var telnetPort = parseInt( argv.telnet );
 var webPort = parseInt( argv.port );
 
+//UDP socket to communicate with Connector Input/Output
+const dgram = require('dgram');
+var UDPSocket = dgram.createSocket('udp4');
 
 // Set up EJS-rendering web server
 
@@ -83,7 +92,7 @@ function findCards( currentDirPath ) {
         	cards.push( path.resolve( filePath ) );
         } else if ( stat.isDirectory() ) {
         	cards = cards.concat( findCards( filePath ) );
-        } 
+        }
 
     });
 
@@ -149,7 +158,7 @@ var checkForOperator = function( checkPaths ) {
 					reject( thePath, 'is not a file.' );
 					return;
 				}
-				
+
 				// TODO Check if executable
 
 				resolve( thePath );
@@ -168,7 +177,7 @@ var checkForOperator = function( checkPaths ) {
 	return checkers.reduce( function( cur, next ) {
 
 		return cur.catch( function( reason ) {
-			
+
 			if ( argv.verbose ) {
 				console.log( reason );
 			}
@@ -196,6 +205,11 @@ var launchOperator = function( operatorPath, telnetPort ) {
 		'--StartupIdle',
 		'--Title', '--BCI2000Web'
 	];
+
+	if ( argv.hide )
+	{
+		operatorArgs.push("--Hide");
+	}
 
 	var spawnParams = {
 		cwd: path.dirname( operatorPath )
@@ -256,7 +270,7 @@ var connectTelnet = function( operator, telnetPort ) {
 
 		// Connect to telnet
 
-		var telnetParams = { 
+		var telnetParams = {
 			host: '127.0.0.1',
 			port: telnetPort,
 			timeout: 3000,
@@ -275,7 +289,7 @@ var connectTelnet = function( operator, telnetPort ) {
 			ws.on( 'message', function( msg ) {
 
 				var preamble = msg.split( ' ' );
-				
+
 				var msg = {};
 				msg.opcode = preamble.shift();
 				msg.id = preamble.shift();
@@ -290,13 +304,24 @@ var connectTelnet = function( operator, telnetPort ) {
 
 		} );
 
+		// Set up UDP socket to send out state/watch information (not really needed since state info is sent out via bci2k's execute('Get System State')...)
+		UDPSocket.bind(3333,'127.0.0.1');
+		UDPSocket.on('listening', function () {
+		    var address = UDPSocket.address();
+		    console.log('UDP Server listening on ' + address.address + ":" + address.port);
+		});
+		//Example case of using ConnectorOutput to send out what the Stimulus Code is:
+		UDPSocket.on('message', function(message, remote){
+			if(String.fromCharCode.apply(null, new Uint16Array(message)).indexOf("StimulusCode")==0)
+			ws.send("StimulusCode is: " + parseFloat(BCIString.substring(BCIString.length-3,BCIString.length+3)));
+		});
 
 		// Start command execution loop
 
 		( function syncCommunications() {
 
 			if ( operator.commandQueue.length && operator.telnet && !operator.executing ) {
-				
+
 				operator.executing = operator.commandQueue.shift();
 
 				try {
@@ -309,7 +334,7 @@ var connectTelnet = function( operator, telnetPort ) {
 
 					var ws = operator.executing.ws;
 					var id = operator.executing.id;
-					
+
 					operator.executing = null;
 
 					try {
