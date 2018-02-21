@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/75337424.svg)](https://zenodo.org/badge/latestdoi/75337424)
+
 bci2000web
 ===================
 
