@@ -224,10 +224,13 @@ var accessGH = function( username, password ) {
         }
 
         var goodRepos = [];
-
         repos.filter( function( repo ) {
-            return repo.description.search( '\\[Paradigm\\]' ) >= 0;
-        } ).forEach( function( repo ) {
+          //Unity project seems to break paradigm pull. No idea, fix later.
+          
+          if(repo.name!="webFM_Unity"){
+            return repo.description.search( '\\[Paradigm\\]' ) == 0;
+          }
+          } ).forEach( function( repo ) {
             goodRepos.push( {
                 name: repo.name,
                 "path": path.join( paradigmsPath, repo.name ),
