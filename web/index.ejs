@@ -88,11 +88,26 @@
             </div><!-- /input-group -->
           </div>
           <ul id="localconfig-list" class="list-group">
-            <a href="replay" class="list-group-item bigger">
+            <a href="replay" target="_blank" class="list-group-item bigger">
                 <span class="glyphicon glyphicon-play"></span> Replay
             </a>
           </ul>
         </div>
+
+        <div class="panel panel-default">
+          <div id="localconfig-list" class="list-group">
+            <a href="#" class="list-group-item bigger" onclick="getChannels()">Query channels</a>
+          </div>
+          <div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Dropdown
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu"  id="chanList" aria-labelledby="dropdownMenu1">
+  </ul>
+</div>
+
+      </div>
 
       </div>
 
@@ -172,6 +187,20 @@
     var bci = new BCI2K.Connection();
     var systemState = null;
 
+    function getChannels(){
+      bci.execute('List Parameter channelNames', function(result){
+        var channels = result.output.substring(result.output.indexOf("="), result.output.indexOf("//")-1).split(" ").slice(2);
+        channels.forEach(function(e){
+          var item = document.createElement('li');
+          var item2 = document.createElement('a');
+          item2.innerHTML = e
+          item2.setAttribute('href','#')
+          item.appendChild(item2);
+          document.getElementById("chanList").appendChild(item);
+        })
+      });
+    }
+
     function selectParadigm( cardName ) {
 
         // Hide all paradigms
@@ -218,13 +247,6 @@
         getState();
 
         $( '#reset-button' ).removeClass( 'disabled' );
-
-        /*
-        bci.getVersion( function( version ) {  
-            $( '#systemVersion' ).text( 'Version: ' + version );
-        } );
-        */
-
     }
 
     bci.ondisconnect = function( event ) {
