@@ -41,3 +41,4 @@ wpad.dat
 node_modules/
 INSTALL.BAT
 START.BAT
+certs/
