@@ -136,3 +136,9 @@ body {
     background-color: #d0103c;
   }
 }
+
+#channelSelector {}
+
+.modal-body {
+  overflow-x: auto;
+}

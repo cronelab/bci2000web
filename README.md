@@ -27,3 +27,11 @@ Requires [Visual C++ Redistributable for Visual Studio 2012 Update 4](https://ww
 
 # Notes
 - Modify web/localconfig.json for experimental parameters
+
+## CAR Parameter generation
+- After starting a task go to the BCI2000Web interface and click "Query channels"
+- This will bring up a modal box where you can click electrode names to exclude them from being included in the CAR parameter generation
+- Currently this uses the name of the electrode to create an independent CAR block.
+	- This will probably be modified in the future if you want to include multiple electrode groups in a single CAR block
+- After you click save a CAR.prm will be downloaded to your "Downloads" folder and then load that into BCI2000 as any ol' parameter file.
+- Could easily incorporating automatic loading of the CAR.prm but I think it's best if we save it, look at it to make sure there aren't any errors, and then load it prior to mapping/testing.

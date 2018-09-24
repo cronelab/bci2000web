@@ -36,7 +36,6 @@
   </nav>
 
   <div class="container">
-
     <div class="row">
 
       <div class="col-md-3 col-sm-4">
@@ -175,6 +174,40 @@
     </div>
   </footer>
 
+  <div id="channelSelector" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×
+          </button>
+          <h4 class="modal-title" id="classModalLabel">
+                Class Info
+              </h4>
+        </div>
+        <div class="modal-body">
+          <table id="classTable" class="table table-bordered">
+            <thead>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Channels</td>
+                <td>Exclude</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" id="saveButton" class="btn btn-primary" data-dismiss="modal">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ===================================================== -->
   <!-- Scripts -->
@@ -187,17 +220,102 @@
     var bci = new BCI2K.Connection();
     var systemState = null;
 
+    function onlyUnique(value, index, self) { 
+        return self.indexOf(value) === index;
+    }
+
     function getChannels(){
+
       bci.execute('List Parameter channelNames', function(result){
+        var totalChannels = result.output.substring(result.output.indexOf("="), result.output.indexOf("//")-1).split(" ").slice(2);
         var channels = result.output.substring(result.output.indexOf("="), result.output.indexOf("//")-1).split(" ").slice(2);
-        channels.forEach(function(e){
-          var item = document.createElement('li');
-          var item2 = document.createElement('a');
-          item2.innerHTML = e
-          item2.setAttribute('href','#')
-          item.appendChild(item2);
-          document.getElementById("chanList").appendChild(item);
+
+        let channelTable = document.getElementById("classTable")
+        
+        excludedChannels = []
+        
+        channels.forEach(function(ch, index){
+          let checkbox = document.createElement('input');
+          checkbox.type = "checkbox";
+          checkbox.id = ch;
+
+          checkbox.addEventListener( 'change', function() {
+              if(this.checked) {
+                document.getElementById(this.id).parentElement.style.background = "red";
+                excludedChannels.push(document.getElementById(this.id).id)
+              } else {
+                document.getElementById(this.id).parentElement.style.background = ""
+                excludedChannels.splice( excludedChannels.indexOf(document.getElementById(this.id).id), 1 );
+              }
+          });
+
+          let newRow = channelTable.insertRow(index+1)
+          newRow.insertCell(0).innerHTML = ch
+          newRow.insertCell(1).appendChild(checkbox)
+                    
+
         })
+
+      $('#channelSelector').modal('show')
+
+
+    var textFile = null,
+      makeTextFile = function (text) {
+        var data = new Blob([text], {type: 'text/plain'});
+        if (textFile !== null) {
+          window.URL.revokeObjectURL(textFile);
+        }
+        textFile = window.URL.createObjectURL(data);
+        return textFile;
+      };
+
+        let saveButton = document.getElementById("saveButton")
+
+        saveButton.addEventListener('click', function () {
+          var link = document.createElement('a');
+          link.setAttribute('download', 'CAR.prm');
+
+          excludedChannels.forEach(exCh =>{
+            for(let i = channels.length;i--;){
+              if(channels[i]===exCh) channels.splice(i,1);
+            }
+          })
+          _excludedChannels = excludedChannels.join(' ')
+          let chBlock = []
+          let channelBlock_ = []
+          let channelBlock = []
+          channels.forEach(ch =>{
+            ch.split('').forEach(function(letter){
+              if(isNaN(parseInt(letter,10))){
+                chBlock.push(letter)
+              }
+              else{
+                if(chBlock.length!=0){
+                    channelBlock_.push(chBlock.join(""))
+                    chBlock = [];
+                }
+              }
+            })
+            })
+
+          _channels = channels.join(' ')
+          _channelBlock_ = channelBlock_.join(' ')
+          _totalChannels = totalChannels.join(' ')
+          let carParameters = 
+          `Filtering:SimpleCAR:SimpleCAR:FilePlaybackADC int EnableSimpleCAR= 2 0 0 2
+  Filtering:SimpleCAR:SimpleCAR:FilePlaybackADC stringlist ExcludeChannels= ${excludedChannels.length} ${_excludedChannels}
+  Filtering:SimpleCAR:SimpleCAR stringlist CARChannels= ${channels.length} ${_channels}
+  Filtering:SimpleCAR:SimpleCAR stringlist CARBlocks= ${channelBlock_.length} ${_channelBlock_}
+  Filtering:SimpleCAR:SimpleCAR stringlist CAROutputChannels= ${totalChannels.length} ${_totalChannels}`
+
+          link.href = makeTextFile(carParameters);
+          document.body.appendChild(link);
+          window.requestAnimationFrame(function () {
+            var event = new MouseEvent('click');
+            link.dispatchEvent(event);
+            document.body.removeChild(link);
+          });
+        }, false);
       });
     }
 
@@ -212,6 +330,8 @@
         $( '#paradigm-' + cardName ).removeClass( 'hidden' );
 
     };
+
+
 
     function getState() {
         bci.execute( 'Get System State', function( result ) {

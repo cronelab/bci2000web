@@ -234,6 +234,7 @@ var launchOperator = function( operatorPath, telnetPort ) {
 
 	operator.on( 'close', function( data ) {
 		console.log( 'Operator subprocess closed... Operator may already be running?' );
+		process.exit(1);
 	} );
 
 
