@@ -1,6 +1,6 @@
 { 
-	"subject": "PY18N013",
-	"_sourceConfig": "new BCI2K.BlackrockConfig( 2, 1000 );",
+	"subject": "PY18N016",
+	"_sourceConfig": "new BCI2K.BlackrockConfig( 1, 2000 );",
 	"comments":
 	{
 		"_sourceConfig":""
