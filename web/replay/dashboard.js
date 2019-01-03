@@ -1,10 +1,10 @@
 var bci = new BCI2K.Connection();
 
 $( document ).ready( function() {
-	bci.onconnect = function() {
-		getReplayFiles(); // src/replay.js
-		monitorSystemState();
-	}
+	// bci.onconnect = function() {
+	// 	// getReplayFiles(); // src/replay.js
+	// 	monitorSystemState();
+	// }
 	bci.connect();
 
 } );

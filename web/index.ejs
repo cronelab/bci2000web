@@ -3,31 +3,24 @@
 <html lang="en">
 
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta name="description" content="">
-  <meta name="author" content="">
-
   <title>BCI2000 Browser</title>
 
   <!-- Styles -->
   <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="index.css">
-
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  <script src="node_modules/tether/dist/js/tether.min.js"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="node_modules/bci2k/dist/bci2k.js"></script>
 
 </head>
 
 <body>
 
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <nav class="navbar navbar-light fixed-top">
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">BCI2000</a>
@@ -37,116 +30,51 @@
 
   <div class="container">
     <div class="row">
-
       <div class="col-md-3 col-sm-4">
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">System</h3>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">System</h3>
           </div>
           <div class="list-group">
             <li id="state-label" class="list-group-item bigger text-center text-muted">
               <strong>Not Connected</strong>
             </li>
-            <li id="info-label" class="list-group-item hidden">
-                <span id="version-label"></span><br />
-            </li>
             <a id="reset-button" class="list-group-item list-group-item-danger disabled" onclick="checkReset()">
               <span class="glyphicon glyphicon-repeat"></span> <strong>Reset</strong>
             </a>
-          </div>
-        </div>
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              Local config <span class="pull-right"><a class="edit-localconfig"><span class="glyphicon glyphicon-pencil"></span></a></span>
-            </h3>
-          </div>
-          <ul id="localconfig-list" class="list-group">
-            <li class="list-group-item">
-                <strong>subject</strong>: ...
-            </li>
-            <li class="list-group-item">
-                <strong>something</strong>: ...
-            </li>
-          </ul>
-        </div>
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Utilities</h3>
-          </div>
-          <div id="new-subject-options" class="panel-heading hidden">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">ID</span>
-              <input id="new-subject-id" type="text" class="form-control" placeholder="PYXXNXXX">
-              <span class="input-group-btn">
-                <button id="new-subject-ok" class="btn btn-default" type="button"><span class="glyphicon glyphicon-ok"></span></button>
-              </span>
-            </div><!-- /input-group -->
-          </div>
-          <ul id="localconfig-list" class="list-group">
             <a href="replay" target="_blank" class="list-group-item bigger">
                 <span class="glyphicon glyphicon-play"></span> Replay
-            </a>
-          </ul>
-        </div>
-
-        <div class="panel panel-default">
-          <div id="localconfig-list" class="list-group">
+            </a> 
             <a href="#" class="list-group-item bigger" onclick="getChannels()">Query channels</a>
           </div>
-          <div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Dropdown
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu"  id="chanList" aria-labelledby="dropdownMenu1">
-  </ul>
-</div>
-
-      </div>
-
+        </div>
       </div>
 
       <div class="col-md-4 col-sm-3">
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Paradigms</h3>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Paradigms</h3>
           </div>
           <ul id="paradigms-list" class="list-group">
-
             <% cards.forEach( function( card ) { %>
-
               <a id="paradigm-link-<%- card.name; %>" href="#<%- card.name; %>" class="list-group-item" onclick="selectParadigm('<%- card.name %>')">
                 <%- card.name; %>
               </a>
-
             <% } ); %>
-
           </ul>
         </div>
-
       </div>
 
       <div id="paradigms-container" class="col-md-5 col-sm-5">
-
         <% cards.forEach( function( card ) { %>
-
-          <div id="paradigm-<%- card.name; %>" class="hidden">
+          <div id="paradigm-<%- card.name; %>" style="display: none">
             <%- include( card.path, {
               cardRoot: card.root
             } ); %>
           </div>
-
         <% } ) %>
-
       </div>
-
     </div>
-
   </div> <!-- /container -->
 
   <div id="reset-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -211,9 +139,6 @@
 
   <!-- ===================================================== -->
   <!-- Scripts -->
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="node_modules/bci2k/dist/bci2k.js"></script>
 
   <script>
     
@@ -256,7 +181,7 @@
 
         })
 
-      $('#channelSelector').modal('show')
+      document.getElementById('channelSelector').modal('show')
 
 
     var textFile = null,
@@ -320,27 +245,21 @@
     }
 
     function selectParadigm( cardName ) {
-
         // Hide all paradigms
-        $( '#paradigms-list' ).children().removeClass( 'active' );
-        $( '#paradigms-container' ).children().addClass( 'hidden' );
-
+        let allParadigms = document.getElementById(`paradigms-container`).children
+        for(let paras of allParadigms){
+          paras.style.display = "none";
+        }
         // Show this paradigm
-        $( '#paradigm-link-' + cardName ).addClass( 'active' );
-        $( '#paradigm-' + cardName ).removeClass( 'hidden' );
-
+        document.getElementById(`paradigm-${cardName}`).style.display = "block";
     };
-
-
 
     function getState() {
         bci.execute( 'Get System State', function( result ) {
+            systemState = result.output.trim();
 
-            systemState = $.trim( result.output );
-
-            $( '#state-label' ).html( '<strong>' + systemState + '</strong>' );
-
-            var stateClasses = {
+            document.getElementById('state-label').innerHTML =  '<strong>' + systemState + '</strong>';
+            let stateClasses = {
                 Running: 'text-success',
                 Suspended: 'text-warning',
                 Idle: 'text-info'
@@ -348,43 +267,38 @@
 
             // Clear existing classes
             Object.keys( stateClasses ).forEach( function( key ) {
-                $( '#state-label' ).removeClass( stateClasses[key] );
+                document.getElementById('state-label').classList.remove( stateClasses[key] );
             } );
 
             var curStateClass = stateClasses[systemState];
 
             if ( curStateClass ) {
-                $( '#state-label' ).addClass( curStateClass );
+                document.getElementById('state-label').classList.add( curStateClass );
             }
 
         } );
         setTimeout( getState, 1000 );
     }
 
-    bci.onconnect = function( event ) {
-        
-        console.log( 'BCI2000 connected' );
+    bci.onconnect = event => {
         getState();
-
-        $( '#reset-button' ).removeClass( 'disabled' );
+        document.getElementById('reset-button' ).classList.remove( 'disabled' );
     }
 
-    bci.ondisconnect = function( event ) {
-        console.log( "BCI2000 connection closed" );
-        $( '#reset-button' ).addClass( 'disabled' );
+    bci.ondisconnect = event => {
+        document.getElementById('reset-button' ).classList.add( 'disabled' );
     }
 
     function checkReset() {
-
         if( systemState == null ) {
             return;
         } else if( systemState == 'Running' ) {
-            $( '#reset-modal' ).modal();
+            document.getElementById('reset-modal').modal();
         } else {
           doReset();
-        }
-            
+        }           
     }
+
     function doReset() {
         bci.resetSystem();
     }
@@ -392,7 +306,5 @@
     bci.connect();
 
   </script>
-
 </body>
-
 </html>
