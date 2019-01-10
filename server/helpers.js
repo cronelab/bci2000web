@@ -85,7 +85,7 @@ module.exports = {
     fs.readdirSync(currentDirPath).forEach(name => {
       const filePath = path.join(currentDirPath, name);
       const stat = fs.statSync(filePath);
-      if (stat.isFile() && path.basename(filePath) == "cards.ejs") {
+      if (stat.isFile() && path.basename(filePath) == "task.json") {
         cards.push(path.resolve(filePath));
       } else if (stat.isDirectory()) {
         cards = cards.concat(module.exports.findCards(filePath));

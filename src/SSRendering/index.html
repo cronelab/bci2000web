@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.1/dist/tf.min.js"></script>
+    <script>
+      let renderWS = new WebSocket("ws://127.0.0.1/1");
+      renderWS.onclose = event => {
+        renderWS.close();
+      };
+    </script>
+  </head>
+  <body>
+    <div id="test"></div>
+
+    <script>
+      let dataArr = [];
+      renderWS.onmessage = x => {
+        plotTimeSeries(x);
+
+        //pick a channel
+        // let channel = 0
+        // JSON.parse(x.data)[channel].map(y => {
+        //   dataArr.push(y);
+        // });
+        // console.log(dataArr.length)
+        // if (dataArr.length > 6000) {
+        //   // calculateFFT(dataArr);
+        //   dataArr = [];
+        // }
+      };
+
+
+      function plotTimeSeries(x){
+        let mainDiv = document.getElementById("test");
+        mainDiv.innerHTML = x.data;
+
+      }
+
+      function calculateFFT(rawData) {
+        let data = tf.tensor1d(rawData);
+        let rfftResult = tf.rfft(data);
+        let realCompsOfFFT = tf.real(rfftResult).data();
+
+        realCompsOfFFT.then(z => {
+          document.getElementById("test").innerHTML = z;
+        });
+      }
+    </script>
+  </body>
+</html>

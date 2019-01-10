@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-light fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">BCI2000</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">System</h3></div>
+            <div class="list-group">
+              <li
+                id="state-label"
+                class="list-group-item bigger text-center text-muted"
+              >
+                <strong>Not Connected</strong>
+              </li>
+              <a
+                id="reset-button"
+                class="list-group-item list-group-item-danger disabled"
+              >
+                <span class="glyphicon glyphicon-repeat"></span>
+                <strong>Reset</strong>
+              </a>
+              <a href="#" class="list-group-item bigger">Query channels</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Replay</h3></div>
+            <div class="card-body">
+              <div class="btn-group dropright" style="width: 100%;">
+                <button
+                  type="button"
+                  id="replay-subject"
+                  class="btn btn-primary dropdown-toggle "
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  data-toggle="dropdown" 
+                >
+                  Data files
+                </button>
+                <div class="dropdown-menu" id="replay-dropdown"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col" id="paradigm-container">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Paradigms</h3></div>
+            <ul class="list-group" id="paradigms"></ul>
+          </div>
+        </div>
+        <div class="col" id="task-container">
+          <div class="card" id="task-card">
+            <h3 class="card-header" id="task-header"></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

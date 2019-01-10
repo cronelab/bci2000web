@@ -42,3 +42,5 @@ INSTALL.BAT
 START.BAT
 certs/
 .vscode/*
+
+dist/

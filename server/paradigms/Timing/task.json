@@ -1,0 +1,12 @@
+{
+    "numTasks":1,
+    "Task_1":
+    {
+        "title":"Timing",
+        "description":"Test Audio-Visual timing of the system.",
+        "numBlocks":1,
+        "routes": [
+            "./paradigms/Timing/react_index.html"
+        ]
+    }
+}

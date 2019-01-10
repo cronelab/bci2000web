@@ -13,10 +13,34 @@ const Telnet = require( 'telnet-client' );
 const helpers = require('./helpers.js');
 const config = require('./config.json');
 const opn = require('opn');
-const operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
 
+const operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
+const merge = require("webpack-merge");
+const webpack = require("webpack");
+const webpackConfig = require("../webpack.config.js");
+let newConfig = merge(webpackConfig, {
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ]
+});
+
+app.get('/paradigms/:task/', (req, res) => {
+  const data = require(`./paradigms/${req.params.task}/task.json`)
+  res.json(data);
+});
+app.get('/paradigms/:task/run', (req, res) => {
+  const data = require(`./paradigms/${req.params.task}/parameters.json`)
+  res.json(data);
+});
+
+app.get("/localconfig", (req,res) => {
+  const data = require('./localconfig.json')
+  res.json(data)
+})
   app.get('/paradigms', (req, res) => {
-	const cardPaths = helpers.findCards('./web/paradigms');
+	const cardPaths = helpers.findCards('./server/paradigms');
 	const cards = cardPaths.map((cardPath) => {
 	  const cardDir = path.dirname(cardPath);
 	  const cardDirParts = cardDir.split(path.sep);
@@ -74,23 +98,14 @@ const operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
 	  
   
 
-app.set('views', path.join(__dirname, '../web'))
-
-app.get('/web/index.html', (req, res) => {
-	let cardPaths = helpers.findCards('./server/paradigms');
-	let cards = cardPaths.map(cardPath => {
-		let cardDir = path.dirname( cardPath );
-		let cardDirParts = cardDir.split( path.sep );
-		let cardRoot = cardDirParts.slice( cardDirParts.length - 2).join('/');
-		let cardName = cardDirParts[cardDirParts.length - 1];
-		return {
-			name: cardName,
-			path: cardPath,
-			root: cardRoot
-		};
-	} );
-	res.render( 'index', {cards: cards});
-} );
+  if (process.env.NODE_ENV == "production") {
+    app.use("/", express.static("./dist"));
+  } else if (process.env.NODE_ENV == "development") {
+    const compiler = webpack(newConfig);
+    app.use(require("webpack-dev-middleware")(compiler, { noInfo: true }));
+    app.use(require("webpack-hot-middleware")(compiler));
+  }
+  
 
 const connectTelnet = async operator => {
   const connection = new Telnet();
@@ -181,6 +196,5 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
   }
 });
 
-app.set( 'view engine', 'ejs' );
-app.use( express.static( './' ) );
+
 app.listen(config.webPort, () => {} );
