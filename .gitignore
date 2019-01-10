@@ -33,9 +33,8 @@ data/
 prog.archive/
 BCI2000_Help.html
 GettingStarted.html
+prog/
 
-# MATLAB crap
-*.asv
 
 wpad.dat
 node_modules/
