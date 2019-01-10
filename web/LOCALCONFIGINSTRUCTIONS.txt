@@ -1,9 +1,0 @@
-What you write in here effects system/bci2kconfigjs.
-
-
-BCI2K.BlackrockConfig(instances,samplingrate); //2 instances means 2 NSPs
-{	
-	"sourceConfig": "new BCI2K.BlackrockConfig( 2, 1000 );",
-	"subject": "TESTSubject"
-
-}

@@ -1,0 +1,15 @@
+{
+    "title": "BCI2000Web: Manual Recording",
+    "executables":{
+        "source": "SignalGenerator",
+        "processing": "SpectralSignalProcessingMod",
+        "application": "StimulusPresentationCronelab"
+    },
+    "setParameters":{
+        "WSSpectralOutputServer":"*:20203",
+        "WSConnectorServer":"*:20323", 
+        "WSSourceServer":"*:20100"
+    },
+    "loadParameters":[
+        "../parms.ecog/SpectralSigProc.prm" ]
+}

@@ -44,3 +44,4 @@ certs/
 .vscode/*
 
 dist/
+prog_old/

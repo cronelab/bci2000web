@@ -1,0 +1,27 @@
+{
+    "NihonKohden":{
+        "comment": "ask for device address",
+        "setParameters":{
+            "DeviceAddress": "",
+            "SampleBlockSize": "100"    
+        }
+    },
+    "Blackrock":{
+        "comment": "ask for NSPs and sampling rate",
+        "setParameters":{
+            "NSPInstances": "",
+            "SamplingRate": ""    
+        }
+    },
+    "Grapevine":{
+        "comment": "ask for sampling rate",
+        "setParameters":{
+            "SamplingRate":"",
+            "SampleBlockSize":"48"
+        }
+    },
+    "Biosemi2":{
+        "comments": "ask for parameter",
+        "loadParameters":"../parms.ecog/AmpFragments/Biosemi2/BioSemi32CH.prm"
+    }
+}
