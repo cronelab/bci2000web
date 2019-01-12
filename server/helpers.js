@@ -3,7 +3,7 @@ const spawn = require("child_process").spawn;
 const exec = require("child_process").exec;
 let Client = require("ssh2-sftp-client");
 let sftp = new Client();
-const config = require("./config.json");
+const config = require("./Config/config.json");
 const fs = require("fs");
 
 // const credentials = require('./credentials.json');
@@ -12,26 +12,9 @@ module.exports = {
   isRunning: (win, mac, linux) => {
     return new Promise(function(resolve, reject) {
       const plat = process.platform;
-      const cmd =
-        plat == "win32"
-          ? "tasklist"
-          : plat == "darwin"
-          ? "ps -ax | grep " + mac
-          : plat == "linux"
-          ? "ps -A"
-          : "";
-      const proc =
-        plat == "win32"
-          ? win
-          : plat == "darwin"
-          ? mac
-          : plat == "linux"
-          ? linux
-          : "";
-      if (cmd === "" || proc === "") {
-        resolve(false);
-      }
-      exec(cmd, function(err, stdout, stderr) {
+      const cmd = "tasklist"
+      const proc = win
+     exec(cmd, function(err, stdout, stderr) {
         resolve(stdout.toLowerCase().indexOf(proc.toLowerCase()) > -1);
       });
     });

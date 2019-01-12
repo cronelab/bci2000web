@@ -1,0 +1,26 @@
+{
+  "SignalGenerator": {
+    "setParameters": {
+      "SamplingRate": "1000"
+    }
+  },
+  "NihonKohden": {
+    "setParameters": {
+      "DeviceAddress": "",
+      "SampleBlockSize": "100"
+    }
+  },
+  "Blackrock": {
+    "setParameters": {
+      "NSPInstances": "1",
+      "SamplingRate": "1000",
+      "SampleBlockSize": "50"
+    }
+  },
+  "Grapevine": {
+    "setParameters": {
+      "SamplingRate": "",
+      "SampleBlockSize": "48"
+    }
+  }
+}

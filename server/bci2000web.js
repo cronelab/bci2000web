@@ -11,7 +11,7 @@ const app = express();
 const expressWs = require( 'express-ws' )( app );
 const Telnet = require( 'telnet-client' );
 const helpers = require('./helpers.js');
-const config = require('./config.json');
+const config = require('./Config/config.json');
 const opn = require('opn');
 
 const operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
@@ -30,13 +30,14 @@ app.get('/paradigms/:task/', (req, res) => {
   const data = require(`./paradigms/${req.params.task}/task.json`)
   res.json(data);
 });
-app.get('/paradigms/:task/run', (req, res) => {
-  const data = require(`./paradigms/${req.params.task}/parameters.json`)
+
+app.get('/amplifiers/', (req, res) => {
+  const data = require(`./Config/amplifiers.json`)
   res.json(data);
 });
 
 app.get("/localconfig", (req,res) => {
-  const data = require('./localconfig.json')
+  const data = require('./Config/localconfig.json')
   res.json(data)
 })
   app.get('/paradigms', (req, res) => {

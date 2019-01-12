@@ -1,13 +1,23 @@
 {
-    "Task_1":
-    {
-        "title":"Manual Recording",
-        "description":"Manually record a data file.",
-        "Blocks":{
-            "Block_1":{
-                "title": "Task_1 - Block_1"
-            }
-        },
-        "Input":["Enter a task name"]
+  "Task_1": {
+    "title": "Manual Recording",
+    "description": "Manually record a data file.",
+    "executables": {
+      "processing": "SpectralSignalProcessingMod"
+    },
+    "setParameters": {
+      "WSSpectralOutputServer": "*:20203",
+      "WSConnectorServer": "*:20323",
+      "WSSourceServer": "*:20100"
+    },
+    "loadParameters": ["../parms.ecog/SpectralSigProc.prm"],
+    "addEvents": [],
+    "addStates": [],
+    "Blocks": {
+      "Block_1": {
+        "title": "Task_1 - Block_1",
+        "loadParameters": []
+      }
     }
+  }
 }
