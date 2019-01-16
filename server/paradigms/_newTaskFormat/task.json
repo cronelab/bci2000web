@@ -1,0 +1,64 @@
+{
+  "Task_1": {
+    "title": "New Task Format",
+    "description": "Structure your tasks as follows.",
+    "executables": {
+      "processing": "SpectralSignalProcessingMod",
+      "application": "StimulusPresentationCronelab"
+    },
+    "setParameters": {},
+    "loadParameters": [
+      "../parms.ecog/SpectralSigProc.prm",
+      "../parms.ecog/screen_setup.prm",
+      "../server/paradigms/_newTaskFormat/PRM/taskq.prm"
+    ],
+    "addEvents": [],
+    "addStates": [],
+    "userPrompt": [],
+    "Blocks": {
+      "Block_1": {
+        "title": "Run Task 1 Block 1",
+        "loadParameters": [
+          "../server/paradigms/_newTaskFormat/PRM/sequences/seq1.prm"
+        ]
+      },
+      "Block_2": {
+        "title": "Run Task 1 Block 2",
+        "loadParameters": [
+          "../server/paradigms/_newTaskFormat/PRM/sequences/seq2.prm"
+        ]
+      }
+    }
+  },
+  "Task_2": {
+    "title": "New Task Format",
+    "description": "Structure your tasks as follows.",
+    "executables": {
+      "processing": "SpectralSignalProcessingMod",
+      "application": "StimulusPresentationCronelab"
+    },
+    "setParameters": {},
+    "loadParameters": [
+      "../parms.ecog/SpectralSigProc.prm",
+      "../parms.ecog/screen_setup.prm",
+      "../server/paradigms/_newTaskFormat/PRM/task2.prm"
+    ],
+    "addEvents": [],
+    "addStates": [],
+    "userPrompt": [],
+    "Blocks": {
+      "Block_1": {
+        "title": "Run Task 1 Block 1",
+        "loadParameters": [
+          "../server/paradigms/_newTaskFormat/PRM/sequences/seq1.prm"
+        ]
+      },
+      "Block_2": {
+        "title": "Run Task 1 Block 2",
+        "loadParameters": [
+          "../server/paradigms/_newTaskFormat/PRM/sequences/seq2.prm"
+        ]
+      }
+    }
+  }
+}

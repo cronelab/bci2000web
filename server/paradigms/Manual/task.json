@@ -5,14 +5,11 @@
     "executables": {
       "processing": "SpectralSignalProcessingMod"
     },
-    "setParameters": {
-      "WSSpectralOutputServer": "*:20203",
-      "WSConnectorServer": "*:20323",
-      "WSSourceServer": "*:20100"
-    },
+    "setParameters": {},
     "loadParameters": ["../parms.ecog/SpectralSigProc.prm"],
     "addEvents": [],
     "addStates": [],
+    "userPrompt":[],
     "Blocks": {
       "Block_1": {
         "title": "Task_1 - Block_1",

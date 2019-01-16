@@ -1,14 +1,12 @@
 [![DOI](https://zenodo.org/badge/75337424.svg)](https://zenodo.org/badge/latestdoi/75337424)
 
-bci2000web
+BCI2000Web
 ===================
 
-### Cloning/Setup
+###Cloning/Setup
 
 1. Set up a [BCI2000 user account](http://www.bci2000.org/wiki/index.php/Creating_a_User_Account "Creating a user account") if necessary.
-
-2. [Checkout a clean BCI2000](http://www.bci2000.org/wiki/index.php/Programming_Howto:SVN_Client_Setup "Programming Howto:SVN Client Setup") to a new directory.  HEAD is recommended, and should work, but can be unstable.  The most recent revision this repository has been tested to work with is r4774.
-
+2. [Checkout a clean copy of the BCI2000 source](http://www.bci2000.org/wiki/index.php/Programming_Howto:SVN_Client_Setup "Programming Howto:SVN Client Setup") to a new directory.  HEAD is recommended, and should work, but can be unstable.  The most recent revision this repository has been tested to work with is r4774.
 3. Clone this repo into the same BCI2000 folder
 
 		cd <BCI2000 Root Directory>
@@ -17,21 +15,31 @@ bci2000web
 		git pull origin master
 
 	If your current BCI2000 distribution already has custom projects, you may need to manually merge src/custom/CMakeLists.txt
-4. BCI2000's build system should recognize all of the custom projects.  [At a minimum, build:](http://www.bci2000.org/wiki/index.php/Programming_Howto:Building_BCI2000 "Programming HowTo:Building BCI2000") **Make sure you use build/Configure.sh.cmd to enable WSSourceFilter and WSConnectorFilter and re-configure/generate the build files before building the executables**
-
-Requires [Visual C++ Redistributable for Visual Studio 2012 Update 4](https://www.microsoft.com/en-ca/download/details.aspx?id=30679)
-
-    There may be more required projects as BCI2000 matures.  [See doc.bci2000.org for current information](http://doc.bci2000.org)
+4. BCI2000's build system should recognize all of the custom projects.  [Visit this guide for BCI2000 build instructions:](https://www.bci2000.org/mediawiki/index.php/Programming_Howto:Building_BCI2000#Building_Contributions) 
+**Make sure you use build/Configure.sh.cmd to enable WSSourceFilter and WSConnectorFilter and re-configure/generate the build files before building the executables**
 5. Launch BCI2000Web and navigate to localhost to launch experiments
 
 
-# Notes
-- Modify web/localconfig.json for experimental parameters
+###Requires
+#####(BCI2000)
+- Visual Studio 2017
+- CMake 3.13.2
+- QT 5.12
+#####(BCI2000Web)
+- NodeJS
 
-## CAR Parameter generation
-- After starting a task go to the BCI2000Web interface and click "Query channels"
-- This will bring up a modal box where you can click electrode names to exclude them from being included in the CAR parameter generation
-- Currently this uses the name of the electrode to create an independent CAR block.
-	- This will probably be modified in the future if you want to include multiple electrode groups in a single CAR block
-- After you click save a CAR.prm will be downloaded to your "Downloads" folder and then load that into BCI2000 as any ol' parameter file.
-- Could easily incorporating automatic loading of the CAR.prm but I think it's best if we save it, look at it to make sure there aren't any errors, and then load it prior to mapping/testing.
+
+###Notes
+Introducing a new way to parameterize tasks.
+- *server/Config/config.json* relates to server control
+- *server/Config/localconfig.json* is experiment dependent
+- *server/Config/amplifiers.json* includes templates for various neural amplifiers
+- *server/paradigms/Paradigm/task.json* contains various fields that are task and block specific.
+	- Allows users to select the processing and application layers used for the task
+	- Which parameters to be set and loaded
+	- Title and descriptions to be displayed in the web interface.
+	- See *server/paradigms/_newTaskFormat/task.json* for the template
+
+#Known issues:
+- Loading .jpgs into the stimulus presentation application is currently throwing an error.
+- Adding events to the BCI2000 operator module is also throwing an error (states are still working fine).

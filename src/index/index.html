@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <!-- <script src="https://iodide.io/pyodide-demo/pyodide.js"></script> -->
-
+    <title>BCI2000Web</title>
     <script src="index.js"></script>
   </head>
   <body>
@@ -21,7 +19,7 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="card">
+          <div class="card text-center">
             <div class="card-header"><h3 class="card-title">System</h3></div>
             <div class="list-group">
               <li
@@ -30,49 +28,96 @@
               >
                 <strong>Not Connected</strong>
               </li>
-              <a
-                id="reset-button"
-                class="list-group-item list-group-item-danger disabled"
-              >
-                <span class="glyphicon glyphicon-repeat"></span>
-                <strong>Reset</strong>
-              </a>
-              <a href="#" class="list-group-item bigger">Query channels</a>
-            </div>
-          </div>
 
-          <div class="card">
-            <div class="card-header"><h3 class="card-title">Replay</h3></div>
-            <div class="card-body">
-              <div class="btn-group dropright" style="width: 100%;">
+              <button type="button" class="btn btn-secondary" id="reset-button">
+                Reset
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="queryChannels"
+                data-toggle="modal" data-target="#channelSelector"
+              >
+                Query channels
+              </button>
+              <button
+              type="button"
+              class="btn btn-secondary"
+              id="webFM"
+            >
+              Map
+            </button>
+              <div class="btn-group" role="group">
                 <button
-                  type="button"
                   id="replay-subject"
-                  class="btn btn-primary dropdown-toggle "
+                  type="button"
+                  class="btn btn-secondary dropdown-toggle"
+                  data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  data-toggle="dropdown" 
                 >
-                  Data files
+                  Dropdown
                 </button>
-                <div class="dropdown-menu" id="replay-dropdown"></div>
+                <div class="dropdown-menu" aria-labelledby="replay-dropdown" id="replay-dropdown">
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div class="col" id="paradigm-container">
-          <div class="card">
-            <div class="card-header"><h3 class="card-title">Paradigms</h3></div>
+          <div class="card text-center">
+            <div class="card-header">
+              <h3 class="card-title">Paradigms</h3>
+            </div>
             <ul class="list-group" id="paradigms"></ul>
           </div>
         </div>
         <div class="col" id="task-container">
-          <div class="card" id="task-card">
-            <h3 class="card-header" id="task-header"></h3>
+          <div class="card text-center" id="task-card">
+            <div class="card-header" id="task-header">
+              <h3 class="card-title">Tasks</h3>
+            </div>
+            <ul class="list-group" id="data"></ul>
+
           </div>
         </div>
       </div>
     </div>
+
+
+    <div id="channelSelector" class="modal" tabindex="-1" role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="classModalLabel">
+                  Class Info
+                </h4>
+          </div>
+          <div class="modal-body">
+            <table id="classTable" class="table table-bordered">
+              <thead>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Channels</td>
+                  <td>Exclude</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" id="saveButton" class="btn btn-primary" data-dismiss="modal">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </body>
 </html>

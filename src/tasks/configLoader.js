@@ -4,6 +4,7 @@ export class CreateConfig {
       const urlParams = new URLSearchParams(window.location.search);
 
       const task = urlParams.get("task");
+      const taskTitle = urlParams.get("taskName");
       const instance = urlParams.get("instance");
       const block = urlParams.get("block");
       let configRes = await fetch("/localconfig");
@@ -18,16 +19,35 @@ export class CreateConfig {
       let script = "";
       //Reset and restart
       script += "Reset System; ";
+
+      if (taskConfig[instance].addEvents.length >= 1) {
+        //Currently hardcoded to convert Events to States because something is broken.
+        script += `Add State ${taskConfig[instance].addEvents}; `;
+      }
+      if (taskConfig[instance].addStates.length >=1) {
+        script += `Add State ${taskConfig[instance].addStates}; `;
+      }
+
       script += "Startup System localhost; ";
 
-      //declare executables
-      if (localConfig.source != "") {
-        script += `Start executable ${localConfig.source} --local; `;
-        ampParams = ampConfig[localConfig.source];
-      } else {
-        script += `Start executable SignalGenerator --local; `;
-        ampParams = ampConfig[localConfig.source];
+      let userPrompt = null;
+      if (taskConfig[instance].userPrompt.length > 0) {
+        let res = confirm(`${Object.keys(taskConfig[instance].userPrompt[0])}`);
+        if (res == true) {
+          userPrompt = Object.values(taskConfig[instance].userPrompt[0]);
+        }
       }
+
+      //declare executables
+      if (userPrompt != null) {
+        script += `Start executable ${
+          localConfig.source
+        } --local ${userPrompt}; `;
+      } else {
+        script += `Start executable ${localConfig.source} --local; `;
+      }
+      ampParams = ampConfig[localConfig.source];
+
       if (
         Object.keys(taskConfig[instance].executables).includes("processing")
       ) {
@@ -49,11 +69,14 @@ export class CreateConfig {
 
       script += "Wait for Connected; ";
 
+
+
       script += `Set parameter SubjectName ${localConfig.subject}; `;
-      // if (session) ret += "Set parameter SubjectSession " + session + "; ";
+      if (block)
+        script += "Set parameter SubjectSession " + block.substring(6) + "; ";
       script += "Set parameter DataFile ";
-      script += '"%24%7bSubjectName%7d/' + task + "/%24%7bSubjectName%7d_";
-      script += task + "_S%24%7bSubjectSession%7dR%24%7bSubjectRun%7d.";
+      script += '"%24%7bSubjectName%7d/' + taskTitle + "/%24%7bSubjectName%7d_";
+      script += taskTitle + "_S%24%7bSubjectSession%7dR%24%7bSubjectRun%7d.";
       script += '%24%7bFileFormat%7d"; ';
 
       //Source parameters
@@ -63,25 +86,25 @@ export class CreateConfig {
 
       //Set parameters
       Object.keys(taskConfig[instance].setParameters).map(tskPrm => {
+        script += `Set parameter WSSpectralOutputServer *:20203; `;
+        script += `Set parameter WSConnectorServer *:20323; `;
+        script += `Set parameter WSSourceServer *:20100; `;
         script += `Set parameter ${tskPrm} ${
           taskConfig[instance].setParameters[tskPrm]
         }; `;
       });
 
-      //Load parameters
+      //Load task parameters
       taskConfig[instance].loadParameters.map(tskPrm => {
         script += `Load parameterfile ${tskPrm}; `;
       });
 
-      console.log(taskConfig[instance]);
-      console.log(taskConfig[instance].Blocks);
-      console.log(taskConfig[instance].Blocks.Block_1);
-
-
+      //Load block parameters
       taskConfig[instance].Blocks[block].loadParameters.map(tskPrm => {
-        console.log(tskPrm)
+        console.log(tskPrm);
         script += `Load parameterfile ${tskPrm}; `;
       });
+
 
       script += `Set config; `;
       script += `Start`;

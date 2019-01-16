@@ -36,7 +36,7 @@ const getParametersForParadigm = async () => {
   const block = urlParams.get("block");
   let config = await new CreateConfig(task);
   bci.execute(config);
-  await new Promise(resolve => setTimeout(resolve, 3000));
+  await new Promise(resolve => setTimeout(resolve, 2500));
   document.title = `${task}: ${instance}`
   // tapSockets();
 
@@ -77,8 +77,22 @@ const getParametersForParadigm = async () => {
 bci.onconnect = e => {
   console.log("connected");
 };
-window.onbeforeunload = function() {
-  if (bci.connected()) {
-    bci.resetSystem();
-  }
+
+
+// window.onbeforeunload = function() {
+//   if (bci.connected()) {
+//     bci.resetSystem();
+//   }
+// };
+
+bci.onconnect = e => {
+  setInterval(() => {
+    bci
+      .execute("Get System State", result => result)
+      .then(state => {
+        if(state.trim() == "Idle"){
+          window.close()
+        }
+      })
+  }, 1000);
 };
