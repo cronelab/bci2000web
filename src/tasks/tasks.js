@@ -80,9 +80,9 @@ bci.onconnect = e => {
 
 
 // window.onbeforeunload = function() {
-//   if (bci.connected()) {
-//     bci.resetSystem();
-//   }
+  // if (bci.connected()) {
+    // bci.resetSystem();
+  // }
 // };
 
 bci.onconnect = e => {
