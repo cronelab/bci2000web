@@ -197,7 +197,7 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       )
       .then(operator => {
         connectTelnet(operator, config.telnetPort);
-        if(config.autoOpen) opn("http://localhost");
+        if(config.autoOpen) opn("http://127.0.0.1");
       })
       .catch(reason => console.log(reason));
   }

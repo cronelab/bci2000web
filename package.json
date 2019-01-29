@@ -4,7 +4,6 @@
   "description": "Websocket based remote control for Operator",
   "main": "bci2000web.js",
   "scripts": {
-    "start": "node bci2000web",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "server": "cross-env NODE_ENV=production nodemon server/bci2000web",
     "devServer": "cross-env NODE_ENV=development nodemon server/bci2000web --ignore 'dist/*'"
