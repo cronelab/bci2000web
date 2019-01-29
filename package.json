@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node bci2000web",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
-    "server": "cross-env NODE_ENV=production node server/bci2000web",
+    "server": "cross-env NODE_ENV=production nodemon server/bci2000web",
     "devServer": "cross-env NODE_ENV=development nodemon server/bci2000web --ignore 'dist/*'"
   },
   "repository": {
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/cronelab/bci2000web#readme",
   "dependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@fortawesome/fontawesome-free": "^5.6.3",
     "babel-loader": "^8.0.5",
     "bci2k": "^2.0.1",

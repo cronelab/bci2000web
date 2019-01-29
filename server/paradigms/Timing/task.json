@@ -3,7 +3,8 @@
     "title": "Timing",
     "description": "Test Audio-Visual timing of the system.",
     "executables": {
-      "processing": "SpectralSignalProcessingMod"
+      "processing": "SpectralSignalProcessingMod",
+      "application": "DummyApplication"
     },
     "setParameters": {},
     "loadParameters": ["../parms.ecog/SpectralSigProc.prm"],

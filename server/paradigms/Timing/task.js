@@ -1,86 +1,32 @@
+var showStim = false;
 
+const tapSockets = async bciInstance => {
+  const show = () => {
+    showStim = true;
+    requestAnimationFrame(draw);
+    setTimeout(hide, 1000);
+    playsound();
+    bciInstance.execute("Set Event StimulusCode 1");
+  };
 
-// style=* { margin: 0; padding: 0; }
-
-// html, body {
-// 	background-color: black;
-// 	width: 100%;
-// 	height: 100%;
-// }
-
-// canvas#stim {
-//     display: block;
-// 	width: 100%;
-// 	height: 100%;
-// 	position: absolute;
-// 	top: 0px;
-// 	left: 0px;
-// }
-
-
-var bci = new BCI2K.Connection();
-bci.connect();
-
-(function applyConfig() {
-  if (bci.connected() && config) {
-    console.log(config.script());
-    bci.execute(config.script(), function(result) {
-      bci.execute("Set Config; Wait for Resting; Start;");
-      hide();
-    });
-  } else setTimeout(applyConfig, 100);
-})();
-
-window.onbeforeunload = function() {
-  if (bci.connected()) {
-    bci.resetSystem();
-  }
+  const hide = () => {
+    showStim = false;
+    requestAnimationFrame(draw);
+    setTimeout(show, 1000);
+    bciInstance.execute("Set Event StimulusCode 0");
+  };
+  hide();
 };
 
-var canvas = document.getElementById("stim");
-var context = canvas.getContext("2d");
-
-window.addEventListener("resize", resize, false);
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  requestAnimationFrame(draw);
-}
-
-resize();
-
-function draw(time) {
-  context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
+const draw = time => {
+  let canvas = document.getElementById("timing");
+  let context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
   if (showStim) {
-    var cx = canvas.width / 2.0;
-    var cy = canvas.height / 2.0;
-    var size = canvas.height * 0.2;
     context.fillStyle = "#FFFFFF";
-    context.fillRect(
-      0, // x
-      canvas.height - size, // y
-      size, // width
-      size // height
-    );
+    context.fillRect(0, 0, canvas.width, canvas.height);
   }
-}
-
-var showStim = false;
-function show() {
-  showStim = true;
-  requestAnimationFrame(draw);
-  setTimeout(hide, 1000);
-  playsound();
-  bci.execute("Set Event StimulusCode 1");
-}
-
-function hide() {
-  showStim = false;
-  requestAnimationFrame(draw);
-  setTimeout(show, 1000);
-  bci.execute("Set Event StimulusCode 0");
-}
+};
 
 function playsound() {
   var snd = new Audio(

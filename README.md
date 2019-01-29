@@ -39,7 +39,6 @@ Introducing a new way to parameterize tasks.
 	- Which parameters to be set and loaded
 	- Title and descriptions to be displayed in the web interface.
 	- See *server/paradigms/_newTaskFormat/task.json* for the template
-
+- *server/paradigms/Paradigm/task.js* dictates the web-based visual ouput of the task. Currently most tasks use a default which queries the "StimulusCode" and acts as a counter. The 'Timing' task presents a visual and auditory cue to indicate trial progression.
 #Known issues:
-- Loading .jpgs into the stimulus presentation application is currently throwing an error.
-- Adding events to the BCI2000 operator module is also throwing an error (states are still working fine).
+- Loading .jpgs into the stimulus presentation application no longer works...but .pngs appear fine

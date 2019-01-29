@@ -29,6 +29,11 @@ let newConfig = merge(webpackConfig, {
 app.get('/paradigms/:task/', (req, res) => {
   const data = require(`./paradigms/${req.params.task}/task.json`)
   res.json(data);
+
+});
+
+app.get('/paradigms/:task/task', (req, res) => {
+  res.sendFile(path.join(__dirname,`paradigms/${req.params.task}/task.js`))
 });
 
 app.get('/amplifiers/', (req, res) => {
@@ -101,6 +106,7 @@ app.get("/localconfig", (req,res) => {
 
   if (process.env.NODE_ENV == "production") {
     app.use("/", express.static("./dist"));
+
   } else if (process.env.NODE_ENV == "development") {
     const compiler = webpack(newConfig);
     app.use(require("webpack-dev-middleware")(compiler, { noInfo: true }));

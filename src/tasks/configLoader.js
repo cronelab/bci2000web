@@ -21,10 +21,9 @@ export class CreateConfig {
       script += "Reset System; ";
 
       if (taskConfig[instance].addEvents.length >= 1) {
-        //Currently hardcoded to convert Events to States because something is broken.
-        script += `Add State ${taskConfig[instance].addEvents}; `;
+        script += `Add Event ${taskConfig[instance].addEvents}; `;
       }
-      if (taskConfig[instance].addStates.length >=1) {
+      if (taskConfig[instance].addStates.length >= 1) {
         script += `Add State ${taskConfig[instance].addStates}; `;
       }
 
@@ -37,6 +36,19 @@ export class CreateConfig {
           userPrompt = Object.values(taskConfig[instance].userPrompt[0]);
         }
       }
+      
+
+      // let externalScript = Object.values(taskConfig[instance].externalScript)
+      // externalScript.map(script => {
+        let taskScript = fetch(`/paradigms/${task}/task`)
+        let response = taskScript.then(res => res.text())
+        response.then(y => {
+          let script = document.createElement('script')
+          document.body.appendChild(script);
+          script.innerHTML = y
+        })
+      // })
+
 
       //declare executables
       if (userPrompt != null) {
@@ -69,8 +81,6 @@ export class CreateConfig {
 
       script += "Wait for Connected; ";
 
-
-
       script += `Set parameter SubjectName ${localConfig.subject}; `;
       if (block)
         script += "Set parameter SubjectSession " + block.substring(6) + "; ";
@@ -86,12 +96,10 @@ export class CreateConfig {
 
       //Set parameters
       Object.keys(taskConfig[instance].setParameters).map(tskPrm => {
-        script += `Set parameter WSSpectralOutputServer *:20203; `;
-        script += `Set parameter WSConnectorServer *:20323; `;
-        script += `Set parameter WSSourceServer *:20100; `;
         script += `Set parameter ${tskPrm} ${
           taskConfig[instance].setParameters[tskPrm]
         }; `;
+        console.log("Happened.");
       });
 
       //Load task parameters
@@ -104,7 +112,9 @@ export class CreateConfig {
         console.log(tskPrm);
         script += `Load parameterfile ${tskPrm}; `;
       });
-
+      script += `Set parameter WSSpectralOutputServer *:20203; `;
+      script += `Set parameter WSConnectorServer *:20323; `;
+      script += `Set parameter WSSourceServer *:20100; `;
 
       script += `Set config; `;
       script += `Start`;

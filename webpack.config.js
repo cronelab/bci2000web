@@ -1,8 +1,8 @@
 const path = require("path");
-const webpack = require('webpack')
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const WriteFilePlugin = require('write-file-webpack-plugin');
+const WriteFilePlugin = require("write-file-webpack-plugin");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var hotMiddlewareScript =
@@ -17,8 +17,7 @@ module.exports = {
       : "./src/index/index.js",
     tasks: devMode
       ? ["./src/tasks/tasks.js", hotMiddlewareScript]
-      : "./src/tasks/tasks.js",
-      
+      : "./src/tasks/tasks.js"
   },
   mode: devMode ? "development" : "production",
 
@@ -61,24 +60,21 @@ module.exports = {
       inject: false,
       hash: true,
       template: "./src/index/index.html",
-      filename: 'index.html',
-
-    }), 
+      filename: "index.html"
+    }),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
       template: "./src/SSRendering/index.html",
-      filename: 'serverRender.html',
-
-    }), 
+      filename: "serverRender.html"
+    }),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
       template: "./src/tasks/index.html",
-      filename: 'task.html',
-
-    }), 
-new MiniCssExtractPlugin({
+      filename: "task.html"
+    }),
+    new MiniCssExtractPlugin({
       filename: devMode ? "[name].css" : "[name].css",
       chunkFilename: devMode ? "[id].css" : "[id].css"
     }),
@@ -90,9 +86,11 @@ new MiniCssExtractPlugin({
     publicPath: path.resolve(__dirname, "dist")
   },
 
-  devServer: devMode ? {
-    contentBase: './dist',
-    publicPath: './dist',
-    hot:true
-  } : {},
+  devServer: devMode
+    ? {
+        contentBase: "./dist",
+        publicPath: "./dist",
+        hot: true
+      }
+    : {}
 };
