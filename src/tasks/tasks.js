@@ -30,3 +30,6 @@ const getParametersForParadigm = async () => {
   await new Promise(resolve => setTimeout(resolve, 2500));
   tapSockets(bci);
 };
+
+window.addEventListener("unload", function(event) {   bci.resetSystem();
+});
