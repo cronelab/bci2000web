@@ -112,6 +112,10 @@ app.get("/localconfig", (req,res) => {
     app.use(require("webpack-dev-middleware")(compiler, { noInfo: true }));
     app.use(require("webpack-hot-middleware")(compiler));
   }
+  else{
+    app.use("/", express.static("./dist"));
+
+  }
   
 
 const connectTelnet = async operator => {
@@ -136,6 +140,9 @@ const connectTelnet = async operator => {
 
   await connection.connect(telnetParams);
 
+  //Fixes an idiotic race condition where the WS isn't set up until AFTER bci2000 connects
+  //arbitrary time, in the future set this into the config.json
+  await new Promise(resolve => setTimeout(resolve, 2000));
   // Set up WebSocket handler
   app.ws("/", ws => {
     ws.on("message", msg => {

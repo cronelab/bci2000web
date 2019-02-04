@@ -4,6 +4,6 @@
     "telnetPort": 3999,
     "hide": false,
     "sftpUser": "Enter your creds here",
-    "telnetTimeout": 2000,
+    "telnetTimeout": 1000,
     "autoOpen":true
 }
