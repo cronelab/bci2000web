@@ -45,3 +45,4 @@ certs/
 
 dist/
 prog_new/*
+server/paradigms/*

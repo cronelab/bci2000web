@@ -1,20 +1,14 @@
 const path = require("path");
 const spawn = require("child_process").spawn;
 const exec = require("child_process").exec;
-let Client = require("ssh2-sftp-client");
-let sftp = new Client();
-const config = require("./Config/config.json");
 const fs = require("fs");
 
-// const credentials = require('./credentials.json');
-
 module.exports = {
-  isRunning: (win, mac, linux) => {
-    return new Promise(function(resolve, reject) {
-      const plat = process.platform;
+  isRunning: win => {
+    return new Promise((resolve, reject) => {
       const cmd = "tasklist"
       const proc = win
-     exec(cmd, function(err, stdout, stderr) {
+     exec(cmd, (err, stdout, stderr) => {
         resolve(stdout.toLowerCase().indexOf(proc.toLowerCase()) > -1);
       });
     });
@@ -32,51 +26,19 @@ module.exports = {
     let operator = spawn(operatorPath, operatorArgs, spawnParams);
     return operator;
   },
-  connect2STFP: () => {
-    //docs
-    //https://www.npmjs.com/package/ssh2-sftp-client
-    //         var fs = require('fs');
-
-    // // ...
-
-    // for(var i = 0; i < data.length; i++) {
-    //   const remoteFilename = '/path/to/remote/files/' + data[i].name;
-    //   const localFilename = '/path/to/local/files/' + data[i].name;
-    //   sftp.get(remoteFilename).then((stream) => {
-    //     stream.pipe(fs.createWriteStream(localFilename));
-    //   });
-    // }
-    sftp
-      .connect({
-        host: "zappa.neuro.jhu.edu",
-        port: "22",
-        username: config.sftpUser,
-        password: credentials.sftpPass
-      })
-      .then(() => {
-        return sftp.list("/mnt/shared/ecog");
-      })
-      .then(data => {
-        console.log(data, "the data info");
-      })
-      .catch(err => {
-        console.log(err, "catch error");
-      });
-  },
   findCards: currentDirPath => {
-    let cards = [];
+    let cardPaths = [];
     fs.readdirSync(currentDirPath).forEach(name => {
       const filePath = path.join(currentDirPath, name);
       const stat = fs.statSync(filePath);
       if (stat.isFile() && path.basename(filePath) == "task.json") {
-        cards.push(path.resolve(filePath));
+        cardPaths.push(path.resolve(filePath));
       } else if (stat.isDirectory()) {
-        cards = cards.concat(module.exports.findCards(filePath));
+        cardPaths = cardPaths.concat(module.exports.findCards(filePath));
       }
     });
-    return cards;
+    return cardPaths;
   },
-
   findData: currentDirPath => {
     let data = [];
     fs.readdirSync(currentDirPath).forEach(name => {
