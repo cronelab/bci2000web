@@ -1,11 +1,10 @@
-//* bci2000web.js
-//? A node-based implementation of web-socket based BCI2000 remote control
-//! test
+// bci2000web.js
+//* A node-based implementation of web-socket based BCI2000 remote control
+//! 
 //TODO asdf
 ////no
 "use strict";
 const path = require("path");
-const fs = require("fs");
 const express = require("express");
 const app = express();
 const expressWs = require("express-ws")(app);
@@ -14,7 +13,6 @@ const config = require("./Config/config.json");
 const opn = require("opn");
 const routes = require("./routes")(express);
 const helpers = require("./helpers.js");
-
 const operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
 const merge = require("webpack-merge");
 const webpack = require("webpack");
@@ -38,7 +36,7 @@ if (process.env.NODE_ENV == "production") {
 } else {
   app.use("/", express.static("./dist"));
 }
-
+//? Connect to BCI2000's operator telnet port in order to send/receive operator commands.
 const connectTelnet = async operator => {
   const connection = new Telnet();
 
@@ -51,6 +49,7 @@ const connectTelnet = async operator => {
   connection.on("timeout", () => (operator.executing = null));
   connection.on("close", () => process.exit(0));
 
+  //TODO configure this better
   await connection.connect({
     host: "127.0.0.1",
     port: config.telnetPort,
@@ -60,10 +59,10 @@ const connectTelnet = async operator => {
     execTimeout: 30
   });
 
-  //Fixes an idiotic race condition where the WS isn't set up until AFTER bci2000 connects
-  //arbitrary time, in the future set this into the config.json
+  //!Fixes an idiotic race condition where the WS isn't set up until AFTER bci2000 connects
+  //!arbitrary time, in the future set this into the config.json
   await new Promise(resolve => setTimeout(resolve, 2000));
-  // Set up WebSocket handler
+  //? Set up WebSocket handler
   app.ws("/", ws => {
     ws.on("message", msg => {
       let preamble = msg.split(" ");
@@ -79,6 +78,7 @@ const connectTelnet = async operator => {
   });
 
   // Start command execution loop
+  //?Every 20ms send info about connection state/listen for commands
   (function syncCommunications() {
     if (
       operator.commandQueue.length &&
@@ -109,25 +109,31 @@ const connectTelnet = async operator => {
     setTimeout(syncCommunications, 20);
   })();
 };
-
+//?Check if BCI2000 is running
 helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
+  //? if not, start BCI2000 operator.exe
   if (!v) {
     helpers
       .launchOperator(operatorPath, config.telnetPort, config.hide)
+      //?Add a timeout...
       .then(
         x =>
           new Promise(resolve =>
             setTimeout(() => resolve(x), config.telnetTimeout)
           )
       )
+      //? ...so we can connect to the telnet port without throwing an erro.
       .then(operator => {
         connectTelnet(operator, config.telnetPort);
       })
+      //?More timeouts
+      //TODO make more elegant.
       .then(
         x => {
           new Promise(resolve => 
             setTimeout(() => resolve(x), 10000)
       )
+      //? Automatically open a browser to go to BCI2000Web
       if (config.autoOpen) opn("http://127.0.0.1");
           })
       .catch(reason => console.log(reason));

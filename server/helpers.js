@@ -4,6 +4,8 @@ const exec = require("child_process").exec;
 const fs = require("fs");
 
 module.exports = {
+
+  //? Checks to see if BCI2000's operator executable is running.
   isRunning: win => {
     return new Promise((resolve, reject) => {
       const cmd = "tasklist"
@@ -13,6 +15,7 @@ module.exports = {
       });
     });
   },
+  //? Launches BCI2000 on a particular telnet port in the foreground or background
   launchOperator: async (operatorPath, telnetPort, hide) => {
     let spawnParams = { cwd: path.dirname(operatorPath) };
     let operatorArgs = [
@@ -26,6 +29,7 @@ module.exports = {
     let operator = spawn(operatorPath, operatorArgs, spawnParams);
     return operator;
   },
+  //? Searches the server/paradigms folder or tasks to populate the UI's task field
   findCards: currentDirPath => {
     let cardPaths = [];
     fs.readdirSync(currentDirPath).forEach(name => {
@@ -39,6 +43,7 @@ module.exports = {
     });
     return cardPaths;
   },
+  //? Searches the bci2000/data folder for saved .dat files.
   findData: currentDirPath => {
     let data = [];
     fs.readdirSync(currentDirPath).forEach(name => {
