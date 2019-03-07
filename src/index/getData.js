@@ -1,4 +1,6 @@
-import { bci } from "./index.js";
+import {
+  bci
+} from "./index.js";
 
 export const loadParadigms = async () => {
   let res = await fetch("/paradigms");
@@ -7,7 +9,7 @@ export const loadParadigms = async () => {
     let paradigmList = document.createElement("li");
     paradigmList.classList.add("list-group-item");
     paradigmList.innerHTML = paradigm.name;
-    paradigmList.onclick = function(e) {
+    paradigmList.onclick = function (e) {
       e.preventDefault();
       loadTask(e.target.innerHTML);
     };
@@ -74,11 +76,11 @@ export const getChannels = chs => {
   let channelTable = document.getElementById("classTable");
   let excludedChannels = [];
   let _excludedChannels = [];
-  channels.forEach(function(ch, index) {
+  channels.forEach(function (ch, index) {
     let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.id = ch;
-    checkbox.addEventListener("change", function() {
+    checkbox.addEventListener("change", function () {
       if (this.checked) {
         document.getElementById(this.id).parentElement.style.background = "red";
         excludedChannels.push(document.getElementById(this.id).id);
@@ -96,8 +98,10 @@ export const getChannels = chs => {
   });
 
   var textFile = null,
-    makeTextFile = function(text) {
-      var data = new Blob([text], { type: "text/plain" });
+    makeTextFile = function (text) {
+      var data = new Blob([text], {
+        type: "text/plain"
+      });
       if (textFile !== null) {
         window.URL.revokeObjectURL(textFile);
       }
@@ -109,12 +113,12 @@ export const getChannels = chs => {
 
   saveButton.addEventListener(
     "click",
-    function() {
+    function () {
       var link = document.createElement("a");
       link.setAttribute("download", "CAR.prm");
 
       excludedChannels.forEach(exCh => {
-        for (let i = channels.length; i--; ) {
+        for (let i = channels.length; i--;) {
           if (channels[i] === exCh) channels.splice(i, 1);
         }
       });
@@ -123,7 +127,7 @@ export const getChannels = chs => {
       let channelBlock_ = [];
       let channelBlock = [];
       channels.forEach(ch => {
-        ch.split("").forEach(function(letter) {
+        ch.split("").forEach(function (letter) {
           if (isNaN(parseInt(letter, 10))) {
             chBlock.push(letter);
           } else {
@@ -138,7 +142,7 @@ export const getChannels = chs => {
       let _channels = channels.join(" ");
       let _channelBlock_ = channelBlock_.join(" ");
       let _totalChannels = totalChannels.join(" ");
-      let carParameters = `Filtering:SimpleCAR:SimpleCAR:FilePlaybackADC int EnableSimpleCAR= 2 0 0 2
+      let carParameters = `Filtering:SimpleCAR:SimpleCAR:FilePlaybackADC int EnableSimpleCAR= 1 0 0 2
 Filtering:SimpleCAR:SimpleCAR:FilePlaybackADC stringlist ExcludeChannels= ${
         excludedChannels.length
       } ${_excludedChannels}
@@ -149,12 +153,12 @@ Filtering:SimpleCAR:SimpleCAR stringlist CARBlocks= ${
         channelBlock_.length
       } ${_channelBlock_}
 Filtering:SimpleCAR:SimpleCAR stringlist CAROutputChannels= ${
-        totalChannels.length
-      } ${_totalChannels}`;
+  excludedChannels.length + channels.length
+      } ${_excludedChannels} ${_channels}`;
 
       link.href = makeTextFile(carParameters);
       document.body.appendChild(link);
-      window.requestAnimationFrame(function() {
+      window.requestAnimationFrame(function () {
         var event = new MouseEvent("click");
         link.dispatchEvent(event);
         document.body.removeChild(link);
