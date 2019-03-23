@@ -1,0 +1,1 @@
+Set parameter DataFile "%24%7bSubjectName%7d/$1/%24%7bSubjectName%7d_$1_S%24%7bSubjectSession%7dR%24%7bSubjectRun%7d.%24%7bFileFormat%7d"

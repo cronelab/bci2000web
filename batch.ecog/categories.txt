@@ -1,0 +1,45 @@
+# Launch BCI2000
+Change directory $BCI2000LAUNCHDIR
+Show window; Set title $1
+
+Reset system
+Startup system localhost
+
+Start executable StimulusPresentationCronelab --local
+Sleep 1
+
+# Setup the signal source and processing
+EXECUTE SCRIPT "../batch.ecog/setup_system.txt"
+
+Load parameterfile "../parms.ecog/categories/categories.prm"
+
+# Set Task specific parameters for the task
+IF [ $1 == CategoryNaming_Text ];
+	Set parameter CaptionSwitch 1; 
+	Set parameter AudioSwitch 0;
+	Set parameter IconSwitch 0;
+END
+
+IF [ $1 == CategoryNaming_Audio ];
+	Set parameter CaptionSwitch 0; 
+	Set parameter AudioSwitch 1;
+	Set parameter IconSwitch 0;
+END
+
+IF [ $1 == CategoryNaming_Pictures ];
+	Set parameter CaptionSwitch 0; 
+	Set parameter AudioSwitch 0;
+	Set parameter IconSwitch 1;
+END
+
+# Set up data storage
+EXECUTE SCRIPT "../batch.ecog/setup_storage.txt" $1
+
+Echo Which Block (1-6, 0 for instruction block)?
+Set i ${Read Line}
+
+# Load the specific sequence
+ECHO Loading Block $i 
+Load parameterfile "../parms.ecog/categories/seq$i.prm"
+
+Set Config

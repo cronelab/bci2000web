@@ -1,0 +1,7 @@
+*.lnk
+config.txt
+config_static.txt
+node_modules
+bciws
+brain-visualization
+npm-debug.log

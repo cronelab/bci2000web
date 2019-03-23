@@ -1,0 +1,10 @@
+tskill Operator
+tskill DummySignalProcessing
+tskill OFMSignalProcessing
+tskill DummyApplication
+tskill SignalGenerator
+tskill StimulusPresentation
+tskill Blackrock
+tskill CursorTask
+tskill JoystickTask
+pause
