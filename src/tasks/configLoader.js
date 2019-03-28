@@ -116,9 +116,11 @@ export class CreateConfig {
         console.log(tskPrm);
         script += `Load parameterfile ${tskPrm}; `;
       });
-      // script += `Set parameter WSSpectralOutputServer *:20203; `;
-      // script += `Set parameter WSConnectorServer *:20323; `;
-      // script += `Set parameter WSSourceServer *:20100; `;
+      if (taskConfig[instance].executables.processing != 'DummySignalProcessing') {
+        script += `Set parameter WSSpectralOutputServer *:20203; `;
+      }
+      script += `Set parameter WSConnectorServer *:20323; `;
+      script += `Set parameter WSSourceServer *:20100; `;
 
       script += `Set config; `;
       script += `Start`;
