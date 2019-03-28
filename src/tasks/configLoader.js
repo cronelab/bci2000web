@@ -21,10 +21,14 @@ export class CreateConfig {
       script += "Reset System; ";
 
       if (taskConfig[instance].addEvents.length >= 1) {
-        script += `Add Event ${taskConfig[instance].addEvents}; `;
+        taskConfig[instance].addEvents.forEach(event => {
+          script += `Add Event ${event}; `;
+        })
       }
       if (taskConfig[instance].addStates.length >= 1) {
-        script += `Add State ${taskConfig[instance].addStates}; `;
+        taskConfig[instance].addStates.forEach(state => {
+          script += `Add State ${state}; `;
+        })
       }
 
       script += "Startup System localhost; ";
@@ -36,17 +40,17 @@ export class CreateConfig {
           userPrompt = Object.values(taskConfig[instance].userPrompt[0]);
         }
       }
-      
+
 
       // let externalScript = Object.values(taskConfig[instance].externalScript)
       // externalScript.map(script => {
-        let taskScript = fetch(`/paradigms/${task}/task`)
-        let response = taskScript.then(res => res.text())
-        response.then(y => {
-          let script = document.createElement('script')
-          document.body.appendChild(script);
-          script.innerHTML = y
-        })
+      let taskScript = fetch(`/paradigms/${task}/task`)
+      let response = taskScript.then(res => res.text())
+      response.then(y => {
+        let script = document.createElement('script')
+        document.body.appendChild(script);
+        script.innerHTML = y
+      })
       // })
 
 
@@ -112,9 +116,9 @@ export class CreateConfig {
         console.log(tskPrm);
         script += `Load parameterfile ${tskPrm}; `;
       });
-      script += `Set parameter WSSpectralOutputServer *:20203; `;
-      script += `Set parameter WSConnectorServer *:20323; `;
-      script += `Set parameter WSSourceServer *:20100; `;
+      // script += `Set parameter WSSpectralOutputServer *:20203; `;
+      // script += `Set parameter WSConnectorServer *:20323; `;
+      // script += `Set parameter WSSourceServer *:20100; `;
 
       script += `Set config; `;
       script += `Start`;
