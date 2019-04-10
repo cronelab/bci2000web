@@ -6,6 +6,7 @@ import { CreateConfig } from "./configLoader";
 window.onload = () => {
   bci.connect("127.0.0.1").then(() => {
     console.log("connected");
+
   });
   getParametersForParadigm();
   setInterval(() => {
@@ -24,10 +25,12 @@ const getParametersForParadigm = async () => {
   const task = urlParams.get("task");
   const instance = urlParams.get("instance");
   const block = urlParams.get("block");
-  let config = await new CreateConfig(task);
+  let configurer = new CreateConfig();
+  let config = await configurer.creator(task);
   bci.execute(config);
   document.title = `${task}: ${instance}`;
   await new Promise(resolve => setTimeout(resolve, 2500));
+
   tapSockets(bci);
 };
 

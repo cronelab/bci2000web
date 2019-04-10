@@ -134,7 +134,7 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
             setTimeout(() => {
               resolve(x);
               //? Automatically open a browser to go to BCI2000Web
-              if (config.autoOpen) opn("http://127.0.0.1");
+              if (config.autoOpen) {opn("http://127.0.0.1")};
             }, 1500))
           })
       .catch(reason => console.log(reason));

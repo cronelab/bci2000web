@@ -1,6 +1,7 @@
 export class CreateConfig {
-  constructor(task) {
-    return (async () => {
+
+    async creator(task2) {
+
       const urlParams = new URLSearchParams(window.location.search);
 
       const task = urlParams.get("task");
@@ -9,7 +10,7 @@ export class CreateConfig {
       const block = urlParams.get("block");
       let configRes = await fetch("/localconfig");
       let localConfig = await configRes.json();
-      let taskRes = await fetch(`/paradigms/${task}`);
+      let taskRes = await fetch(`/paradigms/${task2}`);
       let taskConfig = await taskRes.json();
       let ampRes = await fetch(`/amplifiers`);
       let ampConfig = await ampRes.json();
@@ -90,7 +91,7 @@ export class CreateConfig {
         script += "Set parameter SubjectSession " + block.substring(6) + "; ";
       script += "Set parameter DataFile ";
       script += '"%24%7bSubjectName%7d/' + taskTitle + "/%24%7bSubjectName%7d_";
-      script += taskTitle + "_S%24%7bSubjectSession%7dR%24%7bSubjectRun%7d.";
+      script += `${taskTitle}_S%24%7bSubjectSession%7dR%24%7bSubjectRun%7d_${localStorage.getItem("datComment")}.`;
       script += '%24%7bFileFormat%7d"; ';
 
       //Source parameters
@@ -123,6 +124,6 @@ export class CreateConfig {
       script += `Set config; `;
       script += `Start`;
       return script;
-    })();
-  }
+    };
+
 }

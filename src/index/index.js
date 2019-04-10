@@ -11,7 +11,7 @@ window.onload = () => {
   bci.connect("127.0.0.1");
   bci.onconnect = e => {
     setInterval(() => {
-      bci
+      bci 
         .execute("Get System State", result => result)
         .then(state => updateState(state.trim()));
     }, 500);

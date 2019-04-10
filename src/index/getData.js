@@ -55,6 +55,9 @@ export const loadTask = async taskName => {
       blockButton.classList.add("btn-primary");
       blockButton.innerHTML = individualBlock.title;
       blockButton.onclick = async e => {
+        let datComment = document.getElementById("datComment");
+        localStorage.setItem("datComment", datComment.value);
+
         if(!document.getElementById('newBlock').checked){
           bci.resetSystem();
           await new Promise(resolve => setTimeout(resolve, 500));
@@ -68,8 +71,20 @@ export const loadTask = async taskName => {
         else{
           let script = ``;
           script += `Suspend; `;
-          script += `Load parameterfile ${individualBlock.loadParameters[0]}; `;
+          if(individualBlock.loadParameters[0]){
+            script += `Load parameterfile ${individualBlock.loadParameters[0]}; `;
+          }
           script += `Set parameter SubjectSession ${i+1}; `;
+          script += "Set parameter DataFile ";
+          script += '"%24%7bSubjectName%7d/' + individualTaskKeys.title.replace(
+            /\s/g,
+            ""
+          ) + "/%24%7bSubjectName%7d_";
+          script += `${individualTaskKeys.title.replace(
+            /\s/g,
+            ""
+          )}_S%24%7bSubjectSession%7dR%24%7bSubjectRun%7d_${localStorage.getItem("datComment")}.`;
+          script += '%24%7bFileFormat%7d"; ';
           script += `Set Config; `;
           bci.execute(script);
         }  
