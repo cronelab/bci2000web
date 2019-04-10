@@ -103,7 +103,6 @@ export class CreateConfig {
         script += `Set parameter ${tskPrm} ${
           taskConfig[instance].setParameters[tskPrm]
         }; `;
-        console.log("Happened.");
       });
 
       //Load task parameters
@@ -113,7 +112,6 @@ export class CreateConfig {
 
       //Load block parameters
       taskConfig[instance].Blocks[block].loadParameters.map(tskPrm => {
-        console.log(tskPrm);
         script += `Load parameterfile ${tskPrm}; `;
       });
       if (taskConfig[instance].executables.processing != 'DummySignalProcessing') {
@@ -128,25 +126,3 @@ export class CreateConfig {
     })();
   }
 }
-
-// if (!Object.keys(params.executables).includes("source")) {
-//   script += `Set Parameter SamplingRate 1000Hz; `;
-// }
-
-// Object.values(params.executables).map(executables => {
-//   script += `Start executable ${executables} --local; `;
-// });
-
-// params.loadParameters.map(loadP => {
-//   script += `Load Parameterfile ${loadP}; `;
-// });
-// Object.keys(params.setParameters).map(setP => {
-//   script += `Set Parameter ${setP} ${params.setParameters[setP]} ; `;
-// });
-
-// script += `Set parameter SubjectName ${localConfig.subject}; `;
-
-// script += "Set Config; ";
-// script += "Wait for Resting; ";
-// script += "Sleep 1; ";
-// script += "Start; ";

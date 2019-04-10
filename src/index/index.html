@@ -1,125 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>BCI2000Web</title>
-    <script src="index.js"></script>
-    <link rel="stylesheet" type="text/css" href="./index.css" />
 
-  </head>
-  <body>
-    <nav class="navbar navbar-light fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">BCI2000</a>
-        </div>
-      </div>
-    </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>BCI2000Web</title>
+  <script src="index.js"></script>
+  <link rel="stylesheet" type="text/css" href="./index.css" />
 
+</head>
+
+<body>
+  <nav class="navbar navbar-light fixed-top">
     <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="card text-center">
-            <div class="card-header"><h3 class="card-title">System</h3></div>
-            <div class="list-group">
-              <li
-                id="state-label"
-                class="list-group-item bigger text-center text-muted"
-              >
-                <strong>Not Connected</strong>
-              </li>
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">BCI2000</a>
+      </div>
+    </div>
+  </nav>
 
-              <button type="button" class="btn btn-secondary" id="reset-button">
-                Reset
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                id="queryChannels"
-                data-toggle="modal" data-target="#channelSelector"
-              >
-                Query channels
-              </button>
-              <button
-              type="button"
-              class="btn btn-secondary"
-              id="webFM"
-            >
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card text-center">
+          <div class="card-header">
+            <h3 class="card-title">System</h3>
+          </div>
+          <div class="list-group">
+            <li id="state-label" class="list-group-item bigger text-center text-muted">
+              <strong>Not Connected</strong>
+            </li>
+
+            <button type="button" class="btn btn-secondary" id="reset-button">
+              Reset
+            </button>
+            <button type="button" class="btn btn-secondary" id="queryChannels" data-toggle="modal"
+              data-target="#channelSelector">
+              Query channels
+            </button>
+            <button type="button" class="btn btn-secondary" id="webFM">
               Map
             </button>
-              <div class="btn-group" role="group">
-                <button
-                  id="replay-subject"
-                  type="button"
-                  class="btn btn-secondary dropdown-toggle"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Replay files
-                </button>
-                <div class="dropdown-menu" aria-labelledby="replay-dropdown" id="replay-dropdown">
-                </div>
+            <div class="btn-group" role="group">
+              <button id="replay-subject" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Replay files
+              </button>
+              <div class="dropdown-menu" aria-labelledby="replay-dropdown" id="replay-dropdown">
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="col" id="paradigm-container">
-          <div class="card text-center">
-            <div class="card-header">
-              <h3 class="card-title">Paradigms</h3>
-            </div>
-            <ul class="list-group" id="paradigms"></ul>
+      <div class="col" id="paradigm-container">
+        <div class="card text-center">
+          <div class="card-header">
+            <h3 class="card-title">Paradigms</h3>
           </div>
+          <ul class="list-group" id="paradigms"></ul>
         </div>
-        <div class="col" id="task-container">
-          <div class="card text-center" id="task-card">
-            <div class="card-header" id="task-header">
-              <h3 class="card-title">Tasks</h3>
-            </div>
-            <ul class="list-group" id="data"></ul>
-
+      </div>
+      <div class="col" id="task-container">
+        Check this if you want to do another block
+        <input type="checkbox" id="newBlock">
+        <div class="card text-center" id="task-card">
+          <div class="card-header" id="task-header">
+            <h3 class="card-title">Tasks</h3>
           </div>
+          <ul class="list-group" id="data"></ul>
+
         </div>
       </div>
     </div>
+  </div>
 
 
-    <div id="channelSelector" class="modal" tabindex="-1" role="dialog" aria-labelledby="classInfo" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="classModalLabel">
-                  Class Info
-                </h4>
-          </div>
-          <div class="modal-body">
-            <table id="classTable" class="table table-bordered">
-              <thead>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Channels</td>
-                  <td>Exclude</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">
-              Close
-            </button>
-            <button type="button" id="saveButton" class="btn btn-primary" data-dismiss="modal">
-              Save
-            </button>
-          </div>
+  <div id="channelSelector" class="modal" tabindex="-1" role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="classModalLabel">
+            Class Info
+          </h4>
+        </div>
+        <div class="modal-body">
+          <table id="classTable" class="table table-bordered">
+            <thead>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Channels</td>
+                <td>Exclude</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" id="saveButton" class="btn btn-primary" data-dismiss="modal">
+            Save
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
 
-  </body>
+</body>
+
 </html>

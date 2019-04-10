@@ -48,23 +48,32 @@ export const loadTask = async taskName => {
     document.getElementById("task-card").appendChild(cardBody);
 
     let blocks = individualTaskKeys.Blocks;
-    Object.keys(blocks).map(individualBlocks => {
+    Object.keys(blocks).map((individualBlocks, i) => {
       let individualBlock = blocks[`${individualBlocks}`];
       let blockButton = document.createElement("button");
       blockButton.classList.add("btn");
       blockButton.classList.add("btn-primary");
       blockButton.innerHTML = individualBlock.title;
       blockButton.onclick = async e => {
-        console.log("RESET!");
-        bci.resetSystem();
-        await new Promise(resolve => setTimeout(resolve, 500));
-        window.open(
-          `/task.html?task=${taskName}&taskName=${individualTaskKeys.title.replace(
-            /\s/g,
-            ""
-          )}&instance=${indTask}&block=${individualBlocks}`
-        );
-      };
+        if(!document.getElementById('newBlock').checked){
+          bci.resetSystem();
+          await new Promise(resolve => setTimeout(resolve, 500));
+          window.open(
+            `/task.html?task=${taskName}&taskName=${individualTaskKeys.title.replace(
+              /\s/g,
+              ""
+            )}&instance=${indTask}&block=${individualBlocks}`
+          );
+        }
+        else{
+          let script = ``;
+          script += `Suspend; `;
+          script += `Load parameterfile ${individualBlock.loadParameters[0]}; `;
+          script += `Set parameter SubjectSession ${i+1}; `;
+          script += `Set Config; `;
+          bci.execute(script);
+        }  
+        }
       document.getElementById("task-card").appendChild(blockButton);
     });
   });
@@ -139,6 +148,8 @@ export const getChannels = chs => {
         });
       });
 
+      //TODO Reverse the order onexcludedChannels
+
       let _channels = channels.join(" ");
       let _channelBlock_ = channelBlock_.join(" ");
       let _totalChannels = totalChannels.join(" ");
@@ -154,7 +165,7 @@ Filtering:SimpleCAR:SimpleCAR stringlist CARBlocks= ${
       } ${_channelBlock_}
 Filtering:SimpleCAR:SimpleCAR stringlist CAROutputChannels= ${
   excludedChannels.length + channels.length
-      } ${_excludedChannels} ${_channels}`;
+      } ${_channels} ${_excludedChannels}`;
 
       link.href = makeTextFile(carParameters);
       document.body.appendChild(link);

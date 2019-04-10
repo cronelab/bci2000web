@@ -31,5 +31,4 @@ const getParametersForParadigm = async () => {
   tapSockets(bci);
 };
 
-window.addEventListener("unload", function(event) {   bci.resetSystem();
-});
+// window.addEventListener("unload", e => bci.resetSystem());
