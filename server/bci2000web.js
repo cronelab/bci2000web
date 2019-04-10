@@ -131,14 +131,15 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       .then(
         x => {
           new Promise(resolve => 
-            setTimeout(() => resolve(x), 10000)
-      )
-      //? Automatically open a browser to go to BCI2000Web
-      if (config.autoOpen) opn("http://127.0.0.1");
+            setTimeout(() => {
+              resolve(x);
+              //? Automatically open a browser to go to BCI2000Web
+              if (config.autoOpen) opn("http://127.0.0.1");
+            }, 1500))
           })
       .catch(reason => console.log(reason));
 
   }
 });
 
-app.listen(config.webPort, () => {});
+app.listen(config.webPort, () => console.log(`Listenting on port ${config.webPort}`));
