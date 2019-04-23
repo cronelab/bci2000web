@@ -15,9 +15,12 @@ module.exports = {
     index: devMode
       ? ["./src/index/index.js", hotMiddlewareScript]
       : "./src/index/index.js",
-    tasks: devMode
+      tasks: devMode
       ? ["./src/tasks/tasks.js", hotMiddlewareScript]
-      : "./src/tasks/tasks.js"
+      : "./src/tasks/tasks.js",
+      ssrender: devMode
+      ? ["./src/SSRendering/index.js", hotMiddlewareScript]
+      : "./src/SSRendering/index.js"
   },
   mode: devMode ? "development" : "production",
 

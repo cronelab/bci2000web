@@ -46,7 +46,31 @@ export const loadTask = async taskName => {
 
     document.getElementById("task-card").appendChild(taskTitle);
     document.getElementById("task-card").appendChild(cardBody);
+    if(individualTaskKeys.uiInput){
+      let stim1field = document.createElement("input");
+      let stim2field = document.createElement("input");
+      let stimintensityfield = document.createElement("input");
+      let stimratefield = document.createElement("input");
+      stim1field.setAttribute('type','text')
+      stim1field.setAttribute('value','Stimulating channel 1 (index)')
+      stim1field.setAttribute('id','stimChannel1')
+      stim2field.setAttribute('type','text')
+      stim2field.setAttribute('value','Stimulating channel 2 (index)')
+      stim2field.setAttribute('id','stimChannel2')
 
+      stimintensityfield.setAttribute('type','text')
+      stimintensityfield.setAttribute('value','Stimulation intensity (microamps)')
+      stimintensityfield.setAttribute('id','stimIntensity')
+
+      stimratefield.setAttribute('type','text')
+      stimratefield.setAttribute('value','Stimulation rate (milliseconds)')
+      stimratefield.setAttribute('id','stimRate')
+
+      cardBody.appendChild(stim1field);
+      cardBody.appendChild(stim2field);
+      cardBody.appendChild(stimintensityfield);
+      cardBody.appendChild(stimratefield);
+    }
     let blocks = individualTaskKeys.Blocks;
     Object.keys(blocks).map((individualBlocks, i) => {
       let individualBlock = blocks[`${individualBlocks}`];
@@ -57,7 +81,13 @@ export const loadTask = async taskName => {
       blockButton.onclick = async e => {
         let datComment = document.getElementById("datComment");
         localStorage.setItem("datComment", datComment.value);
-
+        if(individualTaskKeys.uiInput){
+          localStorage.setItem("hasInput", true);
+          localStorage.setItem("stim1field", document.getElementById("stimChannel1").value);
+          localStorage.setItem("stim2field", document.getElementById("stimChannel2").value);
+          localStorage.setItem("stimintensityfield", document.getElementById("stimIntensity").value);
+          localStorage.setItem("stimratefield", document.getElementById("stimRate").value); 
+        }
         if(!document.getElementById('newBlock').checked){
           bci.resetSystem();
           await new Promise(resolve => setTimeout(resolve, 500));
