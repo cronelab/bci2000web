@@ -54,17 +54,21 @@ export const loadTask = async taskName => {
       stim1field.setAttribute('type','text')
       stim1field.setAttribute('value','Stimulating channel 1 (index)')
       stim1field.setAttribute('id','stimChannel1')
+      stim1field.style = "width: 90%"
       stim2field.setAttribute('type','text')
       stim2field.setAttribute('value','Stimulating channel 2 (index)')
       stim2field.setAttribute('id','stimChannel2')
+      stim2field.style = "width: 90%"
 
       stimintensityfield.setAttribute('type','text')
       stimintensityfield.setAttribute('value','Stimulation intensity (microamps)')
       stimintensityfield.setAttribute('id','stimIntensity')
+      stimintensityfield.style = "width: 90%"
 
       stimratefield.setAttribute('type','text')
       stimratefield.setAttribute('value','Stimulation rate (milliseconds)')
       stimratefield.setAttribute('id','stimRate')
+      stimratefield.style = "width: 90%"
 
       cardBody.appendChild(stim1field);
       cardBody.appendChild(stim2field);

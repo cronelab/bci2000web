@@ -3,6 +3,6 @@
     "webPort": 80,
     "telnetPort": 3999,
     "hide": false,
-    "telnetTimeout": 1000,
+    "telnetTimeout": 2000,
     "autoOpen":true
 }

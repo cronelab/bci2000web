@@ -1,48 +1,12 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-.svn/
 
 # BCI2000 specific stuff
-doc/
 tools/
-build/
-batch/
 parms/
-binaries/
 data/
-prog.archive/
-BCI2000_Help.html
-GettingStarted.html
-
-
-wpad.dat
 node_modules/
-INSTALL.BAT
-START.BAT
-certs/
 .vscode/*
 
 dist/
 prog_new/*
 server/paradigms/*
-prog/*.ini
+prog/*

@@ -12,15 +12,9 @@ const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
   entry: {
-    index: devMode
-      ? ["./src/index/index.js", hotMiddlewareScript]
-      : "./src/index/index.js",
-      tasks: devMode
-      ? ["./src/tasks/tasks.js", hotMiddlewareScript]
-      : "./src/tasks/tasks.js",
-      ssrender: devMode
-      ? ["./src/SSRendering/index.js", hotMiddlewareScript]
-      : "./src/SSRendering/index.js"
+    index: devMode ? ["./src/index/index.js", hotMiddlewareScript] : "./src/index/index.js",
+    tasks: devMode ? ["./src/tasks/tasks.js", hotMiddlewareScript] : "./src/tasks/tasks.js",
+    ssrender: devMode ? ["./src/SSRendering/index.js", hotMiddlewareScript] : "./src/SSRendering/index.js"
   },
   mode: devMode ? "development" : "production",
 
@@ -40,25 +34,38 @@ module.exports = {
     usedExports: true
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.js$/,
         exclude: /node_modules/,
         use: ["babel-loader"]
       },
       {
         test: /\.(sa|sc|c)ss$/,
-        use: [
-          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
-          "css-loader",
-          "postcss-loader",
-          "sass-loader"
+        use: [{
+            loader: devMode ? "style-loader" : MiniCssExtractPlugin.loader
+          }, {
+            loader: "css-loader"
+          },
+          {
+            loader: "postcss-loader"
+          }, {
+            loader: "sass-loader",
+            options: {
+              implementation: require("sass")
+            }
+          }
         ]
+        // use: [{}
+        //   devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+        //   "css-loader",
+        //   "postcss-loader",
+        //   "sass-loader"
+        // ]
       }
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(["dist"]),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
@@ -89,11 +96,9 @@ module.exports = {
     publicPath: path.resolve(__dirname, "dist")
   },
 
-  devServer: devMode
-    ? {
-        contentBase: "./dist",
-        publicPath: "./dist",
-        hot: true
-      }
-    : {}
+  devServer: devMode ? {
+    contentBase: "./dist",
+    publicPath: "./dist",
+    hot: true
+  } : {}
 };
