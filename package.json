@@ -29,7 +29,7 @@
     "@fortawesome/fontawesome-free": "^5.8.1",
     "acorn": "^6.1.1",
     "babel-loader": "^8.0.5",
-    "bci2k": "^2.0.1",
+    "bci2k": "^2.0.2",
     "bootstrap": "^4.3.1",
     "clean-webpack-plugin": "^2.0.1",
     "cross-env": "^5.2.0",

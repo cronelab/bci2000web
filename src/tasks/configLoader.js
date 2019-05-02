@@ -23,16 +23,6 @@ export class CreateConfig {
     //Reset and restart
     script += "Reset System; ";
 
-    if (localStorage.getItem("hasInput") == "true") {
-      let stimChan1 = localStorage.getItem("stim1field")
-      let stimChan2 = localStorage.getItem("stim2field")
-      let stimIntensity = localStorage.getItem("stimintensityfield")
-      let stimRate = localStorage.getItem("stimratefield")
-      script += `Add State stimCh1 8 ${parseFloat(stimChan1)}; `;
-      script += `Add State stimCh2 8 ${parseFloat(stimChan2)}; `;
-      script += `Add State stimIntensity 13 ${parseFloat(stimIntensity)}; `;
-      script += `Add State stimRate 12 ${parseFloat(stimRate)}; `;
-    }
 
     if (taskConfig[instance].addEvents.length >= 1) {
       taskConfig[instance].addEvents.forEach(event => {
@@ -129,9 +119,20 @@ export class CreateConfig {
     if (taskConfig[instance].executables.processing != 'DummySignalProcessing') {
       script += `Set parameter WSSpectralOutputServer *:20203; `;
     }
+    if (localStorage.getItem("hasInput") == "true") {
+      let stimChan1 = localStorage.getItem("stim1field")
+      let stimChan2 = localStorage.getItem("stim2field")
+      let stimIntensity = localStorage.getItem("stimintensityfield")
+      let stimRate = localStorage.getItem("stimratefield")
+      script += `Set Parameter stimCh1 ${stimChan1}; `;
+      script += `Set Parameter stimCh2 ${stimChan2}; `;
+      script += `Set Parameter stimIntensity ${stimIntensity}; `;
+      script += `Set Parameter stimRate ${stimRate}; `;
+    }
+
     script += `Set parameter WSConnectorServer *:20323; `;
     script += `Set parameter WSSourceServer *:20100; `;
-
+    
     script += `Set config; `;
     script += `Start`;
     return script;
