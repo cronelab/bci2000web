@@ -11,6 +11,7 @@ const expressWs = require("express-ws")(app);
 const Telnet = require("telnet-client");
 const config = require("./Config/config.json");
 const opn = require("opn");
+const dgram = require('dgram');
 const routes = require("./routes")(express);
 const helpers = require("./helpers.js");
 const operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
@@ -59,11 +60,22 @@ const connectTelnet = async operator => {
     execTimeout: 30
   });
 
+  let socket = dgram.createSocket('udp4');
+  operator.telnet.exec("Add Watch System State at 127.0.0.1:21501")
+  socket.bind({
+    address: '127.0.0.1',
+    port: 21501,
+  });
   //!Fixes an idiotic race condition where the WS isn't set up until AFTER bci2000 connects
   //!arbitrary time, in the future set this into the config.json
   await new Promise(resolve => setTimeout(resolve, 2000));
   //? Set up WebSocket handler
   app.ws("/", ws => {
+    socket.on('message', (msg, rinfo) => {
+      let watchMsg = msg.toString().split("\n")[0].split("\t")[1];
+      ws.send(["X", 0, watchMsg].join(" ").trim());
+    });
+
     ws.on("message", msg => {
       let preamble = msg.split(" ");
       var msg = {};

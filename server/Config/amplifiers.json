@@ -22,5 +22,8 @@
       "SamplingRate": "",
       "SampleBlockSize": "48"
     }
+  },
+  "FilePlayback":{
+    "setParameters":{}
   }
 }
