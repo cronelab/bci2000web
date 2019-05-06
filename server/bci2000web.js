@@ -1,8 +1,6 @@
 // bci2000web.js
 //* A node-based implementation of web-socket based BCI2000 remote control
-//! 
-//TODO asdf
-////no
+
 "use strict";
 const path = require("path");
 const express = require("express");
@@ -32,7 +30,9 @@ if (process.env.NODE_ENV == "production") {
   app.use("/", express.static("./dist"));
 } else if (process.env.NODE_ENV == "development") {
   const compiler = webpack(newConfig);
-  app.use(require("webpack-dev-middleware")(compiler, { noInfo: true }));
+  app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: true
+  }));
   app.use(require("webpack-hot-middleware")(compiler));
 } else {
   app.use("/", express.static("./dist"));
@@ -61,21 +61,19 @@ const connectTelnet = async operator => {
   });
 
   let socket = dgram.createSocket('udp4');
-  operator.telnet.exec("Add Watch System State at 127.0.0.1:21501")
+  operator.telnet.exec("Add Watch System State at 127.0.0.1:21501", (err, res) => {
+    console.log(res)
+  })
   socket.bind({
     address: '127.0.0.1',
     port: 21501,
   });
+
   //!Fixes an idiotic race condition where the WS isn't set up until AFTER bci2000 connects
   //!arbitrary time, in the future set this into the config.json
   await new Promise(resolve => setTimeout(resolve, 2000));
   //? Set up WebSocket handler
   app.ws("/", ws => {
-    socket.on('message', (msg, rinfo) => {
-      let watchMsg = msg.toString().split("\n")[0].split("\t")[1];
-      ws.send(["X", 0, watchMsg].join(" ").trim());
-    });
-
     ws.on("message", msg => {
       let preamble = msg.split(" ");
       var msg = {};
@@ -85,6 +83,12 @@ const connectTelnet = async operator => {
       msg.ws = ws;
       if (msg.opcode == "E") {
         operator.commandQueue.push(msg);
+      }
+    });
+    socket.on('message', (msg, rinfo) => {
+      if (ws.readyState == ws.OPEN) {
+        let watchMsg = msg.toString().split("\n")[0].split("\t")[1];
+        ws.send(["X", 0, watchMsg].join(" ").trim());
       }
     });
   });
@@ -107,6 +111,7 @@ const connectTelnet = async operator => {
       }
 
       operator.telnet.exec(operator.executing.contents, (err, response) => {
+
         let ws = operator.executing.ws;
         let id = operator.executing.id;
         operator.executing = null;
@@ -130,9 +135,9 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       //?Add a timeout...
       .then(
         x =>
-          new Promise(resolve =>
-            setTimeout(() => resolve(x), config.telnetTimeout)
-          )
+        new Promise(resolve =>
+          setTimeout(() => resolve(x), config.telnetTimeout)
+        )
       )
       //? ...so we can connect to the telnet port without throwing an erro.
       .then(operator => {
@@ -142,13 +147,15 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       //TODO make more elegant.
       .then(
         x => {
-          new Promise(resolve => 
+          new Promise(resolve =>
             setTimeout(() => {
               resolve(x);
               //? Automatically open a browser to go to BCI2000Web
-              if (config.autoOpen) {opn("http://127.0.0.1")};
+              if (config.autoOpen) {
+                opn("http://127.0.0.1")
+              };
             }, 1500))
-          })
+        })
       .catch(reason => console.log(reason));
 
   }

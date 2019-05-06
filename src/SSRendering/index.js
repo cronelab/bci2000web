@@ -1,14 +1,12 @@
 import BCI2K from "bci2k";
-var bci = new BCI2K();
+var bci = new BCI2K.bciOperator();
 import * as d3 from "d3";
 
 window.onload = () => {
     bci.connect("127.0.0.1").then(() => {
         console.log("connected");
         tapSockets(bci);
-
     });
-
 };
 
 

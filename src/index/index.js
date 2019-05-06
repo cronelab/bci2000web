@@ -4,17 +4,16 @@ import "bootstrap";
 import "@fortawesome/fontawesome-free/js/all";
 import {launchSession} from './replay.js'
 import {loadParadigms, getChannels} from './getData'
-export const bci = new BCI2K();
+export const bci = new BCI2K.bciOperator();
 
 window.onload = () => {
+  sessionStorage.clear();
 
   bci.connect("127.0.0.1");
   bci.onconnect = e => {
-    setInterval(() => {
-      bci 
-        .execute("Get System State", result => result)
-        .then(state => updateState(state.trim()));
-    }, 500);
+    bci.onStateChange = e =>{
+      updateState(e.trim())
+  }
   };
   loadParadigms();
 
