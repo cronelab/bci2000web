@@ -9,7 +9,7 @@ export const bci = new BCI2K.bciOperator();
 window.onload = () => {
   sessionStorage.clear();
 
-  bci.connect("127.0.0.1");
+  bci.connect("wss://127.0.0.1");
   bci.onconnect = e => {
     bci.onStateChange = e =>{
       updateState(e.trim())

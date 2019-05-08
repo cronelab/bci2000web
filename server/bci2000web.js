@@ -5,7 +5,7 @@
 const path = require("path");
 const express = require("express");
 const app = express();
-const expressWs = require("express-ws")(app);
+const expressWs = require("express-ws");
 const Telnet = require("telnet-client");
 const config = require("./Config/config.json");
 const opn = require("opn");
@@ -13,6 +13,9 @@ const dgram = require('dgram');
 const routes = require("./routes")(express);
 const helpers = require("./helpers.js");
 const operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const merge = require("webpack-merge");
 const webpack = require("webpack");
 const webpackConfig = require("../webpack.config.js");
@@ -23,6 +26,14 @@ let newConfig = merge(webpackConfig, {
     new webpack.NoEmitOnErrorsPlugin()
   ]
 });
+const httpsServer = https.createServer({
+  key: fs.readFileSync('./server/credentials/server.key'),
+  cert: fs.readFileSync('./server/credentials/server.crt'),
+}, app)
+const httpServer = http.createServer(app)
+
+expressWs(app, httpsServer)
+expressWs(app, httpServer)
 
 app.use("/", routes);
 
@@ -160,5 +171,5 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
 
   }
 });
-
-app.listen(config.webPort, () => console.log(`Listenting on port ${config.webPort}`));
+httpsServer.listen(443);
+httpServer.listen(80)
