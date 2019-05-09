@@ -5,9 +5,10 @@
   "main": "bci2000web.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
-    "server": "cross-env NODE_ENV=production nodemon server/bci2000web",
-    "devServer": "cross-env NODE_ENV=development nodemon server/bci2000web --ignore 'dist/*'"
+    "server": "cross-env NODE_ENV=production nodemon --experimental-modules server/bci2000web.js",
+    "devServer": "cross-env NODE_ENV=development nodemon --experimental-modules server/bci2000web.js --ignore 'dist/*'"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cronelab/bci2000web.git"
@@ -56,6 +57,6 @@
   },
   "devDependencies": {
     "sass-loader": "^7.1.0",
-    "sass": "^1.19.0"
+    "node-sass": "4.12.0"
   }
 }

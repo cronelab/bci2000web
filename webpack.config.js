@@ -1,16 +1,17 @@
-const path = require("path");
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const WriteFilePlugin = require("write-file-webpack-plugin");
+import path from "path";
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import CleanWebpackPlugin from "clean-webpack-plugin";
+import WriteFilePlugin from "write-file-webpack-plugin";
+let __dirname = path.resolve(path.dirname(''));
 
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 var hotMiddlewareScript =
   "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true";
 
 const devMode = process.env.NODE_ENV !== "production";
 
-module.exports = {
+const module = {
   entry: {
     index: devMode ? ["./src/index/index.js", hotMiddlewareScript] : "./src/index/index.js",
     tasks: devMode ? ["./src/tasks/tasks.js", hotMiddlewareScript] : "./src/tasks/tasks.js",
@@ -50,9 +51,6 @@ module.exports = {
             loader: "postcss-loader"
           }, {
             loader: "sass-loader",
-            options: {
-              implementation: require("sass")
-            }
           }
         ]
         // use: [{}
@@ -102,3 +100,5 @@ module.exports = {
     hot: true
   } : {}
 };
+
+export default module

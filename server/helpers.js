@@ -1,9 +1,10 @@
-const path = require("path");
-const spawn = require("child_process").spawn;
-const exec = require("child_process").exec;
-const fs = require("fs");
+import path from "path";
+import child_process from "child_process"
+const spawn = child_process.spawn;
+const exec = child_process.exec;
+import fs from "fs";
 
-module.exports = {
+const helpers = {
 
   //? Checks to see if BCI2000's operator executable is running.
   isRunning: win => {
@@ -38,7 +39,7 @@ module.exports = {
       if (stat.isFile() && path.basename(filePath) == "task.json") {
         cardPaths.push(path.resolve(filePath));
       } else if (stat.isDirectory()) {
-        cardPaths = cardPaths.concat(module.exports.findCards(filePath));
+        cardPaths = cardPaths.concat(helpers.findCards(filePath));
       }
     });
     return cardPaths;
@@ -58,9 +59,12 @@ module.exports = {
             .join(".")
         );
       } else if (stat.isDirectory()) {
-        data = data.concat(module.exports.findData(filePath));
+        data = data.concat(helpers.findData(filePath));
       }
     });
     return data;
   }
 };
+
+
+export default helpers

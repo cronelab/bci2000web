@@ -1,26 +1,31 @@
-const helpers = require("./helpers.js");
-const path = require("path");
+import helpers from "./helpers.js";
+import path from "path";
+import fs from "fs";
+let __dirname = path.resolve(path.dirname(''));
 
-module.exports = express => {
+const routes = express => {
   const router = express.Router();
   //? sends the task.json
   router.get("/paradigms/:task/", (req, res) => {
-    const data = require(`./paradigms/${req.params.task}/task.json`);
+const data = JSON.parse(fs.readFileSync(`./server/paradigms/${req.params.task}/task.json`, 'utf8'))
+
     res.json(data);
   });
   //? sends the task.js
   //TODO Can probably wrap this up in /paradigms/:task
   router.get("/paradigms/:task/task", (req, res) => {
-    res.sendFile(path.join(__dirname, `paradigms/${req.params.task}/task.js`));
+    res.sendFile(path.join(__dirname, `server/paradigms/${req.params.task}/task.js`));
   });
   //? Sends amplifier configuration
   router.get("/amplifiers/", (req, res) => {
-    const data = require(`./Config/amplifiers.json`);
+const data = JSON.parse(fs.readFileSync(`./server/Config/amplifiers.json`, 'utf8'))
+
     res.json(data);
   });
   //?Sends local configuration
   router.get("/localconfig", (req, res) => {
-    const data = require("./Config/localconfig.json");
+const data = JSON.parse(fs.readFileSync(`./server/Config/localconfig.json`, 'utf8'))
+
     res.json(data);
   });
   //? Sends all paradigms
@@ -85,3 +90,5 @@ module.exports = express => {
 
   return router;
 };
+
+export default routes

@@ -2,23 +2,25 @@
 //* A node-based implementation of web-socket based BCI2000 remote control
 
 "use strict";
-const path = require("path");
-const express = require("express");
+import path from "path";
+import express from "express";
 const app = express();
-const expressWs = require("express-ws");
-const Telnet = require("telnet-client");
-const config = require("./Config/config.json");
-const opn = require("opn");
-const dgram = require('dgram');
-const routes = require("./routes")(express);
-const helpers = require("./helpers.js");
+import expressWs from "express-ws";
+import Telnet from "telnet-client";
+
+import opn from "opn";
+import dgram from 'dgram';
+import routes from "./routes.js";
+import helpers from "./helpers.js";
+import http from 'http';
+import https from 'https';
+import fs from 'fs';
+const config = JSON.parse(fs.readFileSync('./server/Config/config.json', 'utf8'))
 const operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
-const http = require('http');
-const https = require('https');
-const fs = require('fs');
-const merge = require("webpack-merge");
-const webpack = require("webpack");
-const webpackConfig = require("../webpack.config.js");
+
+import merge from "webpack-merge";
+import webpack from "webpack";
+import webpackConfig from "../webpack.config.js";
 let newConfig = merge(webpackConfig, {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -35,16 +37,18 @@ const httpServer = http.createServer(app)
 expressWs(app, httpsServer)
 expressWs(app, httpServer)
 
-app.use("/", routes);
+app.use("/", routes(express));
+import webpackDevMiddleware from 'webpack-dev-middleware'
+import webpackHotMiddleware from 'webpack-hot-middleware'
 
 if (process.env.NODE_ENV == "production") {
   app.use("/", express.static("./dist"));
 } else if (process.env.NODE_ENV == "development") {
   const compiler = webpack(newConfig);
-  app.use(require("webpack-dev-middleware")(compiler, {
+  app.use(webpackDevMiddleware(compiler, {
     noInfo: true
   }));
-  app.use(require("webpack-hot-middleware")(compiler));
+  app.use(webpackHotMiddleware(compiler));
 } else {
   app.use("/", express.static("./dist"));
 }
