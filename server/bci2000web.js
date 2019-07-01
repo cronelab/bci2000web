@@ -9,13 +9,15 @@ import expressWs from "express-ws";
 import Telnet from "telnet-client";
 
 import opn from "opn";
-import dgram from 'dgram';
+import dgram from "dgram";
 import routes from "./routes.js";
 import helpers from "./helpers.js";
-import http from 'http';
-import https from 'https';
-import fs from 'fs';
-const config = JSON.parse(fs.readFileSync('./server/Config/config.json', 'utf8'))
+import http from "http";
+import https from "https";
+import fs from "fs";
+const config = JSON.parse(
+  fs.readFileSync("./server/Config/config.json", "utf8")
+);
 const operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
 
 import merge from "webpack-merge";
@@ -28,26 +30,31 @@ let newConfig = merge(webpackConfig, {
     new webpack.NoEmitOnErrorsPlugin()
   ]
 });
-const httpsServer = https.createServer({
-  key: fs.readFileSync('./server/credentials/server.key'),
-  cert: fs.readFileSync('./server/credentials/server.crt'),
-}, app)
-const httpServer = http.createServer(app)
+const httpsServer = https.createServer(
+  {
+    key: fs.readFileSync("./server/credentials/server.key"),
+    cert: fs.readFileSync("./server/credentials/server.crt")
+  },
+  app
+);
+const httpServer = http.createServer(app);
 
-expressWs(app, httpsServer)
-expressWs(app, httpServer)
+expressWs(app, httpsServer);
+expressWs(app, httpServer);
 
 app.use("/", routes(express));
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpackHotMiddleware from 'webpack-hot-middleware'
+import webpackDevMiddleware from "webpack-dev-middleware";
+import webpackHotMiddleware from "webpack-hot-middleware";
 
 if (process.env.NODE_ENV == "production") {
   app.use("/", express.static("./dist"));
 } else if (process.env.NODE_ENV == "development") {
   const compiler = webpack(newConfig);
-  app.use(webpackDevMiddleware(compiler, {
-    noInfo: true
-  }));
+  app.use(
+    webpackDevMiddleware(compiler, {
+      noInfo: true
+    })
+  );
   app.use(webpackHotMiddleware(compiler));
 } else {
   app.use("/", express.static("./dist"));
@@ -75,13 +82,16 @@ const connectTelnet = async operator => {
     execTimeout: 30
   });
 
-  let socket = dgram.createSocket('udp4');
-  operator.telnet.exec("Add Watch System State at 127.0.0.1:21501", (err, res) => {
-    console.log(res)
-  })
+  let socket = dgram.createSocket("udp4");
+  operator.telnet.exec(
+    "Add Watch System State at 127.0.0.1:21501",
+    (err, res) => {
+      console.log(res);
+    }
+  );
   socket.bind({
-    address: '127.0.0.1',
-    port: 21501,
+    address: "127.0.0.1",
+    port: 21501
   });
 
   //!Fixes an idiotic race condition where the WS isn't set up until AFTER bci2000 connects
@@ -95,14 +105,18 @@ const connectTelnet = async operator => {
       msg.opcode = preamble.shift();
       msg.id = preamble.shift();
       msg.contents = preamble.join(" ");
+      console.log(msg.contents);
       msg.ws = ws;
       if (msg.opcode == "E") {
         operator.commandQueue.push(msg);
       }
     });
-    socket.on('message', (msg, rinfo) => {
+    socket.on("message", (msg, rinfo) => {
       if (ws.readyState == ws.OPEN) {
-        let watchMsg = msg.toString().split("\n")[0].split("\t")[1];
+        let watchMsg = msg
+          .toString()
+          .split("\n")[0]
+          .split("\t")[1];
         ws.send(["X", 0, watchMsg].join(" ").trim());
       }
     });
@@ -126,7 +140,6 @@ const connectTelnet = async operator => {
       }
 
       operator.telnet.exec(operator.executing.contents, (err, response) => {
-
         let ws = operator.executing.ws;
         let id = operator.executing.id;
         operator.executing = null;
@@ -150,9 +163,9 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       //?Add a timeout...
       .then(
         x =>
-        new Promise(resolve =>
-          setTimeout(() => resolve(x), config.telnetTimeout)
-        )
+          new Promise(resolve =>
+            setTimeout(() => resolve(x), config.telnetTimeout)
+          )
       )
       //? ...so we can connect to the telnet port without throwing an erro.
       .then(operator => {
@@ -160,20 +173,19 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       })
       //?More timeouts
       //TODO make more elegant.
-      .then(
-        x => {
-          new Promise(resolve =>
-            setTimeout(() => {
-              resolve(x);
-              //? Automatically open a browser to go to BCI2000Web
-              if (config.autoOpen) {
-                opn("http://127.0.0.1")
-              };
-            }, 1500))
-        })
+      .then(x => {
+        new Promise(resolve =>
+          setTimeout(() => {
+            resolve(x);
+            //? Automatically open a browser to go to BCI2000Web
+            if (config.autoOpen) {
+              opn("http://127.0.0.1");
+            }
+          }, 1500)
+        );
+      })
       .catch(reason => console.log(reason));
-
   }
 });
 httpsServer.listen(443);
-httpServer.listen(80)
+httpServer.listen(80);

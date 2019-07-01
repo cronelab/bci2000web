@@ -6,6 +6,7 @@
       "processing": "SpectralSignalProcessingMod",
       "application": "StimulusPresentationCronelab"
     },
+    "addParameters":[],
     "setParameters": {},
     "loadParameters": [
       "../parms.ecog/SpectralSigProc.prm",

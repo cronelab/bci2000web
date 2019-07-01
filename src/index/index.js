@@ -2,8 +2,8 @@ import "./index.scss";
 import BCI2K from "bci2k";
 import "bootstrap";
 import "@fortawesome/fontawesome-free/js/all";
-import {launchSession} from './replay.js'
-import {loadParadigms, getChannels} from './getData'
+import { launchSession } from "./replay.js";
+import { loadParadigms, getChannels } from "./getData";
 export const bci = new BCI2K.bciOperator();
 
 window.onload = () => {
@@ -11,9 +11,9 @@ window.onload = () => {
 
   bci.connect("wss://127.0.0.1");
   bci.onconnect = e => {
-    bci.onStateChange = e =>{
-      updateState(e.trim())
-  }
+    bci.onStateChange = e => {
+      updateState(e.trim());
+    };
   };
   loadParadigms();
 
@@ -21,16 +21,16 @@ window.onload = () => {
     fetchSubjects();
   };
 
-  document.getElementById('queryChannels').onclick = () => {
+  document.getElementById("queryChannels").onclick = () => {
     getChannelNames(bci);
-  }
-  document.getElementById('webFM').onclick = () => {
+  };
+  document.getElementById("webFM").onclick = () => {
     window.open("http://zappa.neuro.jhu.edu:8080/map/?view=WebFM:%20Map");
-  }
-  document.getElementById('reset-button').onclick = (e) => {
-    e.preventDefault()
-    bci.execute("Reset System; ")
-  }
+  };
+  document.getElementById("reset-button").onclick = e => {
+    e.preventDefault();
+    bci.execute("Reset System; ");
+  };
 };
 
 const updateState = state => {
@@ -53,14 +53,12 @@ const updateState = state => {
     document.getElementById("state-label").classList.add(stateClasses[state]);
 };
 
-
-const getChannelNames = async (bci) => {
-  let sourceData = await bci.tap("Source")
+const getChannelNames = async bci => {
+  let sourceData = await bci.tap("Source");
   sourceData.onSignalProperties = x => {
-  getChannels(x.channels);
-  }
-}
-
+    getChannels(x.channels);
+  };
+};
 
 const fetchSubjects = async () => {
   let ddMenu = document.getElementById("replay-dropdown");
@@ -109,9 +107,9 @@ const fetchData = async subj => {
         dataList.innerHTML = data;
         dataList.onclick = event => {
           event.preventDefault();
-          bci.execute(launchSession(subj, task, data))
+          bci.execute(launchSession(subj, task, data));
           event.stopPropagation();
-        }
+        };
         document.getElementById("data").appendChild(dataList);
       });
       e.stopPropagation();
@@ -120,6 +118,6 @@ const fetchData = async subj => {
   });
 };
 
-window.onbeforeunload = function (e) {
-  bci.resetSystem()
+window.onbeforeunload = function(e) {
+  bci.resetSystem();
 };
