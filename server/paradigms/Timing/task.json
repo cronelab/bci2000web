@@ -6,15 +6,17 @@
       "processing": "SpectralSignalProcessingMod",
       "application": "DummyApplication"
     },
+    "addParameters": [],
+
     "setParameters": {},
     "loadParameters": ["../parms.ecog/SpectralSigProc.prm"],
     "addEvents": ["StimulusCode 8 0"],
     "addStates": [],
-    "userPrompt":[],
+    "userPrompt": [],
     "Blocks": {
       "Block_1": {
         "title": "Task_1 - Block_1",
-        "loadParameters":[]
+        "loadParameters": []
       }
     }
   }

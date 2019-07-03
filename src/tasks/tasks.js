@@ -34,7 +34,7 @@ const getParametersForParadigm = async () => {
   let config = await configurer.creator(task);
   bci.execute(config);
   document.title = `${task}: ${instance}`;
-  await new Promise(resolve => setTimeout(resolve, 2500));
+  await new Promise(resolve => setTimeout(resolve, 3500));
 
   tapSockets(bci);
 };

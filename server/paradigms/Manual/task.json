@@ -5,11 +5,13 @@
     "executables": {
       "processing": "SpectralSignalProcessingMod"
     },
+    "addParameters": [],
+
     "setParameters": {},
     "loadParameters": ["../parms.ecog/SpectralSigProc.prm"],
     "addEvents": [],
     "addStates": [],
-    "userPrompt":[],
+    "userPrompt": [],
     "Blocks": {
       "Block_1": {
         "title": "Task_1 - Block_1",
