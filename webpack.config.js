@@ -3,7 +3,7 @@ import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import CleanWebpackPlugin from "clean-webpack-plugin";
 import WriteFilePlugin from "write-file-webpack-plugin";
-let __dirname = path.resolve(path.dirname(''));
+let __dirname = path.resolve(path.dirname(""));
 
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 var hotMiddlewareScript =
@@ -13,9 +13,15 @@ const devMode = process.env.NODE_ENV !== "production";
 
 const module = {
   entry: {
-    index: devMode ? ["./src/index/index.js", hotMiddlewareScript] : "./src/index/index.js",
-    tasks: devMode ? ["./src/tasks/tasks.js", hotMiddlewareScript] : "./src/tasks/tasks.js",
-    ssrender: devMode ? ["./src/SSRendering/index.js", hotMiddlewareScript] : "./src/SSRendering/index.js"
+    index: devMode
+      ? ["./src/index/index.js", hotMiddlewareScript]
+      : "./src/index/index.js",
+    tasks: devMode
+      ? ["./src/tasks/tasks.js", hotMiddlewareScript]
+      : "./src/tasks/tasks.js",
+    ssrender: devMode
+      ? ["./src/SSRendering/index.js", hotMiddlewareScript]
+      : "./src/SSRendering/index.js"
   },
   mode: devMode ? "development" : "production",
 
@@ -35,22 +41,26 @@ const module = {
     usedExports: true
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ["babel-loader"]
       },
       {
         test: /\.(sa|sc|c)ss$/,
-        use: [{
+        use: [
+          {
             loader: devMode ? "style-loader" : MiniCssExtractPlugin.loader
-          }, {
+          },
+          {
             loader: "css-loader"
           },
           {
             loader: "postcss-loader"
-          }, {
-            loader: "sass-loader",
+          },
+          {
+            loader: "sass-loader"
           }
         ]
         // use: [{}
@@ -63,7 +73,7 @@ const module = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin.CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
@@ -94,11 +104,13 @@ const module = {
     publicPath: path.resolve(__dirname, "dist")
   },
 
-  devServer: devMode ? {
-    contentBase: "./dist",
-    publicPath: "./dist",
-    hot: true
-  } : {}
+  devServer: devMode
+    ? {
+        contentBase: "./dist",
+        publicPath: "./dist",
+        hot: true
+      }
+    : {}
 };
 
-export default module
+export default module;

@@ -5,11 +5,12 @@ import "@fortawesome/fontawesome-free/js/all";
 import { launchSession } from "./replay.js";
 import { loadParadigms, getChannels } from "./getData";
 export const bci = new BCI2K.bciOperator();
+export const bciData = new BCI2K.bciData();
 
 window.onload = () => {
   sessionStorage.clear();
 
-  bci.connect("wss://127.0.0.1");
+  bci.connect("ws://127.0.0.1");
   bci.onconnect = e => {
     bci.onStateChange = e => {
       updateState(e.trim());

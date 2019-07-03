@@ -4,14 +4,14 @@ var bci = new BCI2K.bciOperator();
 import { CreateConfig } from "./configLoader";
 
 window.onload = () => {
-  bci.connect("wss://127.0.0.1").then(() => {
+  bci.connect("127.0.0.1").then(() => {
     console.log("connected");
 
-  //   bci.onStateChange = e =>{
-  //     if(e.trim() == "Idle"){
-  //       window.close();
-  //     }
-  // }
+    //   bci.onStateChange = e =>{
+    //     if(e.trim() == "Idle"){
+    //       window.close();
+    //     }
+    // }
   });
   getParametersForParadigm();
   setInterval(() => {

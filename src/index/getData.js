@@ -91,6 +91,7 @@ export const loadTask = async taskName => {
           localStorage.setItem("stim2field", document.getElementById("stimChannel2").value);
           localStorage.setItem("stimintensityfield", document.getElementById("stimIntensity").value);
           localStorage.setItem("stimratefield", document.getElementById("stimRate").value); 
+          sessionStorage.setItem("test","testinggg");
         }
         if(!document.getElementById('newBlock').checked){
           bci.resetSystem();
