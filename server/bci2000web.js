@@ -7,7 +7,6 @@ import express from "express";
 const app = express();
 import expressWs from "express-ws";
 import Telnet from "telnet-client";
-
 import opn from "opn";
 import dgram from "dgram";
 import routes from "./routes.js";
@@ -18,7 +17,13 @@ import fs from "fs";
 const config = JSON.parse(
   fs.readFileSync("./server/Config/config.json", "utf8")
 );
-const operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
+let operatorPath;
+const args = process.argv;
+if (args[2] == "-prog") {
+  operatorPath = `${path.resolve(config.bci2kdir)}/${args[3]}/Operator.exe`;
+} else {
+  operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
+}
 
 import merge from "webpack-merge";
 import webpack from "webpack";
