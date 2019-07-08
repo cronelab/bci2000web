@@ -24,6 +24,7 @@ if (args[2] == "-prog") {
 } else {
   operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
 }
+console.log(`Using: ${operatorPath}`);
 
 import merge from "webpack-merge";
 import webpack from "webpack";
@@ -88,12 +89,12 @@ const connectTelnet = async operator => {
   });
 
   let socket = dgram.createSocket("udp4");
-  operator.telnet.exec(
-    "Add Watch System State at 127.0.0.1:21501",
-    (err, res) => {
-      console.log(res);
-    }
-  );
+  // operator.telnet.exec(
+  //   "Add Watch System State at 127.0.0.1:21501",
+  //   (err, res) => {
+  //     console.log(res);
+  //   }
+  // );
   socket.bind({
     address: "127.0.0.1",
     port: 21501

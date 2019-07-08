@@ -4,7 +4,7 @@ var bci = new BCI2K.bciOperator();
 import { CreateConfig } from "./configLoader";
 
 window.onload = () => {
-  bci.connect("127.0.0.1").then(() => {
+  bci.connect("ws://127.0.0.1").then(() => {
     console.log("connected");
 
     //   bci.onStateChange = e =>{
