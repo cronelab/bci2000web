@@ -55,10 +55,11 @@ const updateState = state => {
 };
 
 const getChannelNames = async bci => {
-  let sourceData = await bci.tap("Source");
-  sourceData.onSignalProperties = x => {
-    getChannels(x.channels);
-  };
+  bciData.connect("127.0.0.1:20100").then(y => {
+    bciData.onSignalProperties = x => {
+      getChannels(x.channels);
+    };
+  });
 };
 
 const fetchSubjects = async () => {
