@@ -1,5 +1,5 @@
 import "./index.scss";
-import BCI2K from "bci2k";
+import BCI2K from "@cronelab/bci2k";
 import "bootstrap";
 import "@fortawesome/fontawesome-free/js/all";
 import { launchSession } from "./replay.js";

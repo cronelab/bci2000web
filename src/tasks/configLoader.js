@@ -1,7 +1,5 @@
 export class CreateConfig {
-
   async creator(task2) {
-
     const urlParams = new URLSearchParams(window.location.search);
 
     const task = urlParams.get("task");
@@ -18,21 +16,19 @@ export class CreateConfig {
 
     let script = "";
 
-
     //initiate bci2000 script container
     //Reset and restart
     script += "Reset System; ";
 
-
     if (taskConfig[instance].addEvents.length >= 1) {
       taskConfig[instance].addEvents.forEach(event => {
         script += `Add Event ${event}; `;
-      })
+      });
     }
     if (taskConfig[instance].addStates.length >= 1) {
       taskConfig[instance].addStates.forEach(state => {
         script += `Add State ${state}; `;
-      })
+      });
     }
 
     script += "Startup System localhost; ";
@@ -45,42 +41,36 @@ export class CreateConfig {
       }
     }
 
-    let taskScript = fetch(`/paradigms/${task}/task`)
-    let response = taskScript.then(res => res.text())
+    let taskScript = fetch(`/paradigms/${task}/task`);
+    let response = taskScript.then(res => res.text());
     response.then(y => {
-      let script = document.createElement('script')
+      let script = document.createElement("script");
       document.body.appendChild(script);
-      script.innerHTML = y
-    })
+      script.innerHTML = y;
+    });
 
     //declare executables
     if (userPrompt != null) {
       script += `Start executable ${
-          localConfig.source
-        } --local ${userPrompt}; `;
+        localConfig.source
+      } --local ${userPrompt}; `;
     } else {
       script += `Start executable ${localConfig.source} --local; `;
-      console.log(localConfig.source)
     }
 
     ampParams = ampConfig[localConfig.source];
 
-    if (
-      Object.keys(taskConfig[instance].executables).includes("processing")
-    ) {
+    if (Object.keys(taskConfig[instance].executables).includes("processing")) {
       script += `Start executable ${
-          taskConfig[instance].executables.processing
-        }; `;
+        taskConfig[instance].executables.processing
+      }; `;
     } else {
       script += `Start executable DummySignalProcessing --local; `;
     }
-    console.log(script);
-    if (
-      Object.keys(taskConfig[instance].executables).includes("application")
-    ) {
+    if (Object.keys(taskConfig[instance].executables).includes("application")) {
       script += `Start executable ${
-          taskConfig[instance].executables.application
-        } --local; `;
+        taskConfig[instance].executables.application
+      } --local; `;
     } else {
       script += `Start executable DummyApplication --local; `;
     }
@@ -95,7 +85,9 @@ export class CreateConfig {
       script += "Set parameter SubjectSession " + block.substring(6) + "; ";
     script += "Set parameter DataFile ";
     script += '"%24%7bSubjectName%7d/' + taskTitle + "/%24%7bSubjectName%7d_";
-    script += `${taskTitle}_S%24%7bSubjectSession%7dR%24%7bSubjectRun%7d_${localStorage.getItem("datComment")}.`;
+    script += `${taskTitle}_S%24%7bSubjectSession%7dR%24%7bSubjectRun%7d_${localStorage.getItem(
+      "datComment"
+    )}.`;
     script += '%24%7bFileFormat%7d"; ';
 
     //Source parameters
@@ -106,8 +98,8 @@ export class CreateConfig {
     //Set parameters
     Object.keys(taskConfig[instance].setParameters).map(tskPrm => {
       script += `Set parameter ${tskPrm} ${
-              taskConfig[instance].setParameters[tskPrm]
-            }; `;
+        taskConfig[instance].setParameters[tskPrm]
+      }; `;
     });
 
     //Load task parameters
@@ -119,7 +111,9 @@ export class CreateConfig {
     taskConfig[instance].Blocks[block].loadParameters.map(tskPrm => {
       script += `Load parameterfile ${tskPrm}; `;
     });
-    if (taskConfig[instance].executables.processing != 'DummySignalProcessing') {
+    if (
+      taskConfig[instance].executables.processing != "DummySignalProcessing"
+    ) {
       script += `Set parameter WSSpectralOutputServer *:20203; `;
     }
     // if (localStorage.getItem("hasInput") == "true") {
@@ -139,6 +133,5 @@ export class CreateConfig {
     script += `Set config; `;
     script += `Start`;
     return script;
-  };
-
+  }
 }

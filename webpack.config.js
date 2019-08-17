@@ -18,10 +18,7 @@ const module = {
       : "./src/index/index.js",
     tasks: devMode
       ? ["./src/tasks/tasks.js", hotMiddlewareScript]
-      : "./src/tasks/tasks.js",
-    ssrender: devMode
-      ? ["./src/SSRendering/index.js", hotMiddlewareScript]
-      : "./src/SSRendering/index.js"
+      : "./src/tasks/tasks.js"
   },
   mode: devMode ? "development" : "production",
 
@@ -79,12 +76,6 @@ const module = {
       hash: true,
       template: "./src/index/index.html",
       filename: "index.html"
-    }),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: true,
-      template: "./src/SSRendering/index.html",
-      filename: "serverRender.html"
     }),
     new HtmlWebpackPlugin({
       inject: false,
