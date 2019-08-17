@@ -11,7 +11,7 @@ export const launchSession = (patient, task, file) => {
     "; ";
 
   script += "Wait for Connected; ";
-  script += "Load Parameterfile ../parms.ecog/SpectralSigProc.prm; ";
+  script += "Load Parameterfile ../parms/SpectralSigProc.prm; ";
 
   script += "Set Parameter WSSpectralOutputServer *:20203; ";
   script += "Set Parameter WSConnectorServer *:20323; ";

@@ -130,8 +130,8 @@ export class CreateConfig {
     script += `Set parameter WSConnectorServer *:20323; `;
     script += `Set parameter WSSourceServer *:20100; `;
 
-    script += `Set config; `;
-    script += `Start`;
+    // script += `Set config; `;
+    // script += `Start`;
     return script;
   }
 }

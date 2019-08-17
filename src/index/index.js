@@ -55,7 +55,7 @@ const updateState = state => {
 };
 
 const getChannelNames = async bci => {
-  bciData.connect("127.0.0.1:20100").then(y => {
+  bciData.connect("ws://127.0.0.1:20100").then(y => {
     bciData.onSignalProperties = x => {
       getChannels(x.channels);
     };

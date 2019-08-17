@@ -9,7 +9,7 @@
     "addParameters": [],
 
     "setParameters": {},
-    "loadParameters": ["../parms.ecog/SpectralSigProc.prm"],
+    "loadParameters": ["../parms/SpectralSigProc.prm"],
     "addEvents": ["StimulusCode 8 0"],
     "addStates": [],
     "userPrompt": [],

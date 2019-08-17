@@ -8,8 +8,8 @@
     },
     "setParameters": {},
     "loadParameters": [
-      "../parms.ecog/SpectralSigProc.prm",
-      "../parms.ecog/screen_setup.prm",
+      "../parms/SpectralSigProc.prm",
+      "../parms/screen_setup.prm",
       "../server/paradigms/_newTaskFormat/PRM/taskq.prm"
     ],
     "addEvents": [],
@@ -39,8 +39,8 @@
     },
     "setParameters": {},
     "loadParameters": [
-      "../parms.ecog/SpectralSigProc.prm",
-      "../parms.ecog/screen_setup.prm",
+      "../parms/SpectralSigProc.prm",
+      "../parms/screen_setup.prm",
       "../server/paradigms/_newTaskFormat/PRM/task2.prm"
     ],
     "addEvents": [],
