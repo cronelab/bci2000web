@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "server": "cross-env NODE_ENV=production node --experimental-modules server/bci2000web.js",
-    "devServer": "cross-env NODE_ENV=development nodemon --experimental-modules server/bci2000web.js --ignore 'dist/*'"
+    "dev": "cross-env NODE_ENV=development nodemon --experimental-modules server/bci2000web.js --ignore 'dist/*' --ignore 'data/*'"
   },
   "type": "module",
   "repository": {

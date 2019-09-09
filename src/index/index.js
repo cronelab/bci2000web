@@ -10,7 +10,7 @@ export const bciData = new BCI2K.bciData();
 window.onload = () => {
   sessionStorage.clear();
 
-  bci.connect("ws://127.0.0.1");
+  bci.connect(`ws://${window.location.hostname}`);
   bci.onconnect = e => {
     bci.onStateChange = e => {
       updateState(e.trim());
@@ -55,7 +55,7 @@ const updateState = state => {
 };
 
 const getChannelNames = async bci => {
-  bciData.connect("ws://127.0.0.1:20100").then(y => {
+  bciData.connect(`ws://${window.location.hostname}:20100`).then(y => {
     bciData.onSignalProperties = x => {
       getChannels(x.channels);
     };
@@ -96,6 +96,7 @@ const fetchData = async subj => {
     let taskList = document.createElement("li");
     taskList.classList.add("list-group-item");
     taskList.innerHTML = task;
+
     taskList.onclick = async e => {
       e.preventDefault();
       let res = await fetch(`/api/${subj}/${task}`);
@@ -107,6 +108,7 @@ const fetchData = async subj => {
         let dataList = document.createElement("li");
         dataList.classList.add("list-group-item");
         dataList.innerHTML = data;
+
         dataList.onclick = event => {
           event.preventDefault();
           bci.execute(launchSession(subj, task, data));
