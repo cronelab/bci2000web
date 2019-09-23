@@ -8,7 +8,7 @@
     "addParameters": [],
 
     "setParameters": {},
-    "loadParameters": ["../parms.ecog/SpectralSigProc.prm"],
+    "loadParameters": ["../parms/SpectralSigProc.prm"],
     "addEvents": [],
     "addStates": [],
     "userPrompt": [],

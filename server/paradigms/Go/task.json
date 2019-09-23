@@ -9,9 +9,9 @@
     "addParameters":[],
     "setParameters": {},
     "loadParameters": [
-      "../parms.ecog/SpectralSigProc.prm",
+      "../parms/SpectralSigProc.prm",
       "../server/paradigms/Go/PRM/go.prm",
-      "../parms.ecog/screen_setup.prm"
+      "../parms/screen_setup.prm"
     ],
     "addEvents": [],
     "addStates": [],

@@ -36,16 +36,22 @@ let newConfig = merge(webpackConfig, {
     new webpack.NoEmitOnErrorsPlugin()
   ]
 });
-const httpsServer = https.createServer(
-  {
-    key: fs.readFileSync("./server/credentials/server.key"),
-    cert: fs.readFileSync("./server/credentials/server.crt")
-  },
-  app
-);
 const httpServer = http.createServer(app);
+let httpsServer;
+if (fs.existsSync("./server/credentials/")) {
+  httpsServer = https.createServer(
+    {
+      key: fs.readFileSync("./server/credentials/server.key"),
+      cert: fs.readFileSync("./server/credentials/server.crt")
+    },
+    app
+  );
+  expressWs(app, httpsServer);
+httpsServer.listen(443);
 
-expressWs(app, httpsServer);
+}
+
+
 expressWs(app, httpServer);
 
 app.use("/", routes(express));
@@ -193,5 +199,4 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       .catch(reason => console.log(reason));
   }
 });
-httpsServer.listen(443);
 httpServer.listen(80);
