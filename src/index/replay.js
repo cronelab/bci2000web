@@ -17,9 +17,9 @@ export const launchSession = (patient, task, file) => {
   script += "Set Parameter WSConnectorServer *:20323; ";
   script += "Set Parameter WSSourceServer *:20100; ";
 
-  script += "Set Config; ";
-  script += "Wait for Resting; ";
-  script += "Start; ";
+  // script += "Set Config; ";
+  // script += "Wait for Resting; ";
+  // script += "Start; ";
 
   return script;
 };

@@ -95,12 +95,6 @@ export class CreateConfig {
       script += `Set parameter ${par} ${ampParams.setParameters[par]}; `;
     });
 
-    //Set parameters
-    Object.keys(taskConfig[instance].setParameters).map(tskPrm => {
-      script += `Set parameter ${tskPrm} ${
-        taskConfig[instance].setParameters[tskPrm]
-      }; `;
-    });
 
     //Load task parameters
     taskConfig[instance].loadParameters.map(tskPrm => {
@@ -116,17 +110,12 @@ export class CreateConfig {
     ) {
       script += `Set parameter WSSpectralOutputServer *:20203; `;
     }
-    // if (localStorage.getItem("hasInput") == "true") {
-    //   let stimChan1 = localStorage.getItem("stim1field")
-    //   let stimChan2 = localStorage.getItem("stim2field")
-    //   let stimIntensity = localStorage.getItem("stimintensityfield")
-    //   let stimRate = localStorage.getItem("stimratefield")
-    //   script += `Set Parameter stimCh1 ${stimChan1}; `;
-    //   script += `Set Parameter stimCh2 ${stimChan2}; `;
-    //   script += `Set Parameter stimIntensity ${stimIntensity}; `;
-    //   script += `Set Parameter stimRate ${stimRate}; `;
-    // }
-
+    //Set parameters
+    Object.keys(taskConfig[instance].setParameters).map(tskPrm => {
+      script += `Set parameter ${tskPrm} ${
+        taskConfig[instance].setParameters[tskPrm]
+      }; `;
+    });
     script += `Set parameter WSConnectorServer *:20323; `;
     script += `Set parameter WSSourceServer *:20100; `;
 
