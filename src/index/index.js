@@ -1,21 +1,27 @@
 import "./index.scss";
-import BCI2K from "@cronelab/bci2k";
+import BCI2K from "bci2k";
 import "bootstrap";
 import "@fortawesome/fontawesome-free/js/all";
-import { launchSession } from "./replay.js";
-import { loadParadigms, getChannels } from "./getData";
-export const bci = new BCI2K.bciOperator();
-export const bciData = new BCI2K.bciData();
+import {
+  launchSession
+} from "./replay.js";
+import {
+  loadParadigms,
+  getChannels
+} from "./getData";
+export const bci = new BCI2K.bciOperator(`ws://${window.location.hostname}`);
+export const bciSourceData = new BCI2K.bciData();
+
 
 window.onload = () => {
   sessionStorage.clear();
-
-  bci.connect(`ws://${window.location.hostname}`);
-  bci.onconnect = e => {
+  bci.connect().then(() => {
+    console.log("Connected to operator layer")
+    bci.stateListen();
     bci.onStateChange = e => {
       updateState(e.trim());
     };
-  };
+  });
   loadParadigms();
 
   document.getElementById("replay-subject").onclick = () => {
@@ -55,8 +61,8 @@ const updateState = state => {
 };
 
 const getChannelNames = async bci => {
-  bciData.connect(`ws://${window.location.hostname}:20100`).then(y => {
-    bciData.onSignalProperties = x => {
+  bciSourceData.connect(`ws://${window.location.hostname}:20100`).then(y => {
+    bciSourceData.onSignalProperties = x => {
       getChannels(x.channels);
     };
   });
@@ -122,6 +128,6 @@ const fetchData = async subj => {
   });
 };
 
-window.onbeforeunload = function(e) {
+window.onbeforeunload = function (e) {
   bci.resetSystem();
 };

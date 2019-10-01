@@ -8,7 +8,6 @@ const app = express();
 import expressWs from "express-ws";
 import Telnet from "telnet-client";
 import opn from "opn";
-import dgram from "dgram";
 import routes from "./routes.js";
 import helpers from "./helpers.js";
 import http from "http";
@@ -39,15 +38,14 @@ let newConfig = merge(webpackConfig, {
 const httpServer = http.createServer(app);
 let httpsServer;
 if (fs.existsSync("./server/credentials/")) {
-  httpsServer = https.createServer(
-    {
+  httpsServer = https.createServer({
       key: fs.readFileSync("./server/credentials/server.key"),
       cert: fs.readFileSync("./server/credentials/server.crt")
     },
     app
   );
   expressWs(app, httpsServer);
-httpsServer.listen(443);
+  httpsServer.listen(443);
 
 }
 
@@ -94,42 +92,16 @@ const connectTelnet = async operator => {
     execTimeout: 30
   });
 
-  let socket = dgram.createSocket("udp4");
-  // operator.telnet.exec(
-  //   "Add Watch System State at 127.0.0.1:21501",
-  //   (err, res) => {
-  //     console.log(res);
-  //   }
-  // );
-  socket.bind({
-    address: "127.0.0.1",
-    port: 21501
-  });
-
   //!Fixes an idiotic race condition where the WS isn't set up until AFTER bci2000 connects
   //!arbitrary time, in the future set this into the config.json
   await new Promise(resolve => setTimeout(resolve, 2000));
   //? Set up WebSocket handler
   app.ws("/", ws => {
-    ws.on("message", msg => {
-      let preamble = msg.split(" ");
-      var msg = {};
-      msg.opcode = preamble.shift();
-      msg.id = preamble.shift();
-      msg.contents = preamble.join(" ");
-      console.log(msg.contents);
+    ws.on("message", message => {
+      let msg = JSON.parse(message)
       msg.ws = ws;
       if (msg.opcode == "E") {
         operator.commandQueue.push(msg);
-      }
-    });
-    socket.on("message", (msg, rinfo) => {
-      if (ws.readyState == ws.OPEN) {
-        let watchMsg = msg
-          .toString()
-          .split("\n")[0]
-          .split("\t")[1];
-        ws.send(["X", 0, watchMsg].join(" ").trim());
       }
     });
   });
@@ -143,23 +115,22 @@ const connectTelnet = async operator => {
       !operator.executing
     ) {
       operator.executing = operator.commandQueue.shift();
-      try {
-        operator.executing.ws.send(
-          ["S", operator.executing.id].join(" ").trim()
-        );
-      } catch (e) {
-        /* client stopped caring */
-      }
 
       operator.telnet.exec(operator.executing.contents, (err, response) => {
         let ws = operator.executing.ws;
         let id = operator.executing.id;
         operator.executing = null;
-        try {
-          ws.send(["O", id, response].join(" ").trim());
-          ws.send(["D", id].join(" ").trim());
-        } catch (e) {
-          /* client stopped caring */
+        if (response != undefined) {
+          try {
+            let msg = {
+              opcode: "O",
+              id: id,
+              contents: response.trim()
+            }
+            ws.send(JSON.stringify(msg));
+          } catch (e) {
+            /* client stopped caring */
+          }
         }
       });
     }
@@ -175,9 +146,9 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       //?Add a timeout...
       .then(
         x =>
-          new Promise(resolve =>
-            setTimeout(() => resolve(x), config.telnetTimeout)
-          )
+        new Promise(resolve =>
+          setTimeout(() => resolve(x), config.telnetTimeout)
+        )
       )
       //? ...so we can connect to the telnet port without throwing an erro.
       .then(operator => {

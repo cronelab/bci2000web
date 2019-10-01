@@ -3,8 +3,8 @@
     "title": "New Task Format",
     "description": "Structure your tasks as follows.",
     "executables": {
-      "processing": "SpectralSignalProcessingMod",
-      "application": "StimulusPresentationCronelab"
+      "processing": "Spectral_WS",
+      "application": "StimulusPresentation_Timing"
     },
     "setParameters": {},
     "loadParameters": [
@@ -34,8 +34,8 @@
     "title": "New Task Format",
     "description": "Structure your tasks as follows.",
     "executables": {
-      "processing": "SpectralSignalProcessingMod",
-      "application": "StimulusPresentationCronelab"
+      "processing": "Spectral_WS",
+      "application": "StimulusPresentation_Timing"
     },
     "setParameters": {},
     "loadParameters": [

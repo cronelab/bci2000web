@@ -4,7 +4,7 @@
 ## Description: Build information for SpectralSignalProcessing in Qt
 
 # Set the executable name
-SET( EXECUTABLE_NAME SpectralSignalProcessingMod )
+SET( EXECUTABLE_NAME Spectral_WS )
 
 # Set the project specific sources
 SET( SRC_PROJECT

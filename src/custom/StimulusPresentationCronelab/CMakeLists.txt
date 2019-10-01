@@ -4,7 +4,7 @@
 ## Description: Build information for StimulusPresentation in Qt
 
 # Set the executable name
-SET( EXECUTABLE_NAME StimulusPresentationCronelab )
+SET( EXECUTABLE_NAME StimulusPresentation_Timing )
 
 # Set the project specific sources
 SET( SRC_PROJECT

@@ -1,7 +1,8 @@
 import path from "path";
-import child_process from "child_process"
-const spawn = child_process.spawn;
-const exec = child_process.exec;
+import {
+  spawn,
+  exec
+} from "child_process"
 import fs from "fs";
 
 const helpers = {
@@ -11,14 +12,16 @@ const helpers = {
     return new Promise((resolve, reject) => {
       const cmd = "tasklist"
       const proc = win
-     exec(cmd, (err, stdout, stderr) => {
+      exec(cmd, (err, stdout, stderr) => {
         resolve(stdout.toLowerCase().indexOf(proc.toLowerCase()) > -1);
       });
     });
   },
   //? Launches BCI2000 on a particular telnet port in the foreground or background
   launchOperator: async (operatorPath, telnetPort, hide) => {
-    let spawnParams = { cwd: path.dirname(operatorPath) };
+    let spawnParams = {
+      cwd: path.dirname(operatorPath)
+    };
     let operatorArgs = [
       "--Telnet",
       "*:" + telnetPort,
@@ -53,10 +56,10 @@ const helpers = {
       if (stat.isFile() && path.extname(filePath) === ".dat") {
         data.push(
           path
-            .resolve(filePath)
-            .split(".")
-            .slice(0, -1)
-            .join(".")
+          .resolve(filePath)
+          .split(".")
+          .slice(0, -1)
+          .join(".")
         );
       } else if (stat.isDirectory()) {
         data = data.concat(helpers.findData(filePath));

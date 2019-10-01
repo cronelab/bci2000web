@@ -3,7 +3,7 @@
     "title": "Manual Recording",
     "description": "Manually record a data file.",
     "executables": {
-      "processing": "SpectralSignalProcessingMod"
+      "processing": "Spectral_WS"
     },
     "addParameters": [],
 

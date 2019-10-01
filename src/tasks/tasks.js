@@ -1,28 +1,16 @@
 import "./task.scss";
-import BCI2K from "@cronelab/bci2k";
-var bci = new BCI2K.bciOperator();
-import { CreateConfig } from "./configLoader";
+import BCI2K from "bci2k";
+let bci = new BCI2K.bciOperator();
+let bciSourceData = new BCI2K.bciData();
+import {
+  CreateConfig
+} from "./configLoader";
 
 window.onload = () => {
   bci.connect("wss://127.0.0.1").then(() => {
     console.log("connected");
-
-    //   bci.onStateChange = e =>{
-    //     if(e.trim() == "Idle"){
-    //       window.close();
-    //     }
-    // }
+    getParametersForParadigm();
   });
-  getParametersForParadigm();
-  setInterval(() => {
-    bci
-      .execute("Get System State", result => result)
-      .then(state => {
-        if (state.trim() == "Idle") {
-          window.close();
-        }
-      });
-  }, 1000);
 };
 
 const getParametersForParadigm = async () => {
@@ -34,8 +22,7 @@ const getParametersForParadigm = async () => {
   let config = await configurer.creator(task);
   bci.execute(config);
   document.title = `${task}: ${instance}`;
-  await new Promise(resolve => setTimeout(resolve, 3500));
-
+  await new Promise(resolve => setTimeout(resolve, 7000));
   // /  tapSockets(bci);
 };
 
