@@ -57,7 +57,13 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 
 if (process.env.NODE_ENV == "production") {
-  app.use("/", express.static("./dist"));
+  const compiler = webpack(newConfig);
+  app.use(
+    webpackDevMiddleware(compiler, {
+      noInfo: true
+    })
+  );
+  app.use(webpackHotMiddleware(compiler));
 } else if (process.env.NODE_ENV == "development") {
   const compiler = webpack(newConfig);
   app.use(

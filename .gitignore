@@ -1,17 +1,15 @@
 
 # BCI2000 specific stuff
 tools/
-parms/
 data/
 node_modules/
 .vscode/*
 
 dist/
-prog_new/*
 server/paradigms/*
-prog/*
+!server/paradigms/Template/
 archived/*
 JHT19N001/*
 batch/*
-server/paradigms_/*
-prog*/*
+prog*/*.exe
+prog*/*.ini
