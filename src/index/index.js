@@ -21,6 +21,10 @@ window.onload = () => {
     bci.onStateChange = e => {
       updateState(e.trim());
     };
+    fetch('/localconfig').then(res => res.json()).then(config => {
+      document.getElementById('subjectName').innerHTML = config.subject;
+      document.getElementById('amplifierName').innerHTML = config.source;
+    })
   });
   loadParadigms();
 
