@@ -1,7 +1,7 @@
 //@ts-check
 
-export const launchSession = (patient, task, file) => {
-  var datafile = `../data/${patient}/${task}/${file}.dat`;
+export const launchSession = (patient, task, file, dataDirectory) => {
+  var datafile = `${dataDirectory}/${patient}/${task}/${file}.dat`;
   let filter = 'Spectral_WS'
   if (task == 'CCEPS') filter = 'EvokedPotentialFilter'
   var script = "Reset System; ";

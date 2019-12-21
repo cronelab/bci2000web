@@ -7,7 +7,7 @@ const routes = express => {
   const router = express.Router();
   //? sends the task.json
   router.get("/paradigms/:task/", (req, res) => {
-const data = JSON.parse(fs.readFileSync(`./server/paradigms/${req.params.task}/task.json`, 'utf8'))
+    const data = JSON.parse(fs.readFileSync(`./server/paradigms/${req.params.task}/task.json`, 'utf8'))
 
     res.json(data);
   });
@@ -18,13 +18,13 @@ const data = JSON.parse(fs.readFileSync(`./server/paradigms/${req.params.task}/t
   });
   //? Sends amplifier configuration
   router.get("/amplifiers/", (req, res) => {
-const data = JSON.parse(fs.readFileSync(`./server/Config/amplifiers.json`, 'utf8'))
+    const data = JSON.parse(fs.readFileSync(`./server/Config/amplifiers.json`, 'utf8'))
 
     res.json(data);
   });
   //?Sends local configuration
   router.get("/localconfig", (req, res) => {
-const data = JSON.parse(fs.readFileSync(`./server/Config/localconfig.json`, 'utf8'))
+    const data = JSON.parse(fs.readFileSync(`./server/Config/localconfig.json`, 'utf8'))
 
     res.json(data);
   });
@@ -45,8 +45,10 @@ const data = JSON.parse(fs.readFileSync(`./server/Config/localconfig.json`, 'utf
     res.send(cards);
   });
   //? Sends list of all unique subjects based on /data entries
+  const dataDirectory = JSON.parse(fs.readFileSync(`./server/Config/localconfig.json`, 'utf8')).dataDirectory;
   router.get("/subjects", (req, res) => {
-    const dataPaths = helpers.findData("./data");
+    const dataPaths = helpers.findData(dataDirectory);
+
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
     }
@@ -60,7 +62,8 @@ const data = JSON.parse(fs.readFileSync(`./server/Config/localconfig.json`, 'utf
   //? Sends list of all unique tasks based on /data entries
   router.get("/api/:subj", (req, res) => {
     let subject = req.params.subj;
-    const dataPaths = helpers.findData(`./data/${subject}`);
+    const dataPaths = helpers.findData(`${dataDirectory}/${subject}`);
+
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
     }
@@ -75,7 +78,7 @@ const data = JSON.parse(fs.readFileSync(`./server/Config/localconfig.json`, 'utf
   router.get("/api/:subj/:task", (req, res) => {
     let subject = req.params.subj;
     let task = req.params.task;
-    const dataPaths = helpers.findData(`./data/${subject}/${task}`);
+    const dataPaths = helpers.findData(`${dataDirectory}/${subject}/${task}`);
 
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;

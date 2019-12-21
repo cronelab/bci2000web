@@ -10,6 +10,7 @@ window.onload = () => {
   bci.connect("wss://127.0.0.1").then(() => {
     console.log("connected");
     getParametersForParadigm();
+    bciSourceData.connect("ws://127.0.0.1:20100")
   });
 };
 

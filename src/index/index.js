@@ -11,6 +11,7 @@ import {
 } from "./getData";
 export const bci = new BCI2K.bciOperator(`ws://${window.location.hostname}`);
 export const bciSourceData = new BCI2K.bciData();
+let dataDirectory;
 
 
 window.onload = () => {
@@ -24,6 +25,7 @@ window.onload = () => {
     fetch('/localconfig').then(res => res.json()).then(config => {
       document.getElementById('subjectName').innerHTML = config.subject;
       document.getElementById('amplifierName').innerHTML = config.source;
+      dataDirectory = config.dataDirectory;
     })
   });
   loadParadigms();
@@ -121,7 +123,7 @@ const fetchData = async subj => {
 
         dataList.onclick = event => {
           event.preventDefault();
-          bci.execute(launchSession(subj, task, data));
+          bci.execute(launchSession(subj, task, data, dataDirectory));
           event.stopPropagation();
         };
         document.getElementById("data").appendChild(dataList);

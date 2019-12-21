@@ -1,4 +1,5 @@
 {
-  "subject": "PY19N002",
-  "source": "SignalGenerator"
+  "subject": "Test",
+  "source": "SignalGenerator",
+  "dataDirectory": "./"
 }
