@@ -5,12 +5,13 @@ let __dirname = path.resolve(path.dirname(''));
 
 const routes = express => {
   const router = express.Router();
+
   //? sends the task.json
   router.get("/paradigms/:task/", (req, res) => {
     const data = JSON.parse(fs.readFileSync(`./server/paradigms/${req.params.task}/task.json`, 'utf8'))
-
     res.json(data);
   });
+
   //? sends the task.js
   //TODO Can probably wrap this up in /paradigms/:task
   router.get("/paradigms/:task/task", (req, res) => {
@@ -19,13 +20,11 @@ const routes = express => {
   //? Sends amplifier configuration
   router.get("/amplifiers/", (req, res) => {
     const data = JSON.parse(fs.readFileSync(`./server/Config/amplifiers.json`, 'utf8'))
-
     res.json(data);
   });
   //?Sends local configuration
   router.get("/localconfig", (req, res) => {
-    const data = JSON.parse(fs.readFileSync(`./server/Config/localconfig.json`, 'utf8'))
-
+    const data = JSON.parse(fs.readFileSync(`${__dirname}/server/Config/localconfig.json`, 'utf8'))
     res.json(data);
   });
   //? Sends all paradigms
@@ -90,6 +89,37 @@ const routes = express => {
       .filter(onlyUnique);
     res.send(runs);
   });
+
+
+
+
+  //Notes
+  router.post('/notes', (req, res) => {
+
+    let incomingData = 
+    `
+      Subject: ${req.body.subject}
+      Task: ${req.body.task}
+      Block: ${req.body.block}
+      Comments: ${req.body.comment}
+      Start time: ${req.body.startTime}
+      Researcher: ${req.body.user}
+      Bad Channels: ${req.body.badChan}
+      ----------------------------------
+    `
+
+    if (!fs.existsSync(`./data/${req.body.subject}/${req.body.task}`)){
+      fs.mkdirSync(`./data/${req.body.subject}/${req.body.task}`);
+    }
+    fs.appendFile(`./data/${req.body.subject}/${req.body.task}/Notes.txt`, incomingData, (err) => {})
+  })
+
+
+
+
+
+
+
 
   return router;
 };

@@ -2,106 +2,92 @@ import path from "path";
 import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import CleanWebpackPlugin from "clean-webpack-plugin";
+
 import WriteFilePlugin from "write-file-webpack-plugin";
 let __dirname = path.resolve(path.dirname(""));
-
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-var hotMiddlewareScript =
-  "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true";
-
 const devMode = process.env.NODE_ENV !== "production";
 
 const module = {
-  entry: {
-    index: devMode
-      ? ["./src/index/index.js", hotMiddlewareScript]
-      : "./src/index/index.js",
-    tasks: devMode
-      ? ["./src/tasks/tasks.js", hotMiddlewareScript]
-      : "./src/tasks/tasks.js"
-  },
-  mode: devMode ? "development" : "production",
+	mode: devMode ? "development" : "production",
+	devtool: devMode ? "inline-source-map" : "source-map",
+	entry: {
+		main: './src/Index.jsx',
+	},
+	resolve: {
+		extensions: [".js", ".jsx"]
+	},
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				loader: "babel-loader",
+				options: {
+					presets: ["@babel/preset-env", "@babel/preset-react"],
+					plugins: [
+						"@babel/plugin-syntax-dynamic-import",
+						"@babel/plugin-transform-modules-commonjs",
+						"@babel/plugin-transform-runtime",
+						"@babel/plugin-proposal-class-properties",
+						"@babel/plugin-proposal-export-default-from",
+						"@babel/plugin-transform-async-to-generator"
+					],
+					cacheDirectory: true
+				}
+			},
+			{
+				test: /\.(sa|sc|c)ss$/,
+				use: [{
+					loader: devMode ? "style-loader" : MiniCssExtractPlugin.loader
+				},
+				{
+					loader: "css-loader"
+				},
+				{
+					loader: "postcss-loader"
+				},
+				{
+					loader: "sass-loader"
+				}
+				]
+			},
+		]
+	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				styles: {
+					name: "styles",
+					test: /\.css$/,
+					chunks: "all",
+					enforce: true
+				}
+			}
+		},
+		usedExports: true
+	},
 
-  devtool: devMode ? "inline-source-map" : "source-map",
+	plugins: [
+		new CleanWebpackPlugin.CleanWebpackPlugin(),
+		new WriteFilePlugin(),
+		new MiniCssExtractPlugin({
+			filename: "[name].css",
+			chunkFilename: "[id].css"
+		}),
+		new HtmlWebpackPlugin({
+			template: './src/index.html',
+			filename: "index.html",
+			hash: true,
+			chunks: ["main"]
+		})
+	],
+	output: {
+		path: path.resolve(__dirname, "dist"),
+		filename: "[name].[hash].js",
+		globalObject: `typeof self !== 'undefined' ? self : this`,
+		publicPath: '/'
 
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        styles: {
-          name: "styles",
-          test: /\.css$/,
-          chunks: "all",
-          enforce: true
-        }
-      }
-    },
-    usedExports: true
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: ["babel-loader"]
-      },
-      {
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          {
-            loader: devMode ? "style-loader" : MiniCssExtractPlugin.loader
-          },
-          {
-            loader: "css-loader"
-          },
-          {
-            loader: "postcss-loader"
-          },
-          {
-            loader: "sass-loader"
-          }
-        ]
-        // use: [{}
-        //   devMode ? "style-loader" : MiniCssExtractPlugin.loader,
-        //   "css-loader",
-        //   "postcss-loader",
-        //   "sass-loader"
-        // ]
-      }
-    ]
-  },
-  plugins: [
-    new CleanWebpackPlugin.CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: true,
-      template: "./src/index/index.html",
-      filename: "index.html"
-    }),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: true,
-      template: "./src/tasks/index.html",
-      filename: "task.html"
-    }),
-    new MiniCssExtractPlugin({
-      filename: devMode ? "[name].css" : "[name].css",
-      chunkFilename: devMode ? "[id].css" : "[id].css"
-    }),
-    new WriteFilePlugin()
-  ],
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].js",
-    publicPath: path.resolve(__dirname, "dist")
-  },
-
-  devServer: devMode
-    ? {
-        contentBase: "./dist",
-        publicPath: "./dist",
-        hot: true
-      }
-    : {}
+	}
 };
-
 export default module;

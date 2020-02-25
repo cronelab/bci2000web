@@ -8,11 +8,15 @@ const app = express();
 import expressWs from "express-ws";
 import Telnet from "telnet-client";
 import opn from "opn";
+import dgram from "dgram";
 import routes from "./routes.js";
 import helpers from "./helpers.js";
 import http from "http";
 import https from "https";
 import fs from "fs";
+app.use(express.json())
+
+let __dirname = path.resolve(path.dirname(""));
 const config = JSON.parse(
   fs.readFileSync("./server/Config/config.json", "utf8")
 );
@@ -28,6 +32,8 @@ console.log(`Using: ${operatorPath}`);
 import merge from "webpack-merge";
 import webpack from "webpack";
 import webpackConfig from "../webpack.config.js";
+import webpackDevMiddleware from "webpack-dev-middleware";
+
 let newConfig = merge(webpackConfig, {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -35,10 +41,9 @@ let newConfig = merge(webpackConfig, {
     new webpack.NoEmitOnErrorsPlugin()
   ]
 });
-const httpServer = http.createServer(app);
-let httpsServer;
 if (fs.existsSync("./server/credentials/")) {
-  httpsServer = https.createServer({
+  let httpsServer = https.createServer(
+    {
       key: fs.readFileSync("./server/credentials/server.key"),
       cert: fs.readFileSync("./server/credentials/server.crt")
     },
@@ -46,35 +51,14 @@ if (fs.existsSync("./server/credentials/")) {
   );
   expressWs(app, httpsServer);
   httpsServer.listen(443);
-
 }
-
-
+const httpServer = http.createServer(app);
 expressWs(app, httpServer);
 
+const compiler = webpack(newConfig);
+app.use(webpackDevMiddleware(compiler));
 app.use("/", routes(express));
-import webpackDevMiddleware from "webpack-dev-middleware";
-import webpackHotMiddleware from "webpack-hot-middleware";
 
-if (process.env.NODE_ENV == "production") {
-  const compiler = webpack(newConfig);
-  app.use(
-    webpackDevMiddleware(compiler, {
-      noInfo: true
-    })
-  );
-  app.use(webpackHotMiddleware(compiler));
-} else if (process.env.NODE_ENV == "development") {
-  const compiler = webpack(newConfig);
-  app.use(
-    webpackDevMiddleware(compiler, {
-      noInfo: true
-    })
-  );
-  app.use(webpackHotMiddleware(compiler));
-} else {
-  app.use("/", express.static("./dist"));
-}
 //? Connect to BCI2000's operator telnet port in order to send/receive operator commands.
 const connectTelnet = async operator => {
   const connection = new Telnet();
@@ -88,15 +72,19 @@ const connectTelnet = async operator => {
   connection.on("timeout", () => (operator.executing = null));
   connection.on("close", () => process.exit(0));
 
-  //TODO configure this better
-  await connection.connect({
-    host: "127.0.0.1",
-    port: config.telnetPort,
-    timeout: 1000,
-    shellPrompt: ">",
-    echoLines: 0,
-    execTimeout: 30
-  });
+  try {
+    //TODO configure this better
+    await connection.connect({
+      host: "127.0.0.1",
+      port: config.telnetPort,
+      timeout: 1000,
+      shellPrompt: ">",
+      echoLines: 0,
+      execTimeout: 30
+    });
+  } catch (error) {
+    console.log(error);
+  }
 
   //!Fixes an idiotic race condition where the WS isn't set up until AFTER bci2000 connects
   //!arbitrary time, in the future set this into the config.json
@@ -104,7 +92,7 @@ const connectTelnet = async operator => {
   //? Set up WebSocket handler
   app.ws("/", ws => {
     ws.on("message", message => {
-      let msg = JSON.parse(message)
+      let msg = JSON.parse(message);
       msg.ws = ws;
       if (msg.opcode == "E") {
         operator.commandQueue.push(msg);
@@ -132,7 +120,7 @@ const connectTelnet = async operator => {
               opcode: "O",
               id: id,
               contents: response.trim()
-            }
+            };
             ws.send(JSON.stringify(msg));
           } catch (e) {
             /* client stopped caring */
@@ -152,9 +140,9 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       //?Add a timeout...
       .then(
         x =>
-        new Promise(resolve =>
-          setTimeout(() => resolve(x), config.telnetTimeout)
-        )
+          new Promise(resolve =>
+            setTimeout(() => resolve(x), config.telnetTimeout)
+          )
       )
       //? ...so we can connect to the telnet port without throwing an erro.
       .then(operator => {
@@ -176,4 +164,4 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       .catch(reason => console.log(reason));
   }
 });
-httpServer.listen(80);
+httpServer.listen(8080, () => console.log("Trying my best"));
