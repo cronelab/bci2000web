@@ -1,34 +1,40 @@
 import {
-  ButtonGroup,
+  InputGroup,
   Card,
-  DropdownButton,
-  Tooltip,
-  OverlayTrigger,
   Button,
-  MenuItem
 } from "react-bootstrap";
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../../MyProvider";
 
 const ReplayTasks = () => {
-  const { bci, replayTask,replaySubject, config } = useContext(Context);
+  const { bci, replayTask, replaySubject, config } = useContext(Context);
   const [runs, setRuns] = useState([]);
+  const [stimPres, setStimPres] = useState(false);
 
   const runTask = dataFile => {
-    let data = `${replaySubject}/${replayTask}/${dataFile}`
+    let data = `${replaySubject}/${replayTask}/${dataFile}`;
     let ret = `Reset system;`;
     ret += `Startup system localhost;`;
     ret += `Start executable Spectral_WS; `;
-    ret += `Start executable DummyApplication; `;
+    if(stimPres == false){
+      ret += `Start executable DummyApplication; `;
+    }
+    else{
+    ret += `Start executable StimulusPresentation_Timing; `;
+    }
     ret += `Start executable FilePlayback --local --FileFormat=Null --PlaybackStates=1 --PlaybackFileName=../data/${data}.dat; `;
     ret += `Wait for Connected; `;
     ret += `Load Parameterfile ../parms/SpectralSigProc.prm; `;
     ret += `Set Parameter WSSpectralOutputServer *:20203; `;
     ret += `Set Parameter WSConnectorServer *:20323; `;
     ret += `Set Parameter WSSourceServer *:20100; `;
-    if(Object.keys(config.setParameters).length > 0){
-      ret += `Set Parameter ${Object.keys(config.setParameters)[0]} ${config.setParameters[Object.keys(config.setParameters)[0]]}; `
-      ret += `Set Parameter ${Object.keys(config.setParameters)[1]} ${config.setParameters[Object.keys(config.setParameters)[1]]}; `
+    if (Object.keys(config.setParameters).length > 0) {
+      ret += `Set Parameter ${Object.keys(config.setParameters)[0]} ${
+        config.setParameters[Object.keys(config.setParameters)[0]]
+      }; `;
+      ret += `Set Parameter ${Object.keys(config.setParameters)[1]} ${
+        config.setParameters[Object.keys(config.setParameters)[1]]
+      }; `;
     }
     ret += `Set Config; `;
     ret += `Wait for Resting; `;
@@ -40,43 +46,44 @@ const ReplayTasks = () => {
       let runReq = await fetch(`api/${replaySubject}/${replayTask}`);
       let allRuns = await runReq.json();
       setRuns(allRuns);
-      })()
-  },[replayTask])
+    })();
+  }, [replayTask]);
 
   return (
     <>
       <Card>
         <Card.Header>
           <Card.Title>
+            <InputGroup>
+              <InputGroup.Checkbox
+                as
+                Button
+                onClick={e => setStimPres(e.target.checked)}
+              />
+            </InputGroup>
             <h3 className="text-center">Replay files</h3>
           </Card.Title>
         </Card.Header>
         {runs.map(y => (
-            <Button
-              key={y}
-              id={y}
-              title={y}
-              onClick={() => runTask(y)}
-            >{y}
-            </Button>
-          ))}
+          <Button key={y} id={y} title={y} onClick={() => runTask(y)}>
+            {y}
+          </Button>
+        ))}
       </Card>
     </>
   );
-}
+};
 
 const ReplayParadigms = () => {
   const [tasks, setTasks] = useState([]);
-  const { replaySubject, setReplayTask} = useContext(Context);
-
-  
+  const { replaySubject, setReplayTask } = useContext(Context);
 
   useEffect(() => {
     (async () => {
       let tasks = await fetch(`api/${replaySubject}`);
       let allTasks = await tasks.json();
       setTasks(allTasks);
-    })()
+    })();
   }, [replaySubject]);
 
   return (
@@ -87,24 +94,17 @@ const ReplayParadigms = () => {
             <h3 className="text-center">Replay files</h3>
           </Card.Title>
         </Card.Header>
-          {tasks.map(y => (
-            <Button
-              key={y}
-              id={y}
-              title={y}
-              onClick={() => setReplayTask(y)}
-            >{y}
-            </Button>
-          ))}
+        {tasks.map(y => (
+          <Button key={y} id={y} title={y} onClick={() => setReplayTask(y)}>
+            {y}
+          </Button>
+        ))}
       </Card>
     </>
   );
 };
 
-export {
-  ReplayParadigms,
-  ReplayTasks
-};
+export { ReplayParadigms, ReplayTasks };
 
 //@ts-check
 
