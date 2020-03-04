@@ -1,6 +1,6 @@
 {
   "name": "bci2000web",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "Websocket based remote control for Operator",
   "main": "bci2000web.js",
   "scripts": {
