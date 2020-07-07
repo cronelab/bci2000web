@@ -12,11 +12,9 @@ import dgram from "dgram";
 import routes from "./routes.js";
 import helpers from "./helpers.js";
 import http from "http";
-import https from "https";
 import fs from "fs";
 app.use(express.json())
 
-let __dirname = path.resolve(path.dirname(""));
 const config = JSON.parse(
   fs.readFileSync("./server/Config/config.json", "utf8")
 );
@@ -28,36 +26,24 @@ if (args[2] == "-prog") {
   operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
 }
 console.log(`Using: ${operatorPath}`);
+let __dirname = path.resolve(path.dirname(""));
 
-import merge from "webpack-merge";
-import webpack from "webpack";
-import webpackConfig from "../webpack.config.js";
-import webpackDevMiddleware from "webpack-dev-middleware";
-
-let newConfig = merge(webpackConfig, {
-  plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  ]
-});
-if (fs.existsSync("./server/credentials/")) {
-  let httpsServer = https.createServer(
-    {
-      key: fs.readFileSync("./server/credentials/server.key"),
-      cert: fs.readFileSync("./server/credentials/server.crt")
-    },
-    app
-  );
-  expressWs(app, httpsServer);
-  httpsServer.listen(443);
-}
+// if (fs.existsSync("./server/credentials/")) {
+//   let httpsServer = https.createServer(
+//     {
+//       key: fs.readFileSync("./server/credentials/server.key"),
+//       cert: fs.readFileSync("./server/credentials/server.crt")
+//     },
+//     app
+//   );
+//   expressWs(app, httpsServer);
+//   httpsServer.listen(443);
+// }
 const httpServer = http.createServer(app);
 expressWs(app, httpServer);
 
-const compiler = webpack(newConfig);
-app.use(webpackDevMiddleware(compiler));
 app.use("/", routes(express));
+app.use(express.static(path.resolve(__dirname, "dist")));
 
 //? Connect to BCI2000's operator telnet port in order to send/receive operator commands.
 const connectTelnet = async operator => {
@@ -112,6 +98,7 @@ const connectTelnet = async operator => {
 
       operator.telnet.exec(operator.executing.contents, (err, response) => {
         let ws = operator.executing.ws;
+
         let id = operator.executing.id;
         operator.executing = null;
         if (response != undefined) {
@@ -164,4 +151,4 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
       .catch(reason => console.log(reason));
   }
 });
-httpServer.listen(8080, () => console.log("Trying my best"));
+httpServer.listen(80, () => console.log("Trying my best"));
