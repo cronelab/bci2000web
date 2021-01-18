@@ -9,8 +9,8 @@ import expressWs from "express-ws";
 import Telnet from "telnet-client";
 import opn from "opn";
 import dgram from "dgram";
-import routes from "./routes.js";
-import helpers from "./helpers.js";
+import routes from "./routes.mjs";
+import helpers from "./helpers.mjs";
 import http from "http";
 import fs from "fs";
 app.use(express.json())
@@ -25,7 +25,6 @@ if (args[2] == "-prog") {
 } else {
   operatorPath = `${path.resolve(config.bci2kdir)}/prog/Operator.exe`;
 }
-console.log(`Using: ${operatorPath}`);
 let __dirname = path.resolve(path.dirname(""));
 
 // if (fs.existsSync("./server/credentials/")) {

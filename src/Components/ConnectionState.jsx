@@ -9,7 +9,7 @@ const ConnectionState = () => {
   const [subjName, setSubjName] = useState("");
   const [ampName, setAmpName] = useState("");
   const {bci, setBCI, setConfig} = useContext(Context)
-  const _bci = new BCI2K.bciOperator(`wss://${window.location.hostname}`);
+  const _bci = new BCI2K.bciOperator(`ws://${window.location.hostname}`);
 
   useEffect(() => {
     _bci.connect().then(e => {

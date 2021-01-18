@@ -1,4 +1,4 @@
-import helpers from "./helpers.js";
+import helpers from "./helpers.mjs";
 import path from "path";
 import fs from "fs";
 let __dirname = path.resolve(path.dirname(''));
@@ -96,8 +96,8 @@ const routes = express => {
   //Notes
   router.post('/notes', (req, res) => {
 
-    let incomingData = 
-    `
+    let incomingData =
+      `
       Subject: ${req.body.subject}
       Task: ${req.body.task}
       Block: ${req.body.block}
@@ -108,10 +108,13 @@ const routes = express => {
       ----------------------------------
     `
 
-    if (!fs.existsSync(`./data/${req.body.subject}/${req.body.task}`)){
+    if (!fs.existsSync(`./data/${req.body.subject}/${req.body.task}`)) {
+      if (!fs.existsSync(`./data/${req.body.subject}`)) {
+        fs.mkdirSync(`./data/${req.body.subject}`)
+      }
       fs.mkdirSync(`./data/${req.body.subject}/${req.body.task}`);
     }
-    fs.appendFile(`./data/${req.body.subject}/${req.body.task}/Notes.txt`, incomingData, (err) => {})
+    fs.appendFile(`./data/${req.body.subject}/${req.body.task}/Notes.txt`, incomingData, (err) => { })
   })
 
 

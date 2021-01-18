@@ -1,7 +1,6 @@
 
 # BCI2000 specific stuff
 tools/
-data/
 node_modules/
 .vscode/*
 

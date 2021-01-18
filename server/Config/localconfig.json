@@ -1,7 +1,5 @@
 {
-  "subject": "Test",
-  "source": "SignalGenerator",
-  "dataDirectory": "D:\\BCI2000\\BCI2000Web\\Data",
+  "dataDirectory": "data",
   "setParameters": {
     "VisualizeSource": "0",
     "VisualizeTiming": "0"
