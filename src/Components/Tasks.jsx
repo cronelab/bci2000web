@@ -37,6 +37,9 @@ const Tasks = () => {
         script += `Start executable ${config.source} --local; `;
       }
     }
+    else {
+      script += `Start executable ${config.source} --local; `;
+    }
     //Start processing module
     if (task.executables.processing != null) {
       script += `Start executable ${task.executables.processing} --local; `;
@@ -50,7 +53,7 @@ const Tasks = () => {
       script += `Start executable DummyApplication --local; `;
     }
 
-
+    console.log(`${config.subject}`)
     script += `Set parameter SubjectName ${config.subject}; `;
 
     script += "Wait for Connected; ";
