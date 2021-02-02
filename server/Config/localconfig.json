@@ -1,4 +1,6 @@
 {
+  "subject": "",
+  "source": "SignalGenerator",
   "dataDirectory": "data",
   "setParameters": {
     "VisualizeSource": "0",
