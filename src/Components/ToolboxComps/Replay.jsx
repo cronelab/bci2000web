@@ -54,13 +54,13 @@ const ReplayTasks = () => {
       <Card>
         <Card.Header>
           <Card.Title>
-            <InputGroup>
+            {/* <InputGroup>
               <InputGroup.Checkbox
                 as
                 Button
                 onClick={e => setStimPres(e.target.checked)}
               />
-            </InputGroup>
+            </InputGroup> */}
             <h3 className="text-center">Replay files</h3>
           </Card.Title>
         </Card.Header>
