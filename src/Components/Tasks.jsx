@@ -64,7 +64,7 @@ const Tasks = () => {
       "_"
     )}/${task.title.replace(/\s/g, "_")}_Block${
       currentBlock.block
-    }_Run%24%7bSubjectRun%7d; `;
+    }_Run%24%7bSubjectRun%7d.dat; `;
 
     //Source parameters
     Object.keys(ampConfig.setParameters).map((par) => {

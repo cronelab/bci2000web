@@ -1,12 +1,12 @@
 Application:Application%20Window:ApplicationWindow string WindowBackgroundColor= 0x000000 0x505050 % % // Application window background color (color)
-Application:Sequencing:StimulusTask float PreRunDuration= 1 1 0 % // pause preceding first sequence
-Application:Sequencing:StimulusTask float PostRunDuration= 1 0 0 % // pause following last sequence
-Application:Sequencing:StimulusTask float PreSequenceDuration= 0 2s 0 % // pause preceding sequences/sets of intensifications
-Application:Sequencing:StimulusTask float PostSequenceDuration= 0 2s 0 % // pause following sequences/sets of intensifications
-Application:Sequencing:StimulusTask float StimulusDuration= 1s 40ms 0 % // stimulus duration
+Application:Sequencing:StimulusTask float PreRunDuration= 5s 1 0 % // pause preceding first sequence
+Application:Sequencing:StimulusTask float PostRunDuration= 5s 0 0 % // pause following last sequence
+Application:Sequencing:StimulusTask float PreSequenceDuration= 5s 2s 0 % // pause preceding sequences/sets of intensifications
+Application:Sequencing:StimulusTask float PostSequenceDuration= 5s 2s 0 % // pause following sequences/sets of intensifications
+Application:Sequencing:StimulusTask float StimulusDuration= 2s 40ms 0 % // stimulus duration
 Application:Sequencing:StimulusTask string EarlyOffsetExpression= % // abort stimulus if this expression becomes true
-Application:Sequencing:StimulusTask float ISIMinDuration= 3.0s 80ms 0 % // minimum duration of inter-stimulus interval
-Application:Sequencing:StimulusTask float ISIMaxDuration= 4.0s 80ms 0 % // maximum duration of inter-stimulus interval
+Application:Sequencing:StimulusTask float ISIMinDuration= 3.5s 80ms 0 % // minimum duration of inter-stimulus interval
+Application:Sequencing:StimulusTask float ISIMaxDuration= 4.5s 80ms 0 % // maximum duration of inter-stimulus interval
 Application:Result%20Processing:StimulusTask int InterpretMode= 0 0 0 2 // interpretation of results: 0 none, 1 online free mode, 2 copy mode (enumeration)
 Application:Result%20Processing:StimulusTask int DisplayResults= 1 1 0 1 // display results of copy/free spelling (boolean)
 Application:Result%20Processing:StimulusTask int AccumulateEvidence= 0 0 0 1 // accumulate evidence until a selection is made (boolean)
@@ -32,7 +32,6 @@ Application:Stimuli:StimulusPresentationTask float AudioVolume= 100 100 0 100 //
 Application:Stimuli:StimulusPresentationTask int AVPlayToEnd= 1 1 0 1 // Never abort replay of media files (boolean)
 Application:Localization:Localization string Language= Default Default % % // Language for user messages
 Application:Localization:Localization matrix LocalizedStrings= { German } { TIME%20OUT%20!!! Waiting%20to%20start%20... } Zeit%20abgelaufen! Warte%20... // Localized user messages
-Source:Blackrock:BlackrockADC matrix DigitalOutput= 1 { Instance Output Expression } 0 4 StimulusCode%20!=%200 // Expressions to control the digital outputs
 Filtering:SpatialFilter int SpatialFilterType= 0 2 0 3 // spatial filter type 0: none, 1: full matrix, 2: sparse matrix, 3: common average reference (CAR) (enumeration)
 Filtering:SpatialFilter:SpatialFilter matrix SpatialFilter= 4 4 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 % % // columns represent input channels, rows represent output channels
 Filtering:SpatialFilter:SpatialFilter intlist SpatialFilterCAROutput= 0 // when using CAR filter type: list of output channels, or empty for all channels

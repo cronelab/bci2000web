@@ -47,14 +47,6 @@ const module = {
           },
           {
             loader: 'postcss-loader',
-            options: {
-              options: {
-                plugins: () => [
-                  require('autoprefixer')({}),
-                  require('autoprefixer')({}),
-                ],
-              },
-            },
           },
           {
             loader: 'sass-loader',

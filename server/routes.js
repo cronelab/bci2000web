@@ -56,7 +56,8 @@ const routes = (express) => {
     fs.readFileSync(`./server/Config/localconfig.json`, 'utf8')
   ).dataDirectory;
   router.get('/subjects', (req, res) => {
-    const dataPaths = helpers.findData(dataDirectory);
+
+    const dataPaths = helpers.findData(`${__dirname}/data`);
 
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;

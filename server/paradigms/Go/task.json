@@ -1,21 +1,26 @@
 {
   "Task_1": {
-    "title": "Generic GO Task",
+    "title": "Generic_Go_Task",
     "description": "Deliver a Simple GO Cue for as long as necessary.",
     "executables": {
       "processing": "Spectral_WS",
       "application": "StimulusPresentation_Timing"
     },
     "addParameters":[],
+
     "setParameters": {},
     "loadParameters": [
       "../parms/SpectralSigProc.prm",
-      "../server/paradigms/Go/PRM/go.prm",
-      "../parms/screen_setup.prm"
+      "../parms/screen_setup.prm",
+      "../server/paradigms/Go/PRM/go.prm"
     ],
     "addEvents": [],
     "addStates": [],
-    "userPrompt": [],
+    "userPrompt": [
+      {
+        "Record CyberGlove?": "--LogCyberGlove=1"
+      }
+    ],
     "Blocks": {
       "Block_1": {
         "block": 1,
