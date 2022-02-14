@@ -1,0 +1,9 @@
+{
+  "subject": "Test",
+  "source": "SignalGenerator",
+  "dataDirectory": "./data",
+  "setParameters": {
+    "VisualizeSource": "0",
+    "VisualizeTiming": "0"
+  }
+}
