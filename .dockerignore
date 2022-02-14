@@ -1,0 +1,6 @@
+data/
+!data/Frontiers*
+node_modules/
+dist/
+migration/
+Dockerfile

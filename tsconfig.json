@@ -1,0 +1,18 @@
+{
+    // "exclude": ["./migration", "./server", "./node_modules", "dist", "src/shared/", "src/Components/Map", "src/Components/Record"],
+    "exclude": ["src/shared/", "src/Components/Map/"],
+    "compilerOptions": {
+        "skipLibCheck": true,
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "jsx": "react",
+        "esModuleInterop": true,
+        "downlevelIteration": true,
+        "incremental": true,
+        "module": "es6",
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "lib": ["ES2015", "DOM"],
+        "typeRoots": ["node_modules/@types"]
+    }
+}

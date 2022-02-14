@@ -1,0 +1,70 @@
+{
+  "times": {
+    "template": ["baselineStart", "baselineEnd", "trialStart", "trialEnd"],
+    "default": [-1.0, -0.2, -1.0, 3.0],
+    "PictureNaming": [-1.0, -0.2, -1.0, 3.0],
+    "SoundNaming": [-1.0, -0.2, -1.0, 3.5],
+    "BrandtNaming": [-1.0, -0.2, -1.0, 3.0],
+    "WordReading": [-1.0, -0.2, -1.0, 2.5],
+    "AuditoryNaming": [-1.0, -0.2, -1.0, 4.0],
+    "AuditoryNamingSpanish": [-1.0, -0.2, -1.0, 4.0],
+    "AuditoryWordRepetition": [-1.0, -0.2, -1.0, 2.5],
+    "SyllableRepetition": [-1.0, -0.2, -1.0, 2.5],
+    "SyllableReading": [-1.0, -0.2, -1.0, 2.5],
+    "Matlab_CCEPS": [-1.0, -0.01, -1.0, 1.5],
+    "PassiveStim": [-0.6, -0.2, -1.0, 1.5],
+    "PassiveFingerVibration": [-0.6, -0.2, -0.6, 1.5],
+    "AutoStim": [-1.8, -1.0, -1.8, 1.8],
+    "AutoTone": [-1.0, -0.2, -1.0, 2.2],
+    "SyllableStrings*": [-1.0, -0.2, -1.0, 4.5],
+    "UTHouston_Jabberwocky*": [-1.0, -0.2, -1.0, 6.0],
+    "OLDSentenceCompletion*": [-1.0, -0.2, -1.0, 6.5],
+    "SentenceCompletion*": [0.0, 1.0, -4.0, 1.0],
+    "GoalsTask*": [-1.0, -0.2, -1.0, 5.0],
+    "Match3": [-3.5, -2.9, -3.5, 1.0],
+    "GenericGOTask": [-2.0, 0.0, -2.0, 3.0],
+    "AF_PictureNaming": [-1.0, 0.2, -1.0, 2.0]
+  },
+  "tasks": {
+    "default": {
+      "trialWindow": {
+        "start": -0.5,
+        "end": 2.0
+      },
+      "baselineWindow": {
+        "start": -0.5,
+        "end": -0.1
+      }
+    },
+    "PictureNaming": {
+      "trialWindow": {
+        "start": -1.0,
+        "end": 3.5
+      },
+      "baselineWindow": {
+        "start": -1.0,
+        "end": -0.2
+      }
+    },
+    "AF_PictureNaming": {
+      "trialWindow": {
+        "start": -1.0,
+        "end": 2.0
+      },
+      "baselineWindow": {
+        "start": -1.0,
+        "end": -0.2
+      }
+    },
+    "WordRepetition": {
+      "trialWindow": {
+        "start": -1.0,
+        "end": 2.5
+      },
+      "baselineWindow": {
+        "start": -1.0,
+        "end": -0.2
+      }
+    }
+  }
+}

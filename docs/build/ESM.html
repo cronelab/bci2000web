@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Cortical Stimulation &mdash; WebFM  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> WebFM
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Cortical Stimulation</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting started</a></li>
+<li><a class="reference internal" href="#breakdown">Breakdown</a><ul>
+<li><a class="reference internal" href="#electrode-selection">Electrode selection</a></li>
+<li><a class="reference internal" href="#modifying-parameters">Modifying parameters</a></li>
+<li><a class="reference internal" href="#task-selection">Task selection</a></li>
+<li><a class="reference internal" href="#effect-selection">Effect selection</a></li>
+<li><a class="reference internal" href="#motor-and-sensory-responses">Motor and Sensory responses</a></li>
+<li><a class="reference internal" href="#send-data-to-server">Send data to server</a></li>
+<li><a class="reference internal" href="#generate-report">Generate report</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-structure">Data Structure</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">WebFM</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Cortical Stimulation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/ESM.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cortical-stimulation">
+<h1>Cortical Stimulation<a class="headerlink" href="#cortical-stimulation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Go to <a class="reference external" href="localhost:8090">Dashboard</a></p>
+</li>
+<li><p class="first">Select a patient from the dropdown menu</p>
+</li>
+<li><p class="first">Select “Cortical Stimulation” from the task bar</p>
+</li>
+<li><p class="first">Modify parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Electrodes</li>
+<li>Current</li>
+<li>Frequency</li>
+<li>Duration</li>
+<li>Notes</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Select “Task” from dropdown (or “No Task” if titrating)</p>
+</li>
+<li><p class="first">If running a task, select which task from the dropdown</p>
+</li>
+<li><p class="first">Select which effect (or “Clear”) was elicited during stimulation</p>
+<blockquote>
+<div><ul>
+<li><p class="first">If a motor or sensory response was recorded:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Select which side of the body the response was recorded from</li>
+<li>Select which areas on the homonculus</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Select “Trial complete” to submit the results or “Clear” to undo the result</p>
+</li>
+<li><p class="first">Select “Generate Report” to create a spreadsheet</p>
+</li>
+</ul>
+</div>
+<div class="section" id="breakdown">
+<h2>Breakdown<a class="headerlink" href="#breakdown" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="electrode-selection">
+<h3>Electrode selection<a class="headerlink" href="#electrode-selection" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/Electrodes.png" src="_images/Electrodes.png" />
+</div>
+<div class="section" id="modifying-parameters">
+<h3>Modifying parameters<a class="headerlink" href="#modifying-parameters" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/EditableParameters.png" src="_images/EditableParameters.png" />
+</div>
+<div class="section" id="task-selection">
+<h3>Task selection<a class="headerlink" href="#task-selection" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/TaskSelection.png" src="_images/TaskSelection.png" />
+</div>
+<div class="section" id="effect-selection">
+<h3>Effect selection<a class="headerlink" href="#effect-selection" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/PositiveEffect.png" src="_images/PositiveEffect.png" />
+</div>
+<div class="section" id="motor-and-sensory-responses">
+<h3>Motor and Sensory responses<a class="headerlink" href="#motor-and-sensory-responses" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><img alt="_images/MotorResponse.png" class="first last" src="_images/MotorResponse.png" />
+</td>
+<td><img alt="_images/SensoryResponse.png" class="first last" src="_images/SensoryResponse.png" />
+</td>
+</tr>
+<tr class="row-even"><td colspan="2"><img alt="_images/MotorAndSensoryLogs.png" class="first last" src="_images/MotorAndSensoryLogs.png" />
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="send-data-to-server">
+<h3>Send data to server<a class="headerlink" href="#send-data-to-server" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/SendDataToServer.png" src="_images/SendDataToServer.png" />
+</div>
+<div class="section" id="generate-report">
+<h3>Generate report<a class="headerlink" href="#generate-report" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/CSVReport.png" src="_images/CSVReport.png" />
+</div>
+</div>
+<div class="section" id="data-structure">
+<h2>Data Structure<a class="headerlink" href="#data-structure" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;patientID&quot;</span><span class="p">:</span> <span class="s2">&quot;PY#&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;01/01/20&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;results&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;electrodes&quot;</span><span class="p">:</span> <span class="s2">&quot;elec1_elec2&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;Comprehension (Token)&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;01:01:01&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;current&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="nt">&quot;frequency&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+            <span class="nt">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="nt">&quot;result&quot;</span><span class="p">:</span> <span class="s2">&quot;Language&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;notes&quot;</span><span class="p">:</span> <span class="s2">&quot;Notes placed here.&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;purple&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/CorticalStimulation.png" src="_images/CorticalStimulation.png" />
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Christopher Coogan, Maxwell Collard.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

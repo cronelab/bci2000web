@@ -1,0 +1,115 @@
+
+// .fm-horizon {
+//   border-top: solid 1px rgba(0, 0, 0, 0.5);
+//   border-bottom: solid 1px rgba(0, 0, 0, 0.5);
+//   overflow: hidden;
+//   position: relative;
+// }
+
+// .fm-horizon.fm-horizon-small {
+//   border-top: solid 1px rgba(0, 0, 0, 0.2);
+//   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+// }
+
+// .fm-horizon + .fm-horizon {
+//   border-top: none;
+// }
+
+// .fm-horizon canvas {
+//   display: block;
+//   image-rendering: pixelated;
+// }
+
+// .fm-horizon .title,
+// .fm-horizon .value {
+//   top: 0;
+//   line-height: 13px;
+//   margin: 1px 2px;
+//   position: absolute;
+//   font-family: sans-serif;
+//   font-weight: bold;
+//   font-size: 14px;
+//   color: #000;
+//   white-space: nowrap;
+// }
+
+// .fm-horizon {
+//   .title {
+//     left: 0;
+//   }
+
+//   .value {
+//     right: 0;
+//   }
+// }
+
+// .fm-horizon.fm-horizon-small .title {
+//   line-height: 6px;
+//   font-size: 8px;
+// }
+
+// .fm-scope-line {
+//   fill: none;
+//   stroke: black;
+//   stroke-width: 1.5px;
+// }
+
+// .fm-cursor-svg {
+//   position: fixed;
+//   z-index: 100;
+//   pointer-events: none;
+// }
+
+// .fm-cursor-line {
+//   stroke: #000000;
+//   stroke-width: 1;
+//   stroke-opacity: 0.5;
+//   stroke-linecap: butt;
+// }
+
+// .fm-cursor-line.fm-cursor-locked {
+//   stroke-width: 2;
+//   stroke-opacity: 1;
+// }
+
+// .fm-cursor-origin-line {
+//   stroke: #000000;
+//   stroke-width: 2;
+//   stroke-opacity: 0.75;
+//   stroke-linecap: butt;
+// }
+
+.horizon {
+  border-top: solid 1px #000;
+  border-bottom: solid 1px #000;
+  overflow: hidden;
+  position: relative;
+}
+
+.horizon + .horizon {
+  border-top: none;
+}
+
+.horizon canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+
+.horizon .title,
+.horizon .value {
+bottom: 0;
+line-height: 30px;
+margin: 0 6px;
+position: absolute;
+font-family: sans-serif;
+text-shadow: 0 1px 0 rgba(255,255,255,.5);
+white-space: nowrap;
+}
+
+.horizon .title {
+left: 0;
+}
+
+.horizon .value {
+right: 0;
+}
