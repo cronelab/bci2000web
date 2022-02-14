@@ -33,3 +33,6 @@ yarn-error.log*
 .turbo
 
 sync.ffs_db
+apps/ReconstructionSuite/.dockerignore
+apps/ReconstructionSuite/visualize/.gitconfig
+apps/ReconstructionSuite/visualize/.ssh/known_hosts

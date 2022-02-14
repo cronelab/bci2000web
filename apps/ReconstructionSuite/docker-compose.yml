@@ -14,8 +14,8 @@ services:
       - ./preprocess/scripts:/home/preprocess/scripts:cached
     tty: true
     
-  mesh_generator2:
-    container_name: mesh_generator2
+  mesh_generator:
+    container_name: mesh_generator
     build:
       context: ./generate
       dockerfile: Dockerfile
@@ -26,8 +26,8 @@ services:
       - ./generate:/home/generate:cached
     tty: true
 
-  mesh_visualizer2:
-    container_name: mesh_visualizer2
+  mesh_visualizer:
+    container_name: mesh_visualizer
     build: 
       context: ./visualize
       dockerfile: Dockerfile

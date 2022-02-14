@@ -145,8 +145,8 @@ function SlicedView(): JSX.Element {
       let VOX = new Vector3(lastKnownClick.x, lastKnownClick.y, lastKnownClick.z).applyMatrix4(stack_._lps2IJK);
       let tkrRAS = new Vector3(VOX.x, VOX.y, VOX.z).applyMatrix4(stack_._ijk2LPS).applyMatrix4(LPStoRAS);
 
-      let req_anatomicalLocation = await fetch(`locationInfo/${activeSubject}?location=${JSON.stringify(VOX)}`);
-      let anatomicalLocation = await req_anatomicalLocation.json();
+      // let req_anatomicalLocation = await fetch(`locationInfo/${activeSubject}?location=${JSON.stringify(VOX)}`);
+      let anatomicalLocation = ''; //await req_anatomicalLocation.json();
 
       let sphere_r0 = new Mesh(new SphereGeometry(1.1), new MeshBasicMaterial({ color: electrodeColor }));
       sphere_r0.position.set(lastKnownClick.x, lastKnownClick.y, lastKnownClick.z);
@@ -250,8 +250,11 @@ function SlicedView(): JSX.Element {
           link.style.display = 'none';
           document.body.appendChild(link);
           //@ts-ignore
-          link.href = URL.createObjectURL(new Blob([result], { type: 'application/octet-stream' }));
-          link.download = 'electrodes.glb';
+          // link.href = URL.createObjectURL(new Blob([result], { type: 'application/octet-stream' }));
+          link.href = URL.createObjectURL(new Blob([JSON.stringify(valuesToSave)]), {
+            type: 'application/octet-stream',
+          });
+          link.download = 'files.json';
           link.click();
         },
         { binary: true }

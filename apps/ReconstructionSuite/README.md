@@ -18,7 +18,7 @@ Output:
 - docker-compose up --build
 - docker exec -it -e SUBJECT=$SUBJECT preprocessor python3 scripts/1_reconstruction.py
 - docker exec -it -e SUBJECT=$SUBJECT mesh_generator bash 1_prep.sh
-- docker exec -it -e SUBJECT=$SUBJECT mesh_generator bash 2_brainGenerator.sh 
+- docker exec -it -e SUBJECT=$SUBJECT mesh_generator bash 2_brainGenerator.sh
 - docker exec -it -e SUBJECT=$SUBJECT preprocessor python3 scripts/2_coregistration.py
 - docker exec -it mesh_visualizer npm run start
 - docker exec -it -e SUBJECT=$SUBJECT mesh_generator bash 3_electrodeGenerator.sh

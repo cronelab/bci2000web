@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useEffect, Suspense, useState, useRef } from 'react';
 import '../App.scss';
 import { initRenderer3D } from '../helpers/helpers';

@@ -5,7 +5,7 @@ import { exec } from 'child_process';
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 
 let dataDir = '/data';
-console.log(dataDir)
+console.log(dataDir);
 let __dirname = path.resolve(path.dirname(''));
 
 const routes = (express) => {
@@ -45,7 +45,7 @@ const routes = (express) => {
   });
 
   router.get('/api/list', (req, res) => {
-    console.log("AY!")
+    console.log('AY!');
     fs.readdir('/data/', (err, subjects) => {
       if (subjects != undefined) {
         res.status(200).json(subjects.filter((x) => x.startsWith('PY')));
@@ -103,16 +103,15 @@ const routes = (express) => {
   //T1
   router.get('/cerebellumRemoved/:subject', (req, res) => {
     let subject = req.params.subject;
-    console.log("ASDSD")
+    console.log('ASDSD');
     if (fs.existsSync(`${dataDir}/${subject}/cerebellumRemoved.nii.gz`)) {
       res.setHeader('Content-Type', 'application/gzip');
       res.sendFile(`${dataDir}/${subject}/cerebellumRemoved.nii.gz`);
-      console.log("ASDSD1")
+      console.log('ASDSD1');
     } else if (fs.existsSync(`${dataDir}/${subject}/cerebellumRemoved.nii`)) {
       res.setHeader('Content-Type', 'application/nii');
       res.sendFile(`${dataDir}/${subject}/cerebellumRemoved.nii`);
-      console.log("ASDSD2")
-
+      console.log('ASDSD2');
     } else {
       res.status(404).send('Not Found');
     }
@@ -196,13 +195,9 @@ const routes = (express) => {
           flag: 'a+',
         }
       );
-      writeFileSync(
-        `/data/${subject}/electrodes/anatomicalLocations.tsv`,
-        `${entry}\t${req.body[entry].location}\n`,
-        {
-          flag: 'a+',
-        }
-      );
+      writeFileSync(`/data/${subject}/electrodes/anatomicalLocations.tsv`, `${entry}\t${req.body[entry].location}\n`, {
+        flag: 'a+',
+      });
     });
     res.send(JSON.stringify('Saved!'));
   });

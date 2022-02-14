@@ -1,8 +1,8 @@
 #!/bin/bash
 
-mkdir -p $SUBJECTS_DIR/$SUBJECT/obj
-mkdir -p $SUBJECTS_DIR/$SUBJECT/rois
-mkdir -p $SUBJECTS_DIR/$SUBJECT/electrodes
+mkdir -p -m777 $SUBJECTS_DIR/$SUBJECT/obj
+mkdir -p -m777 $SUBJECTS_DIR/$SUBJECT/rois
+mkdir -p -m777 $SUBJECTS_DIR/$SUBJECT/electrodes
 mkdir -p /usr/local/freesurfer/matlab
 
 ./bash/aseg2srf.sh $SUBJECT
