@@ -1,0 +1,26 @@
+{
+  "name": "Existing Dockerfile",
+  "context": ".",
+  "dockerFile": "./Dockerfile",
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/usr/src/NAVI,type=bind,consistency=cached",
+  // "mounts": [
+  // 	"source=/mnt/user/Data/Projects/Work/webfm,target=/webfm,type=bind,consistency=cached"
+  // ],
+  "workspaceFolder": "/usr/src/NAVI",
+  "extensions": [
+    "coenraads.bracket-pair-colorizer-2",
+    "esbenp.prettier-vscode",
+    "eamodio.gitlens",
+    "formulahendry.auto-rename-tag",
+    "dbaeumer.vscode-eslint",
+    "wix.vscode-import-cost",
+    "visualstudioexptteam.vscodeintellicode"
+  ],
+  "appPort": [
+    "3010:3010"
+  ]
+  // Uncomment the next line to run commands after the container is created - for example installing curl.
+}

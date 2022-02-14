@@ -1,0 +1,77 @@
+{
+  "states": [
+    {
+      "name": "StimulusCode",
+      "width": 4
+    },
+    {
+      "name": "Baseline",
+      "width": 1
+    },
+    {
+      "name": "TrialStart",
+      "width": 1
+    },
+    {
+      "name": "Response",
+      "width": 1
+    },
+    {
+      "name": "ControlUp",
+      "width": 1
+    },
+    {
+      "name": "ControlDown",
+      "width": 1
+    },
+    {
+      "name": "ControlLeft",
+      "width": 1
+    },
+    {
+      "name": "ControlRight",
+      "width": 1
+    },
+    {
+      "name": "ControlClick",
+      "width": 1
+    },
+    {
+      "name": "CursorUp",
+      "width": 1
+    },
+    {
+      "name": "CursorDown",
+      "width": 1
+    },
+    {
+      "name": "CursorLeft",
+      "width": 1
+    },
+    {
+      "name": "CursorRight",
+      "width": 1
+    },
+    {
+      "name": "CursorClick",
+      "width": 1
+    },
+    {
+      "name": "OptionNumbers",
+      "width": 3
+    },
+    {
+      "name": "OptionState",
+      "width": 3
+    }
+  ],
+  "executables": ["Blackrock", "ZMQ_Filter", "DummyApplication"],
+  "setParameters": [
+    "ZMQContextOutputServer 5556",
+    "VisualizeSource 0",
+    "SamplingRate 1000Hz",
+    "SubjectName Chris",
+    "VisualizeTiming 0",
+    "WSSourceServer *:20100"
+  ]
+}
