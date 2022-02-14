@@ -25,7 +25,7 @@ const PacedSentence = () => {
 
       <Container fluid style={{ height: window.innerHeight * 0.8, padding: 0 }}>
         <svg width="100%" height="100%">
-          {/* <circle
+          <circle
             cx="25%"
             cy="45%"
             r="10"
@@ -35,7 +35,7 @@ const PacedSentence = () => {
           />
           <text x="20%" y="50%">
             There was an Old Man of Marseilles
-          </text> */}
+          </text>
 
           <rect width="20" height="20" x="20%" y="50%" ref={rectangleRef}>
           </rect>

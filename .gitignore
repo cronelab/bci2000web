@@ -31,3 +31,5 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+sync.ffs_db

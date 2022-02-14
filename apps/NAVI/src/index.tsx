@@ -18,6 +18,8 @@ import Hand from './Components/Tasks/Movements/Hand/Hand'
 import Arm from './Components/Tasks/Movements/Arm/Arm'
 import NonSpeechMovements from './Components/Tasks/NonSpeechMovements/NonSpeechMovements';
 import ASL from './Components/Tasks/Movements/ASL/ASL';
+import GridScan1x3 from './Components/Tasks/GridScan/GridScan1x3';
+import GridScan3x3 from './Components/Tasks/GridScan/GridScan3x3';
 
 ReactDOM.render(
   <Provider>
@@ -37,6 +39,9 @@ ReactDOM.render(
         <Route path="/hand" element={<Hand />} />
         <Route path="/arm" element={<Arm />} />
         <Route path="/asl" element={<ASL />} />
+        <Route path="/gridscan1x3" element={<GridScan1x3 />} />
+        <Route path="/gridscan3x3" element={<GridScan3x3 />} />
+        
         
       </Routes>
     </Router>
