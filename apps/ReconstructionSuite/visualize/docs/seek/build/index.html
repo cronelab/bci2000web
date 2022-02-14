@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SEEK Pipeline (Stereotactic ElectroEncephalography Kit) &#8212; seek 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          SEEK</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="auto_examples/index.html">Tutorials</a></li>
+                <li><a href="pipeline_description.html">Pipeline Description</a></li>
+                <li><a href="api.html">Python API</a></li>
+                <li><a href="whats_new.html">What's new</a></li>
+                <li><a href="https://github.com/ncsl/seek">GitHub</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+<div class="navbar-form navbar-right navbar-btn dropdown btn-group-sm" style="margin-left: 20px; margin-top: 5px; margin-bottom: 5px">
+  <button type="button" class="btn btn-primary navbar-btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
+    v0.1.0
+    <span class="caret"></span>
+  </button>
+<!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">-->
+<!--    <li><a href="https://mne.tools/mne-bids/dev/index.html">Development</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/stable/index.html">Stable</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.4/index.html">v0.4</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.3/index.html">v0.3</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.2/index.html">v0.2</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.1/index.html">v0.1</a></li>-->
+<!--  </ul>-->
+</div>
+
+
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="seek-pipeline-stereotactic-electroencephalography-kit">
+<h1>SEEK Pipeline (Stereotactic ElectroEncephalography Kit)<a class="headerlink" href="#seek-pipeline-stereotactic-electroencephalography-kit" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://circleci.com/gh/ncsl/seek"><img alt="CircleCI" src="https://circleci.com/gh/ncsl/seek.svg?style=svg" /></a>
+<a class="reference external image-reference" href="https://travis-ci.com/ncsl/seek"><img alt="Build Status" src="https://travis-ci.com/ncsl/seek.svg?token=6sshyCajdyLy6EhT8YAq&amp;branch=master" /></a>
+<a class="reference external image-reference" href="https://github.com/ambv/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
+<a class="reference external image-reference" href="https://img.shields.io/github/repo-size/ncsl/seek"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/ncsl/seek" /></a>
+<a class="reference external image-reference" href="https://zenodo.org/badge/latestdoi/160566959"><img alt="DOI" src="https://zenodo.org/badge/160566959.svg" /></a>
+<a class="reference external image-reference" href="https://snakemake.readthedocs.io"><img alt="Snakemake" src="https://img.shields.io/badge/snakemake-≥5.27.4-brightgreen.svg?style=flat" /></a>
+<a class="reference external image-reference" href="https://app.netlify.com/sites/elated-almeida-a25d64/deploys"><img alt="Netlify Status" src="https://api.netlify.com/api/v1/badges/d36d01d2-319a-4e0d-b84f-1d5b4133d5f8/deploy-status" /></a>
+<a class="reference external image-reference" href="https://gitter.im/ncsl/seek?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge"><img alt="Gitter" src="https://badges.gitter.im/ncsl/seek.svg" /></a>
+<p>This repo describes efforts to pipeline explicitly a neuroimaging data workflow that involves T1 MRI, CT,
+and iEEG data (ECoG, or SEEG). For ECoG data, we do not explicitly have a process outlined, but these are significantly easier since grids can
+be easily interpolated. See <a href="#id3"><span class="problematic" id="id4">`Fieltrip Toolbox`_</span></a>.</p>
+<p>To start using the workflows with your data, see [workflow documentation](workflow/documentation.md) file.</p>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>For a detailed description of the overall SEEK workflow, see <a class="reference external" href="https://github.com/ncsl/seek/blob/master/workflow/documentation.md">workflow documentation</a>.</p></li>
+<li><p>For a detailed description of the SEEK workflow of contact localization, specifically localizing the 2 points per electrode, see <a class="reference internal" href="localization_guide.html"><span class="doc">localization guide</span></a></p></li>
+</ul>
+<p>For a description of the visualization engine, see: <a class="reference external" href="https://github.com/cronelab/ReconstructionVisualizer">https://github.com/cronelab/ReconstructionVisualizer</a></p>
+</div>
+<div class="section" id="setup-and-installation">
+<h2>Setup and Installation<a class="headerlink" href="#setup-and-installation" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference external" href="installation.rst">INSTALLATION GUIDE</a> for full instructions. SEEK uses the <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a>
+workflow management system to create the different workflows. We chose this because
+it is easy to run individual workflows, as well as an entire workflow from the command line.
+The full repository is set up similar to the <cite>cookiecutter</cite> Snakemake file: <cite>cookiecutter gh:snakemake-workflows/cookiecutter-snakemake-workflow</cite>.</p>
+<p>The recommended installation is via <a class="reference external" href="https://www.docker.com/">Docker</a>. See here for instructions on running workflows in the container are shown here below:</p>
+</div>
+<div class="section" id="docker-installation">
+<h2>Docker Installation<a class="headerlink" href="#docker-installation" title="Permalink to this headline">¶</a></h2>
+<p>The Docker containers sit on <a class="reference external" href="https://hub.docker.com/">Docker Hub</a>, specifically at <a class="reference external" href="https://hub.docker.com/r/neuroseek/seek">https://hub.docker.com/r/neuroseek/seek</a>.</p>
+<p>Setup: Note that the docker container names are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">seek_reconstruction</span>
+<span class="o">-</span> <span class="n">seek_localization</span>  <span class="c1"># tbd</span>
+<span class="o">-</span> <span class="n">seek_visualization</span>  <span class="c1"># tbd</span>
+</pre></div>
+</div>
+<p>To setup the container in your system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span> <span class="o">--</span><span class="n">build</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Running workflows within the container:
+In another terminal, one can run the pipeline commands in terminal.
+
+.. code-block::
+
+   # run container and mount data directories
+   docker run -v $PWD/Data:/data -it -e bids_root=/data -e derivatives_output_dir=/data/derivatives --rm neuroimg_pipeline_reconstruction bash
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Running</span> <span class="n">workflows</span> <span class="o">**</span><span class="n">using</span><span class="o">**</span> <span class="n">the</span> <span class="n">container</span><span class="p">:</span>
+
+<span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span>
+
+   <span class="c1"># run snakemake using the containers</span>
+   <span class="n">snakemake</span> <span class="o">&lt;</span><span class="n">rule_name</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">use</span><span class="o">-</span><span class="n">singularity</span>
+</pre></div>
+</div>
+<p>For running individual pipelines, see <a class="reference external" href="INSTALLATION.md">INSTALLATION GUIDE</a>.</p>
+</div>
+<div class="section" id="creating-persistent-volumes-in-docker">
+<h2>Creating persistent volumes in Docker<a class="headerlink" href="#creating-persistent-volumes-in-docker" title="Permalink to this headline">¶</a></h2>
+<p>If one wants to make a persistent data volume that reflects changes in the Docker container running Snakemake workflows,
+then one can just make a <code class="docutils literal notranslate"><span class="pre">data/</span></code> directory inside this repository. Then add in sourcedata. This
+directory serves as the BIDS root of the workflows.</p>
+</div>
+<div class="section" id="data-organization">
+<h2>Data Organization<a class="headerlink" href="#data-organization" title="Permalink to this headline">¶</a></h2>
+<p>We use BIDS. See <a class="reference external" href="https://github.com/bids-standard/bids-starter-kit/wiki/The-BIDS-folder-hierarchy">https://github.com/bids-standard/bids-starter-kit/wiki/The-BIDS-folder-hierarchy</a></p>
+<p>Before data is converted to BIDS in <code class="docutils literal notranslate"><span class="pre">seek/pipeline/01-prep</span></code> pipeline,
+then <code class="docutils literal notranslate"><span class="pre">sourcedata/</span></code> should contain a semi-structured format of the neuroimaging data that will
+be put through the workflow.</p>
+<p><strong>sourcedata/</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="p">{</span><span class="n">subject</span><span class="p">}</span><span class="o">/</span>
+    <span class="o">-</span> <span class="n">premri</span><span class="o">/*.</span><span class="n">dcm</span>
+    <span class="o">-</span> <span class="n">posmri</span><span class="o">/*.</span><span class="n">dcm</span>
+    <span class="o">-</span> <span class="n">postct</span><span class="o">/*.</span><span class="n">dcm</span>
+</pre></div>
+</div>
+<div class="section" id="development">
+<h3>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h3>
+<p>Seek was created and is maintained by <a class="reference external" href="https://adam2392.github.io">Adam Li</a>. It is also maintained and contributed by
+Christopher Coogan and other researchers in the NCSL and Crone lab. Contributions are more than welcome so feel free to contact me, open an issue or submit a pull request! See the
+<span class="xref std std-doc">contribution guide</span>.</p>
+<p>To report a bug, please visit the <a class="reference external" href="https://github.com/ncsl/seek/issues/">GitHub repository</a>.</p>
+<p>Note that this program is provided with NO WARRANTY OF ANY KIND. If you can, always double check the results with a human researcher, or clinician.</p>
+</div>
+<div class="section" id="pipeline-process-visualized">
+<h3>Pipeline Process Visualized<a class="headerlink" href="#pipeline-process-visualized" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="seek/neuroimg/pipeline/dag_neuroimaging_pipeline_reconstruction.pdf">DAG of Pipeline in Snakemake</a></p>
+</div>
+<div class="section" id="how-to-cite-seek">
+<h3>How to cite SEEK?<a class="headerlink" href="#how-to-cite-seek" title="Permalink to this headline">¶</a></h3>
+<p>If you want to cite Seek, please use the Zenodo for the repository.</p>
+</div>
+<div class="section" id="acknowledgement">
+<h3>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h3>
+<p>Several functions of Seek essentially make use of existing software packages for neuroimaging analysis, including:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/recon-all">Recon-all (FreeSurfer)</a></p></li>
+<li><p><a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FLIRT">FSL Flirt</a></p></li>
+<li><p><a class="reference external" href="http://www.mrtrix.org/">MRTrix3</a></p></li>
+<li><p><a class="reference external" href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a></p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<h3>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>For incorporation of DTI data, see <a class="reference external" href="https://github.com/neurodata/ndmg">ndmeg</a>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019-2020, SEEK Developers. Last updated on 2020-12-04.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

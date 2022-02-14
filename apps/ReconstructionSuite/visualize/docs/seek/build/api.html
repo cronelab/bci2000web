@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Documentation &#8212; seek 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          SEEK</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="auto_examples/index.html">Tutorials</a></li>
+                <li><a href="pipeline_description.html">Pipeline Description</a></li>
+                <li><a href="#">Python API</a></li>
+                <li><a href="whats_new.html">What's new</a></li>
+                <li><a href="https://github.com/ncsl/seek">GitHub</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+<div class="navbar-form navbar-right navbar-btn dropdown btn-group-sm" style="margin-left: 20px; margin-top: 5px; margin-bottom: 5px">
+  <button type="button" class="btn btn-primary navbar-btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
+    v0.1.0
+    <span class="caret"></span>
+  </button>
+<!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">-->
+<!--    <li><a href="https://mne.tools/mne-bids/dev/index.html">Development</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/stable/index.html">Stable</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.4/index.html">v0.4</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.3/index.html">v0.3</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.2/index.html">v0.2</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.1/index.html">v0.1</a></li>-->
+<!--  </ul>-->
+</div>
+
+
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="api-documentation">
+<span id="id1"></span><h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Here we list the Application Programming Interface (API) for SEEK. This is the reference for classes (<code class="docutils literal notranslate"><span class="pre">CamelCase</span></code> names) and functions
+(<code class="docutils literal notranslate"><span class="pre">underscore_case</span></code> names) of SEEK, grouped thematically by analysis stage.</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#seek-core-api-seek" id="id2">seek Core API (<code class="xref py py-mod docutils literal notranslate"><span class="pre">seek</span></code>)</a></p></li>
+</ul>
+</div>
+<div class="section" id="seek-core-api-seek">
+<h2><a class="toc-backref" href="#id2">seek Core API (<code class="xref py py-mod docutils literal notranslate"><span class="pre">seek</span></code>)</a><a class="headerlink" href="#seek-core-api-seek" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/seek.bids_validate.html#seek.bids_validate" title="seek.bids_validate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bids_validate</span></code></a>(bids_root)</p></td>
+<td><p>Run BIDS validator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/seek.convert_img_to_bids.html#seek.convert_img_to_bids" title="seek.convert_img_to_bids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_img_to_bids</span></code></a>(image_input, bids_root, …)</p></td>
+<td><p>Run Bids Conversion script to be updated.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/seek.PatientBidsRoot.html#seek.PatientBidsRoot" title="seek.PatientBidsRoot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PatientBidsRoot</span></code></a>(subject_id, bids_root[, …])</p></td>
+<td><p>A utility class wrapper for a Bids root.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019-2020, SEEK Developers. Last updated on 2020-12-04.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

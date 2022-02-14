@@ -1,0 +1,12 @@
+{
+    "name": "Preprocess",
+    "dockerComposeFile": ["../docker-compose.yml"],
+    "service": "preprocessor",
+    "shutdownAction": "none",
+    "workspaceFolder": "/home/preprocess",
+    "extensions": ["esbenp.prettier-vscode", "aaron-bond.better-comments", "dbaeumer.vscode-eslint"],
+    "settings": {
+      "terminal.integrated.profile.linux": "bash"
+    }
+  }
+  
