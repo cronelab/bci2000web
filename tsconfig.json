@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "ES5",
+    "baseUrl": ".",
+    "paths": {
+      "telnet-client": ["node_modules/telnet-client/lib/index.js"],
+      "stream": ["node_modules/stream-browserify/index.js"],
+      "net": ["node_modules/net-browserify/browser.js"]
+    },
+    "sourceMap": true,
+    "module": "UMD",
+    "declaration": true
+  },
+  "include": ["src/**/*.ts"]
+}
