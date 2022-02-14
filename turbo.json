@@ -4,6 +4,9 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "start":{
+      "dependsOn": ["^start"]
+    },
     "lint": {
       "outputs": []
     },
