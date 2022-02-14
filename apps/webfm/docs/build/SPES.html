@@ -1,0 +1,422 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Single Pulse Electrical Stimulation &mdash; WebFM  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> WebFM
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Single Pulse Electrical Stimulation</a><ul>
+<li><a class="reference internal" href="#sub-cortico-sub-cortico-evoked-potentials">(Sub)Cortico-(Sub)Cortico Evoked Potentials</a></li>
+<li><a class="reference internal" href="#sub-cortico-sub-cortico-spectral-responses">(Sub)Cortico-(Sub)Cortico Spectral Responses</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">WebFM</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Single Pulse Electrical Stimulation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/SPES.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="single-pulse-electrical-stimulation">
+<h1>Single Pulse Electrical Stimulation<a class="headerlink" href="#single-pulse-electrical-stimulation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sub-cortico-sub-cortico-evoked-potentials">
+<h2>(Sub)Cortico-(Sub)Cortico Evoked Potentials<a class="headerlink" href="#sub-cortico-sub-cortico-evoked-potentials" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/EvokedPotentials.png" src="_images/EvokedPotentials.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;reciprocal&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;chan1_chan2&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;response&quot;</span><span class="p">:</span> <span class="s2">&quot;chan3_chan4&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;samplingRate&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="nt">&quot;significant&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;chan1_chan2&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;chan1_chan2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">-54.354406730593283</span><span class="p">]</span>
+    <span class="p">},</span>
+
+    <span class="nt">&quot;window&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="mi">-500</span><span class="p">,</span>
+        <span class="mi">1500</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;zscores&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;chan1_chan2&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;n1&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mi">535</span><span class="p">,</span>
+                <span class="mf">10.028049634488145</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;n2&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mi">601</span><span class="p">,</span>
+                <span class="mf">14.02594624915977</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;p2&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mi">546</span><span class="p">,</span>
+                <span class="mf">-2.2825574277800249</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;flipped&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="nt">&quot;overall&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mi">535</span><span class="p">,</span>
+                <span class="mf">10.028049634488145</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The ResponseInfo data structure contains relevant information about the average responses from one block of single-pulse electrical stimulation of a pair of electrodes.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>reciprocal</dt>
+<dd><ul class="first last">
+<li>contains a list of all channels that have a reciprocal relationship with the stimulated electrodes whose ResponseInfo is being viewed. This means 1) they showed a significant response in this stimulation block, and 2) when they were stimulated in a different block, they elicited a significant response in the electrodes whose ResponseInfo is being viewed. The “response” subfield for each channel will contain the names of the channels that showed a significant response upon stimulation of the above electrodes. For bipolar referencing, this will simply be the electrode pair whose ResponseInfo is currently viewed, but for monopolar referencing, this will be either one or both of these electrodes.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>samplingRate</dt>
+<dd><ul class="first last">
+<li>contains the sampling rate in Hz of the data collected</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>significant</dt>
+<dd><ul class="first last">
+<li>contains a list of all channels recorded in this stimulation block, and all channels with significant responses are labeled with a “1” under the channel’s field</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>time</dt>
+<dd><ul class="first last">
+<li>contains a list of all channels recorded in this stimulation block, and under each channel’s field is the time series of the channel’s average response, time-locked to stimulus</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>window</dt>
+<dd><ul class="first last">
+<li>contains the start and end time-points in milliseconds, relative to stimulus, of the time series of each channel contains in the “time” field</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>zscores</dt>
+<dd><ul class="first last">
+<li>contains a list of all channels recorded in this stimulation block, and under each channel’s field are measures of the timing and magnitude of average evoked potential’s peaks. N1 and N2 peaks are identified within 10-50 ms and 100-350 ms post-stimulus time windows, respectively, and P2 is identified as a peak with opposite polarity between the n1 and n2 timepoints. The “n1”, “n2”, and “p2” fields contain the index in the time series within “time” at which the peak can be found, followed by the normalized magnitude of the peak (the z-score). “flipped” contains a 1 or 0 indicating whether the polarity of the n1/n2/p2 potentials appear flipped, relative to the convention of n1 and n2 being negative and p2 positive. “overall” indicates the overall z-score used to quantify the channel’s response. If the absolute value of the channel’s n1 z-score was greater than 6, this field will contain the time index and absolute value of the n1 z-score is displayed. Otherwise, placeholder values of [1, 0].</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="sub-cortico-sub-cortico-spectral-responses">
+<h2>(Sub)Cortico-(Sub)Cortico Spectral Responses<a class="headerlink" href="#sub-cortico-sub-cortico-spectral-responses" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/SpectralResponses.png" src="_images/SpectralResponses.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;highGamma&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;frequencyBand&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="mi">70</span><span class="p">,</span>
+            <span class="mi">110</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;samplingRate&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="nt">&quot;significant&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;LAM1_LAM2&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mf">-1.9207325728872038</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;window&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="mi">-450</span><span class="p">,</span>
+            <span class="mi">1000</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;sscores&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;LAM1_LAM2&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;ER&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="mi">461</span><span class="p">,</span>
+                    <span class="mf">108.36628284815538</span>
+                <span class="p">],</span>
+                <span class="nt">&quot;DR&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="mi">1245</span><span class="p">,</span>
+                    <span class="mf">2.5120641548211311</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;lowGamma&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;frequencyBand&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="mi">20</span><span class="p">,</span>
+            <span class="mi">55</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;samplingRate&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="nt">&quot;significant&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;LAM1_LAM2&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mf">-1.9207325728872038</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;window&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="mi">-450</span><span class="p">,</span>
+            <span class="mi">1000</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;sscores&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;LAM1_LAM2&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;ER&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="mi">461</span><span class="p">,</span>
+                    <span class="mf">108.36628284815538</span>
+                <span class="p">],</span>
+                <span class="nt">&quot;DR&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="mi">1245</span><span class="p">,</span>
+                    <span class="mf">2.5120641548211311</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The field structure under “highGamma” and “lowGamma” is identical, containing information from different frequency bands.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>frequencyBand</dt>
+<dd><ul class="first last">
+<li>contains the bandpass frequencies in Hz</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>samplingRate</dt>
+<dd><ul class="first last">
+<li>contains the sampling rate in Hz of the data collected</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>significant</dt>
+<dd><ul class="first last">
+<li>contains a list of all channels recorded in this stimulation block, and all channels with significant responses are labeled with a “1” under the channel’s field</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>time</dt>
+<dd><ul class="first last">
+<li>contains a list of all channels recorded in this stimulation block, and under each channel’s field is the time series of the channel’s average filtered spectral response, time-locked to stimulus</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>window</dt>
+<dd><ul class="first last">
+<li>contains the start and end time-points in milliseconds, relative to stimulus, of the time series of each channel contains in the “time” field</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>sscores</dt>
+<dd><ul class="first last">
+<li>contains a list of all channels recorded in this stimulation block, and under each channel’s field are measures of the timing and magnitude of spectral responses. The “ER” and “DR” (early response and delayed response) fields contain the index in the time series within “time” and the magnitude of the maximum spectral response within 10-100 ms or 100-1000 ms post-stimulus time windows, respectively for ER and DR.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Christopher Coogan, Maxwell Collard.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
