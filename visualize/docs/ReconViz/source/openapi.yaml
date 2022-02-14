@@ -1,0 +1,57 @@
+
+openapi: "3.0.3"
+info:
+  title: ReconstructionVisualizer
+  version: '1.0.0'
+  description: 'Visualize 3D meshes derviced from Freesurfer analyses'
+  contact:
+    email: croneecoglab@gmail.com
+  license:
+    name: "GPL v3.0"
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+paths:
+  /brain/{subject}:
+    get:
+      description: Returns a .glTF file composed of Freesurfer surfaces
+      parameters:
+        - name: subject
+          description: Freesurfer subject
+          in: path
+          schema: 
+            type: string
+          required: true
+      responses:
+        '200': 
+          description: Brain found
+        '404': 
+          description: Subject/Brain not found
+  /electrodes/{subject}:
+    get:
+      description: Returns a .glTF file composed of electrodes localized to the corresponding brain
+      parameters:
+           - name: subject
+             description: Freesurfer subject
+             in: path
+             schema:
+              type: string
+             required: true
+      responses:
+        '200':
+          description: Electrodes found
+        '404': 
+          description: Subject/Electrodes not found
+  /nifti/{subject:
+    get:
+      description: Returns a T1w nifti file
+      parameters:
+        - name: subject
+          description: Freesurfer subject
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200': 
+          description: Nifti found
+        '404': 
+          description: Subject/Nifti not found

@@ -1,0 +1,14 @@
+.vscode/*
+Data*
+node_modules/
+dist/
+.venv
+.idea
+seekdocs/*
+.DS_Store
+.idea/
+sync.ffs_db
+visualize/.npm/*
+preprocess/prog/*
+visualize/.bash_history
+visualize/.node_repl_history

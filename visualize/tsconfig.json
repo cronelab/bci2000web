@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitAny": false,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "ami.js": ["./node_modules/ami.js/build/ami.js"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["src/Views/notyet"]
+}

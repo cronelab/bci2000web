@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Details &mdash; ReconstructionVisualizer  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ReconstructionVisualizer
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="localization.html">Localization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ReconstructionVisualizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Details</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/details.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="details">
+<h1>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mesh-generator">
+<h2>Mesh generator<a class="headerlink" href="#mesh-generator" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Various freesurfer binaries (for converting, tessellating, etc)</p></li>
+<li><p>Various <a class="reference external" href="https://brainder.org">Brainder</a> scripts for mesh generation</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Matlab/Octave</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Blender (OBJ to gLTF and scene generation)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Comes with a python interpreter</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="output-data">
+<h3>Output data<a class="headerlink" href="#output-data" title="Permalink to this headline">¶</a></h3>
+<p>2 glb files, brain and electrodes with the following structures:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Brain</dt><dd><ul>
+<li><dl class="simple">
+<dt>Gyri</dt><dd><ul>
+<li><p>lh.bankssts</p></li>
+<li><p>lh.cuneus</p></li>
+<li><p>rh. superiorfrontal</p></li>
+<li><p>rh. latealocciptal</p></li>
+<li><p>…</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>SubcorticalStructs</dt><dd><ul>
+<li><p>3rd-Ventricle</p></li>
+<li><p>CSF</p></li>
+<li><p>Left-Vessel</p></li>
+<li><p>Right-Hippocampus</p></li>
+<li><p>…</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>WhiteMatter</dt><dd><ul>
+<li><p>Left-Cerebral-White-Matter</p></li>
+<li><p>Right-Cerebral-WhiteMatter</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<a class="reference internal image-reference" href="_images/brain1.png"><img alt="_images/brain1.png" src="_images/brain1.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="_images/brain2.png"><img alt="_images/brain2.png" src="_images/brain2.png" style="width: 200px;" /></a>
+<ul>
+<li><dl>
+<dt>Electrodes</dt><dd><ul>
+<li><dl class="simple">
+<dt>elecA</dt><dd><ul class="simple">
+<li><p>elecA1</p></li>
+<li><p>elecA2</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>elecB</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-e<var>lecB1</var></span></kbd></dt>
+<dd><p>…</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<a class="reference internal image-reference" href="_images/depth_electrodes.png"><img alt="_images/depth_electrodes.png" src="_images/depth_electrodes.png" style="width: 200px;" /></a>
+<p>Additionally the brain.mgz outputted from recon-all is converted to a nifti and named reconstruction.nii</p>
+</div>
+</div>
+<div class="section" id="visualizer">
+<h2>Visualizer<a class="headerlink" href="#visualizer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Dependencies<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Node v14+</p></li>
+<li><p><a class="reference external" href="https://github.com/FNNDSC/ami">AMI Medical Imaging (AMI) JS ToolKit</a></p></li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>After generating the meshes and starting the server, navigate to your web browser: <a class="reference external" href="http://localhost/?subject=fsaverage">http://localhost/?subject=fsaverage</a></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>To disable the meshes:</dt><dd><ul>
+<li><p>Open the Mesh or Electrodes menu and toggle the different meshes</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>The Slicer menu will slice through T1 in the main view and individual sliced views</p></li>
+<li><p>The Transparency menu will make the meshes opaque or transparent</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/visualizer.png"><img alt="_images/visualizer.png" src="_images/visualizer.png" style="width: 400px;" /></a>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Christopher Coogan
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

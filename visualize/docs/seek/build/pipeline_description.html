@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SEEK PIPELINE DESCRIPTION &#8212; seek 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          SEEK</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="auto_examples/index.html">Tutorials</a></li>
+                <li><a href="#">Pipeline Description</a></li>
+                <li><a href="api.html">Python API</a></li>
+                <li><a href="whats_new.html">What's new</a></li>
+                <li><a href="https://github.com/ncsl/seek">GitHub</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+<div class="navbar-form navbar-right navbar-btn dropdown btn-group-sm" style="margin-left: 20px; margin-top: 5px; margin-bottom: 5px">
+  <button type="button" class="btn btn-primary navbar-btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
+    v0.1.0
+    <span class="caret"></span>
+  </button>
+<!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">-->
+<!--    <li><a href="https://mne.tools/mne-bids/dev/index.html">Development</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/stable/index.html">Stable</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.4/index.html">v0.4</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.3/index.html">v0.3</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.2/index.html">v0.2</a></li>-->
+<!--    <li><a href="https://mne.tools/mne-bids/v0.1/index.html">v0.1</a></li>-->
+<!--  </ul>-->
+</div>
+
+
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="seek-pipeline-description">
+<span id="pipelinedescription"></span><h1>SEEK PIPELINE DESCRIPTION<a class="headerlink" href="#seek-pipeline-description" title="Permalink to this headline">¶</a></h1>
+<p>The Snakemake rule-based workflow essentially abstracts the following rules and workflows. They are described in more
+detail here:</p>
+<ol class="arabic">
+<li><p>(Optional) ACPC Alignment (pipeline/01-prep):</p>
+<blockquote>
+<div><p>Anterior commissure (AC) and posterior commissure (PC) alignment is generally a manual process.
+The midpoint of the anterior commissure (AC) is located first, serving as the origin of Talairach space.
+The brain is then rotated around the new origin (AC) so that the posterior commissure (PC) appears in the
+same axial plane as the anterior commissure. The connection of AC and PC in the middle of the brain forms the y-axis of
+the Talairach coordinate system. The x-axis runs from the left to the right hemisphere through AC.
+The z-axis runs from the inferior part of the brain to the superior part through AC.
+In order to further specify the x and z-axes, a y-z plane is rotated around the y (AC-PC) axis
+until it separates the left and right hemisphere (mid-sagittal plane).
+This completes the first part of Talairach transformation, often called AC-PC transformation.
+The obtained AC-PC space is attractive for individual clinical applications, especially presurgical
+mapping and neuronaviagation since it keeps the original size of the brain intact while providing a
+common orientation for each brain.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">acpcdetect</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">center</span><span class="o">-</span><span class="n">AC</span> <span class="o">-</span><span class="n">output</span><span class="o">-</span><span class="n">orient</span> <span class="n">LIP</span> <span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">tilt</span><span class="o">-</span><span class="n">correction</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">T1</span><span class="o">.</span><span class="n">nii</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Reconstruction and Segmentation (pipeline/02-reconstruction):</p>
+<blockquote>
+<div><p>Reconstruction is the process of taking the raw images and matching the image volume with a specified atlas and then
+segmenting the brain into specific atlas regions. This can be done with FreeSurfer’s recon-all command.
+Note you want to convert things into Nifi format first for FS.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">recon</span><span class="o">-</span><span class="nb">all</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">patid_mriimg</span><span class="o">&gt;.</span><span class="n">nii</span><span class="o">.</span><span class="n">gz</span> <span class="o">-</span><span class="n">subjid</span> <span class="o">&lt;</span><span class="n">patid</span><span class="o">&gt;</span> <span class="o">-</span><span class="nb">all</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Coregistration (pipeline/03-coregistration)</p>
+<blockquote>
+<div><p>Coregistration maps different image volumes (e.g. T1 premri to T1 postop MRI) onto a
+reference image volume. This puts the images into the same coordinate space, and also maps
+voxels to voxels. This is generally done via some affine transformation computed
+with external software packages.</p>
+<p>This can be done with FSL flirt command, or NDReg.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">flirt</span> <span class="o">-</span><span class="ow">in</span> <span class="p">{</span><span class="nb">input</span><span class="o">.</span><span class="n">CT_NIFTI_IMG</span><span class="p">}</span> \
+                    <span class="o">-</span><span class="n">ref</span> <span class="p">{</span><span class="nb">input</span><span class="o">.</span><span class="n">PREMRI_NIFTI_IMG</span><span class="p">}</span> \
+                    <span class="o">-</span><span class="n">omat</span> <span class="p">{</span><span class="n">output</span><span class="o">.</span><span class="n">output_affine_file</span><span class="p">}</span> \
+                    <span class="o">-</span><span class="n">out</span> <span class="p">{</span><span class="n">output</span><span class="o">.</span><span class="n">CT_IN_T1PRE_NIFTI_IMG</span><span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Contact Localization (pipeline/04-contact_localization:</p>
+<blockquote>
+<div><p>Determines the locations (xyz) of the electrode channels in T1 MRI space (pipeline/contact_localization).
+This requires the user to first have preprocessed the CT scans (and optionally the T1 MRI).</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">matlab</span> <span class="o">./</span><span class="n">pipeline</span><span class="o">/</span><span class="n">contact_localization</span><span class="o">/</span><span class="n">matlab</span><span class="o">/</span><span class="n">run_localization_fieldtrip</span><span class="o">.</span><span class="n">m</span>
+
+
+<span class="n">This</span> <span class="n">will</span> <span class="n">run</span> <span class="n">an</span> <span class="o">~</span><span class="mi">10</span><span class="o">-</span><span class="mi">15</span> <span class="n">minute</span> <span class="n">process</span> <span class="n">to</span> <span class="n">have</span> <span class="n">users</span> <span class="n">determine</span> <span class="n">how</span> <span class="n">to</span> <span class="n">localize</span> <span class="n">the</span> <span class="n">channels</span><span class="o">.</span> <span class="n">Note</span> <span class="n">that</span>
+<span class="n">you</span> <span class="n">will</span> <span class="n">need</span> <span class="n">the</span> <span class="n">corresponding</span> <span class="n">implantation</span> <span class="nb">map</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="n">PPT</span><span class="p">,</span> <span class="n">some</span> <span class="n">image</span> <span class="n">drawn</span> <span class="n">up</span> <span class="n">by</span> <span class="n">clinician</span><span class="p">,</span> <span class="ow">or</span> <span class="n">the</span> <span class="n">implantation</span> <span class="n">knowledge</span><span class="p">)</span><span class="o">.</span>
+<span class="n">Deep</span> <span class="n">channels</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="n">A1</span><span class="p">,</span> <span class="n">B1</span><span class="p">,</span> <span class="sa">B</span><span class="s1">&#39;1, etc.) are usually in the brain, while the last channels of</span>
+<span class="n">an</span> <span class="n">electrode</span> <span class="n">are</span> <span class="n">near</span> <span class="n">the</span> <span class="n">skull</span><span class="o">.</span>
+</pre></div>
+</div>
+</li>
+<li><p>Visualization (pipeline/05-visualization):</p>
+<blockquote>
+<div><p>This pipeline will visualize on a local web server the data.</p>
+</div></blockquote>
+</li>
+</ol>
+<div class="section" id="running-individual-workflows-on-docker">
+<h2>Running Individual Workflows on Docker<a class="headerlink" href="#running-individual-workflows-on-docker" title="Permalink to this headline">¶</a></h2>
+<p>Setup the sourcedata directory as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sourcedata</span><span class="o">/</span><span class="p">{</span><span class="n">subject</span><span class="p">}</span><span class="o">/</span>
+                    <span class="o">-</span> <span class="n">premri</span><span class="o">/*.</span><span class="n">dcm</span>
+                    <span class="o">-</span> <span class="n">posmri</span><span class="o">/*.</span><span class="n">dcm</span>
+                    <span class="o">-</span> <span class="n">postct</span><span class="o">/*.</span><span class="n">dcm</span>
+</pre></div>
+</div>
+<p>Edit the <code class="docutils literal notranslate"><span class="pre">seek/pipeline/config/localconfig.yml</span></code> file to include a list of
+subject ids that you want to analyze.</p>
+<p>Then run the following commands (assuming you built the container w/ Docker already):</p>
+<ol class="arabic">
+<li><p>Run reconstruction container:</p>
+<blockquote>
+<div><p>docker-compose run reconstruction /bin/bash</p>
+</div></blockquote>
+</li>
+<li><p>Run a rule, like “Prepping” the data</p>
+<p>Prep the data</p>
+<blockquote>
+<div><p>snakemake –snakefile ./pipeline/01-prep/Snakefile –cores 2</p>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="workflow-steps-explained">
+<h2>Workflow Steps Explained<a class="headerlink" href="#workflow-steps-explained" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Setup data directory</p>
+<p>Setup your raw data directory for your patient to be read in:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">study_name</span><span class="o">/</span>
+   <span class="o">/</span><span class="n">raw</span><span class="o">/</span>
+       <span class="o">/&lt;</span><span class="n">patient_id</span><span class="o">&gt;/</span>
+           <span class="o">/</span><span class="n">premri</span><span class="o">/</span>
+           <span class="o">/</span><span class="n">postct</span><span class="o">/</span>
+           <span class="o">/</span><span class="n">postmri</span><span class="o">/</span> <span class="p">(</span><span class="n">optional</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more details, see BIDS: <a class="reference external" href="https://bids.neuroimaging.io/">https://bids.neuroimaging.io/</a></p>
+</div></blockquote>
+</li>
+<li><p>Patient in FreeSurfer format explained:</p>
+<blockquote>
+<div><p>Here is how an example output <cite>derivatives</cite> directory would look like.</p>
+<dl class="simple">
+<dt>::</dt><dd><dl class="simple">
+<dt>derivatives/</dt><dd><dl class="simple">
+<dt>freesurfer/</dt><dd><dl class="simple">
+<dt>patient_id/</dt><dd><p>/mri/
+/surf/
+/label/
+/stats/
+/elecs/
+/CT/
+/ascii/
+/Meshes/
+/acpc/</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>&lt;patient_id&gt; = The subject directory for data ran through FS (e.g. “umf001”)
+/mri/ = Includes the mri-derived image transformations, including the original mri image volume.
+/surf/ = Includes the computed surface files for each hemisphere (rh and lh), such as white matter (wm), volume, thickness, pial, and smoothed surfaces
+/label/ = Includes derived labels for each surface mesh.
+/stats/ = Includes statistics computed for example for white matter, cortical volume.
+Additional Dirs Made Within to be compatible with FS
+/elecs/ = Localized contacts with xyz coordinates, anatomical mapping, etc.
+/CT/ = a directory to store the CT image volume and any transformations (e.g. mapped into T1 image volume)
+/ascii/ = ascii type files that show the subcortical volume.
+/Meshes/ = .mat files for the hemispheres and the triangular/vertices files for cortical and subcortical.
+/acpc/ = Anterior-commissure &amp; posterior-commissure aligned image volumes. This is generally a common preprocessing step in many pipelines.</p>
+</div></blockquote>
+</li>
+<li><p>Change config.yaml file</p>
+<blockquote>
+<div><p>For the respective data directories of your data. This is under pipeline/config/localconfig.yaml</p>
+<ul class="simple">
+<li><p>define <cite>bids_root</cite> directory</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Run dry-run snakemake to make sure DAG job is constructed properly.</p>
+<blockquote>
+<div><p>Note, that you can only run snakemake commands after installing SnakeMake.</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">snakemake</span> <span class="o">-</span><span class="n">n</span> <span class="c1"># dry run</span>
+<span class="n">snakemake</span> <span class="c1"># real run</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p>Reconstruction</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">pipeline</span><span class="o">/</span><span class="mi">02</span><span class="o">-</span><span class="n">reconstruction</span>
+<span class="n">snakemake</span> <span class="o">-</span><span class="n">n</span>
+<span class="n">snakemake</span>
+</pre></div>
+</div>
+</li>
+<li><p>Coregistration</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">pipeline</span><span class="o">/</span><span class="mi">03</span><span class="o">-</span><span class="n">coregistration</span>
+<span class="n">snakemake</span> <span class="o">-</span><span class="n">n</span>
+<span class="n">snakemake</span>
+</pre></div>
+</div>
+</li>
+<li><p>Contact Localization</p></li>
+</ol>
+<p>Note first, one should follow <a href="#id1"><span class="problematic" id="id2">:ref:`LocalizationGuide`_</span></a> before running this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">pipeline</span><span class="o">/</span><span class="mi">04</span><span class="o">-</span><span class="n">contact_localization</span>
+<span class="n">snakemake</span> <span class="o">-</span><span class="n">n</span>
+<span class="n">snakemake</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019-2020, SEEK Developers. Last updated on 2020-12-04.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
