@@ -2,9 +2,9 @@ import { select, selectAll } from "d3-selection";
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { symbol, symbolStar } from "d3-shape";
 import * as d3 from "d3";
-import { LineGeometry } from "../../node_modules/three/examples/jsm/lines/LineGeometry.js";
-import { LineMaterial } from "../../node_modules/three/examples/jsm/lines/LineMaterial";
-import { Line2 } from "../../node_modules/three/examples/jsm/lines/Line2";
+import { LineGeometry } from "three/examples/jsm/lines/LineGeometry.js";
+import { LineMaterial } from "three/examples/jsm/lines/LineMaterial";
+import { Line2 } from "three/examples/jsm/lines/Line2";
 import { Group, Vector3, SphereGeometry, Color } from "three";
 import { scaleLinear } from 'd3-scale'
 
