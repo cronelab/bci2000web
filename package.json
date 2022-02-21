@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "apps/*",
+    "apps/NAVI",
+    "apps/ReconstructionSuite",
+    "apps/bci2000",
     "packages/*"
   ],
   "scripts": {
@@ -15,7 +17,7 @@
   },
   "devDependencies": {
     "prettier": "^2.5.1",
-    "turbo": "latest"
+    "turbo": "^1.1.3"
   },
   "engines": {
     "npm": ">=7.0.0",
