@@ -1,21 +1,20 @@
 {
   "compilerOptions": {
+    "target": "es2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
     "skipLibCheck": true,
-    "noImplicitAny": false,
-    "sourceMap": true,
-    "jsx": "react",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
     "esModuleInterop": true,
-    "downlevelIteration": true,
-    "incremental": true,
-    "module": "es6",
-    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["ES2015", "DOM", "DOM.Iterable"],
-    "typeRoots": ["node_modules/@types"],
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true
   },
-  "exclude": ["Other"],
-  "typedocOptions": {
-    "name": "NAVI docs",
-    "entryPoints": ["./src/Utilities/index.ts"]
-  }
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }
