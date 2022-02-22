@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/nextjs.json",
+  "extends": "./nextjs.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/paradigms.js"],
   "exclude": ["node_modules"]
 }

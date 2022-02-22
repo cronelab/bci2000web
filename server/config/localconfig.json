@@ -6,7 +6,7 @@
     "VisualizeSource": "0",
     "VisualizeTiming": "0"
   },
-  "operatorPath": "/mnt/c/Users/Chris/Downloads/Dickens_BCI2000/prog/BCI2000Shell.exe",
+  "operatorPath": "C:/Users/Chris/Downloads/Dickens_BCI2000/prog/BCI2000Shell.exe",
   "webPort": 80,
   "HostIP": "192.168.1.7"
 }

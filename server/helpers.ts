@@ -18,7 +18,7 @@ const helpers = {
 
     let spawnParams = {
       cwd: path.dirname(
-        "/mnt/c/Users/Chris/Downloads/Dickens_BCI2000/prog/BCI2000Shell.exe"
+        operatorPath
       ),
       detached: true
     };

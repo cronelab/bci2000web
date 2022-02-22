@@ -1,7 +1,7 @@
 import create from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { persist } from "zustand/middleware";
-import { mountStoreDevtool } from "simple-zustand-devtools";
+// import { mountStoreDevtool } from "simple-zustand-devtools";
 import { BCI2K_OperatorConnection } from "bci2k";
 
 export const useStore = create(
@@ -45,4 +45,4 @@ export const useStore = create(
   // }
   // )
 );
-mountStoreDevtool("Store", useStore);
+// mountStoreDevtool("Store", useStore);
