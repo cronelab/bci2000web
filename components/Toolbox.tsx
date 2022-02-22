@@ -5,13 +5,13 @@ import CAR from "./ToolboxComps/CAR";
 import { useStore } from "./store";
 const Toolbox = () => {
   const [showModal, setShowModal] = useState(false);
-  const [subjects, setSubjects] = useState([])
+  const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
     (async () => {
       let subjReq = await fetch("/api/subjects");
       let subjRes = await subjReq.json();
-      setSubjects(subjRes)
+      setSubjects(subjRes);
       useStore.setState({ subjects: subjRes });
     })();
   }, []);

@@ -6,7 +6,6 @@ import { useStore } from "./store";
 const ConnectionState = () => {
   const [connectionStatus, setConnectionStatus] = useState("Not Connected");
 
-
   useEffect(() => {
     (async () => {
       let bci = useStore.getState().bci;
@@ -15,7 +14,6 @@ const ConnectionState = () => {
       bci.execute("Reset System");
       bci.stateListen();
       bci.onStateChange = (e) => setConnectionStatus(e);
-
     })();
   }, []);
 

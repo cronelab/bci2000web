@@ -1,8 +1,4 @@
-import {
-  InputGroup,
-  Card,
-  Button,
-} from "react-bootstrap";
+import { InputGroup, Card, Button } from "react-bootstrap";
 import React, { useState, useEffect, useContext } from "react";
 import { useStore } from "../store";
 
@@ -10,16 +6,17 @@ const ReplayTasks = () => {
   const [runs, setRuns] = useState([]);
   const [stimPres, setStimPres] = useState(false);
 
-  const runTask = dataFile => {
-    let data = `${useStore.getState().replaySubject}/${useStore.getState().replayTask}/${dataFile}`;
+  const runTask = (dataFile) => {
+    let data = `${useStore.getState().replaySubject}/${
+      useStore.getState().replayTask
+    }/${dataFile}`;
     let ret = `Reset system;`;
     ret += `Startup system localhost;`;
     ret += `Start executable Spectral_WS; `;
-    if(stimPres == false){
+    if (stimPres == false) {
       ret += `Start executable DummyApplication; `;
-    }
-    else{
-    ret += `Start executable StimulusPresentation_Timing; `;
+    } else {
+      ret += `Start executable StimulusPresentation_Timing; `;
     }
     ret += `Start executable FilePlayback --local --FileFormat=Null --PlaybackStates=1 --PlaybackFileName=../data/${data}.dat; `;
     ret += `Wait for Connected; `;
@@ -43,7 +40,11 @@ const ReplayTasks = () => {
 
   useEffect(() => {
     (async () => {
-      let runReq = await fetch(`api/${useStore.getState().replaySubject}/${useStore.getState().replayTask}`);
+      let runReq = await fetch(
+        `api/${useStore.getState().replaySubject}/${
+          useStore.getState().replayTask
+        }`
+      );
       let allRuns = await runReq.json();
       setRuns(allRuns);
     })();
@@ -64,7 +65,7 @@ const ReplayTasks = () => {
             <h3 className="text-center">Replay files</h3>
           </Card.Title>
         </Card.Header>
-        {runs.map(y => (
+        {runs.map((y) => (
           <Button key={y} id={y} title={y} onClick={() => runTask(y)}>
             {y}
           </Button>
@@ -93,10 +94,15 @@ const ReplayParadigms = () => {
             <h3 className="text-center">Replay files</h3>
           </Card.Title>
         </Card.Header>
-        {tasks.map(y => (
-          <Button key={y} id={y} title={y} onClick={() => {
-            useStore.setState({replayTask: y})
-          }}>
+        {tasks.map((y) => (
+          <Button
+            key={y}
+            id={y}
+            title={y}
+            onClick={() => {
+              useStore.setState({ replayTask: y });
+            }}
+          >
             {y}
           </Button>
         ))}

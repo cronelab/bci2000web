@@ -18,8 +18,8 @@ const Notes = () => {
       block: useStore.getState().block.block,
       comment: useStore.getState().comments,
       startTime: `${date} - ${time}`,
-      user:useStore.getState().researcher,
-      badChan:useStore.getState().badChannels,
+      user: useStore.getState().researcher,
+      badChan: useStore.getState().badChannels,
     };
     fetch("/api/notes", {
       method: "POST",

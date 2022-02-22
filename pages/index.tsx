@@ -9,18 +9,14 @@ import {
 import Paradigms from "../components/Paradigms";
 import Tasks from "../components/Tasks";
 import localconfig from "../server/config/localconfig.json";
-import { useStore } from '../components/store'
-import Notes from '../components/Notes'
-import Head from 'next/head'
+import { useStore } from "../components/store";
+import Notes from "../components/Notes";
+import Head from "next/head";
 
 export default function BCI2000Web() {
-  useEffect(() =>{
-    useStore.setState({config: localconfig})
-  },[])
-
-
-
-  
+  useEffect(() => {
+    useStore.setState({ config: localconfig });
+  }, []);
 
   return (
     <div className="App" style={{ width: "85%" }}>
@@ -46,9 +42,20 @@ export default function BCI2000Web() {
             <ConnectionState />
             <Toolbox />
           </Col>
-          <Col>{useStore.getState().replayMode ? <ReplayParadigms /> : <Paradigms />}</Col>
           <Col>
-            {useStore.getState().replayMode && useStore.getState().replayTask != null ? <ReplayTasks /> : <Tasks />}
+            {useStore.getState().replayMode ? (
+              <ReplayParadigms />
+            ) : (
+              <Paradigms />
+            )}
+          </Col>
+          <Col>
+            {useStore.getState().replayMode &&
+            useStore.getState().replayTask != null ? (
+              <ReplayTasks />
+            ) : (
+              <Tasks />
+            )}
           </Col>
           <Col>
             <Notes></Notes>

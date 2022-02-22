@@ -8,35 +8,34 @@ export const useStore = create(
   // persist(
   subscribeWithSelector(() => ({
     task: {
-      title: '',
-      description: '',
-      Blocks: ''
+      title: "",
+      description: "",
+      Blocks: "",
     },
     tasks: [],
     bci: new BCI2K_OperatorConnection(),
     config: {
-      source: '',
-      subject: '',
-      dataDirectory: '',
+      source: "",
+      subject: "",
+      dataDirectory: "",
       setParameters: {},
-      operatorPath: '',
-      HostIP: '',
+      operatorPath: "",
+      HostIP: "",
       webPort: 80,
-
     },
     block: {
-      title: '',
-      block: ''
+      title: "",
+      block: "",
     },
-    bciConfig: '',
+    bciConfig: "",
     replayMode: false,
     subjects: [],
     replaySubject: "",
     replayTask: "",
     subjectSelected: "",
-    researcher: '',
-    badChannels: '',
-    comments: ''
+    researcher: "",
+    badChannels: "",
+    comments: "",
   }))
 
   // ,

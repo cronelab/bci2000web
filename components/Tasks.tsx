@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ListGroup, Card, ListGroupItem } from "react-bootstrap";
-import amplifiers from '../server/config/amplifiers.json'
+import amplifiers from "../server/config/amplifiers.json";
 import { useStore } from "./store";
 const Tasks = () => {
-
-  const [task, setTask] = useState({})
+  const [task, setTask] = useState({});
   let config = useStore.getState().config;
   // useEffect(() => {
   //   (async () => {
@@ -12,14 +11,15 @@ const Tasks = () => {
   //   })();
   // }, []);
 
-
-    useStore.subscribe(
+  useStore.subscribe(
     (state) => state.task,
     (ss) => setTask(ss)
-  )
+  );
 
   const blockSelect = async (task, currentBlock) => {
-    useStore.setState({block: { title: task.title, block: currentBlock.block }})
+    useStore.setState({
+      block: { title: task.title, block: currentBlock.block },
+    });
     //Startup
     let script = ``;
     script += `Reset System; `;
@@ -36,12 +36,13 @@ const Tasks = () => {
     //Start source module
     if (task.userPrompt.length > 0) {
       if (confirm(`${Object.keys(task.userPrompt[0])}`) == true) {
-        script += `Start executable ${config.source} --local ${Object.values(task.userPrompt[0])}; `;
+        script += `Start executable ${config.source} --local ${Object.values(
+          task.userPrompt[0]
+        )}; `;
       } else {
         script += `Start executable ${config.source} --local; `;
       }
-    }
-    else {
+    } else {
       script += `Start executable ${config.source} --local; `;
     }
     //Start processing module
@@ -57,7 +58,7 @@ const Tasks = () => {
       script += `Start executable DummyApplication --local; `;
     }
 
-    console.log(`${config.subject}`)
+    console.log(`${config.subject}`);
     script += `Set parameter SubjectName ${config.subject}; `;
 
     script += "Wait for Connected; ";
@@ -93,7 +94,7 @@ const Tasks = () => {
 
     script += `Set parameter WSSourceServer *:20100; `;
     script += `Set parameter WSSpectralOutputServer *:20203; `;
-    useStore.setState({bciConfig: script})
+    useStore.setState({ bciConfig: script });
   };
 
   return (

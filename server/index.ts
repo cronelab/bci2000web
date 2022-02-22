@@ -31,24 +31,27 @@ app.prepare().then(async () => {
       operator.stdin.write("EXIT; \n");
       process.exit(0);
     });
-  wss.on("connection", async (ws) => {
-    ws.onmessage = (e) => {
-      let msg = JSON.parse(e.data);
-      if (msg.opcode == "E") {
-        operator.stdin.write(`${msg.contents}; \n`);
-        operator.stdout.on("data", (data) => {
-          ws.send(
-            JSON.stringify({
-              opcode: "O",
-              id: msg.id,
-              response: data.toString().replaceAll("BCI2000Shell> ", "").trim(),
-            })
-          );
-        });
-      }
-    };
-  });
-}
+    wss.on("connection", async (ws) => {
+      ws.onmessage = (e) => {
+        let msg = JSON.parse(e.data.toString());
+        if (msg.opcode == "E") {
+          operator.stdin.write(`${msg.contents}; \n`);
+          operator.stdout.on("data", (data) => {
+            ws.send(
+              JSON.stringify({
+                opcode: "O",
+                id: msg.id,
+                response: data
+                  .toString()
+                  .replaceAll("BCI2000Shell> ", "")
+                  .trim(),
+              })
+            );
+          });
+        }
+      };
+    });
+  }
 
   server.on("upgrade", function (req, socket, head) {
     const { pathname } = parse(req.url, true);
