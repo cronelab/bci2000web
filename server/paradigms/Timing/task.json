@@ -1,0 +1,23 @@
+{
+  "Task_1": {
+    "title": "Timing",
+    "description": "Test Audio-Visual timing of the system.",
+    "executables": {
+      "processing": "Spectral_WS",
+      "application": "DummyApplication"
+    },
+    "addParameters": [],
+
+    "setParameters": {},
+    "loadParameters": ["../parms/SpectralSigProc.prm"],
+    "addEvents": ["StimulusCode 8 0"],
+    "addStates": [],
+    "userPrompt": [],
+    "Blocks": {
+      "Block_1": {
+        "title": "Task_1 - Block_1",
+        "loadParameters": []
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "Task_1": {
+    "title": "Manual Recording",
+    "description": "Manually record a data file.",
+    "executables": {
+      "processing": "Spectral_WS"
+    },
+    "addParameters": [],
+    "setParameters": {},
+    "loadParameters": ["../parms/SpectralSigProc.prm"],
+    "addEvents": [],
+    "addStates": [],
+    "userPrompt": [],
+    "Blocks": {
+      "Block_1": {
+        "block": 1,
+        "title": "Task_1 - Block_1",
+        "loadParameters": []
+      }
+    }
+  }
+}
