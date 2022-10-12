@@ -1,0 +1,4 @@
+ADD_SUBDIRECTORY( StimulusPresentation_Timing )
+ADD_SUBDIRECTORY( BCI2000Web )
+ADD_SUBDIRECTORY( shared )
+ADD_SUBDIRECTORY( Spectral_WS )

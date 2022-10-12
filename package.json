@@ -55,7 +55,9 @@
     "sass-loader": "^9.0.3",
     "telnet-client": "^1.4.6",
     "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
     "write-file-webpack-plugin": "^4.5.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.12"
   }
 }

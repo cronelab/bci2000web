@@ -1,5 +1,5 @@
 Application:Application%20Window:ApplicationWindow string WindowBackgroundColor= 0x000000 0x505050 % % // Application window background color (color)
-Application:Sequencing:StimulusTask float PreRunDuration= 1 1 0 % // pause preceding first sequence
+Application:Sequencing:StimulusTask float PreRunDuration= 5s 1 0 % // pause preceding first sequence
 Application:Sequencing:StimulusTask float PostRunDuration= 1 0 0 % // pause following last sequence
 Application:Sequencing:StimulusTask float PreSequenceDuration= 0 2s 0 % // pause preceding sequences/sets of intensifications
 Application:Sequencing:StimulusTask float PostSequenceDuration= 0 2s 0 % // pause following sequences/sets of intensifications

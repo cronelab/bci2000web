@@ -13,7 +13,7 @@ import routes from "./routes.mjs";
 import helpers from "./helpers.mjs";
 import http from "http";
 import fs from "fs";
-app.use(express.json())
+app.use(express.json());
 
 const config = JSON.parse(
   fs.readFileSync("./server/Config/config.json", "utf8")
@@ -45,7 +45,7 @@ app.use("/", routes(express));
 app.use(express.static(path.resolve(__dirname, "dist")));
 
 //? Connect to BCI2000's operator telnet port in order to send/receive operator commands.
-const connectTelnet = async operator => {
+const connectTelnet = async (operator) => {
   const connection = new Telnet();
 
   // Cache new parameters in the operator process object
@@ -65,7 +65,7 @@ const connectTelnet = async operator => {
       timeout: 1000,
       shellPrompt: ">",
       echoLines: 0,
-      execTimeout: 30
+      execTimeout: 30,
     });
   } catch (error) {
     console.log(error);
@@ -73,10 +73,14 @@ const connectTelnet = async operator => {
 
   //!Fixes an idiotic race condition where the WS isn't set up until AFTER bci2000 connects
   //!arbitrary time, in the future set this into the config.json
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   //? Set up WebSocket handler
-  app.ws("/", ws => {
-    ws.on("message", message => {
+  app.ws("/", (ws) => {
+    ws.on("message", (message) => {
+      let newMsg = JSON.parse(message);
+      if (newMsg.contents !== "GET SYSTEM STATE") {
+        // console.log(message);
+      }
       let msg = JSON.parse(message);
       msg.ws = ws;
       if (msg.opcode == "E") {
@@ -105,7 +109,7 @@ const connectTelnet = async operator => {
             let msg = {
               opcode: "O",
               id: id,
-              contents: response.trim()
+              contents: response.trim(),
             };
             ws.send(JSON.stringify(msg));
           } catch (e) {
@@ -118,26 +122,26 @@ const connectTelnet = async operator => {
   })();
 };
 //?Check if BCI2000 is running
-helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
+helpers.isRunning("operator.exe", "myprocess", "myprocess").then((v) => {
   //? if not, start BCI2000 operator.exe
   if (!v) {
     helpers
       .launchOperator(operatorPath, config.telnetPort, config.hide)
       //?Add a timeout...
       .then(
-        x =>
-          new Promise(resolve =>
+        (x) =>
+          new Promise((resolve) =>
             setTimeout(() => resolve(x), config.telnetTimeout)
           )
       )
       //? ...so we can connect to the telnet port without throwing an erro.
-      .then(operator => {
+      .then((operator) => {
         connectTelnet(operator, config.telnetPort);
       })
       //?More timeouts
       //TODO make more elegant.
-      .then(x => {
-        new Promise(resolve =>
+      .then((x) => {
+        new Promise((resolve) =>
           setTimeout(() => {
             resolve(x);
             //? Automatically open a browser to go to BCI2000Web
@@ -147,7 +151,7 @@ helpers.isRunning("operator.exe", "myprocess", "myprocess").then(v => {
           }, 1500)
         );
       })
-      .catch(reason => console.log(reason));
+      .catch((reason) => console.log(reason));
   }
 });
-httpServer.listen(80, () => console.log("Trying my best"));
+httpServer.listen(80, () => console.log("BCI2000Web is running"));

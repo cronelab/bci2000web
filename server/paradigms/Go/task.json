@@ -14,7 +14,9 @@
       "../parms/screen_setup.prm"
     ],
     "addEvents": [],
-    "addStates": [],
+    "addStates": [
+      "CursorClick 1 0"
+    ],
     "userPrompt": [],
     "Blocks": {
       "Block_1": {

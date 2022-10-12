@@ -5,12 +5,16 @@ import { Context } from "../MyProvider";
 const Tasks = () => {
   const { task, setBciConfig, config, setBlock } = useContext(Context);
   const [ampConfig, setAmpConfig] = useState();
+  const [dataDirectory, setDataDirectory] = useState()
 
   useEffect(() => {
     (async () => {
       let ampReq = await fetch(`/amplifiers`);
       let ampRes = await ampReq.json();
-      if (config) setAmpConfig(ampRes[config.source]);
+      if (config) {
+        setAmpConfig(ampRes[config.source])
+        setDataDirectory(config.dataDirectory);
+      };
     })();
   }, [config]);
 
@@ -64,8 +68,12 @@ const Tasks = () => {
       "_"
     )}/${task.title.replace(/\s/g, "_")}_Block${
       currentBlock.block
-    }_Run%24%7bSubjectRun%7d; `;
+    }_Run%24%7bSubjectRun%7d.dat; `;
 
+    console.log(dataDirectory)
+
+    script += `Set parameter DataDirectory ${dataDirectory}; `;
+    
     //Source parameters
     Object.keys(ampConfig.setParameters).map((par) => {
       script += `Set parameter ${par} ${ampConfig.setParameters[par]}; `;

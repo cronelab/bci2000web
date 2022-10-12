@@ -9,13 +9,14 @@ import { Context } from "../../MyProvider";
 const ReplayTasks = () => {
   const { bci, replayTask, replaySubject, config } = useContext(Context);
   const [runs, setRuns] = useState([]);
+  const [filterExec, setFilterExec] = useState('')
   const [stimPres, setStimPres] = useState(false);
 
   const runTask = dataFile => {
     let data = `${replaySubject}/${replayTask}/${dataFile}`;
     let ret = `Reset system;`;
     ret += `Startup system localhost;`;
-    ret += `Start executable Spectral_WS; `;
+    ret += `Start executable ${filterExec}; `;
     if(stimPres == false){
       ret += `Start executable DummyApplication; `;
     }
@@ -25,6 +26,10 @@ const ReplayTasks = () => {
     ret += `Start executable FilePlayback --local --FileFormat=Null --PlaybackStates=1 --PlaybackFileName=../data/${data}.dat; `;
     ret += `Wait for Connected; `;
     ret += `Load Parameterfile ../parms/SpectralSigProc.prm; `;
+    if(filterExec == 'ZMQ_Filter'){
+      ret += "SET Parameter ZMQOutputServer *:5556; "
+    }
+    ret += 'Add State ControlClick 0 2'
     ret += `Set Parameter WSSpectralOutputServer *:20203; `;
     ret += `Set Parameter WSConnectorServer *:20323; `;
     ret += `Set Parameter WSSourceServer *:20100; `;
@@ -46,6 +51,9 @@ const ReplayTasks = () => {
       let runReq = await fetch(`api/${replaySubject}/${replayTask}`);
       let allRuns = await runReq.json();
       setRuns(allRuns);
+
+      let signalProcessingExecutable = prompt('Filter executable?')
+      setFilterExec(signalProcessingExecutable)
     })();
   }, [replayTask]);
 

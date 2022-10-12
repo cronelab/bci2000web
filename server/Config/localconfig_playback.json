@@ -1,7 +1,7 @@
 {
     "subject": "CC01",
     "source": "Blackrock",
-    "dataDirectory": "C:/Users/User/Desktop/Corticom/Data/CC01/BCI2000/2022_10_10",
+    "dataDirectory": "C:/Users/User/Desktop/Corticom/bci2000web/data",
     "setParameters": {
         "VisualizeSource": "0",
         "VisualizeTiming": "0"
