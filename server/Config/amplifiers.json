@@ -1,26 +1,26 @@
 {
   "SignalGenerator": {
     "setParameters": {
-      "SamplingRate": "1000"
+      "SamplingRate": "2000"
     }
   },
   "NihonKohden": {
     "setParameters": {
       "DeviceAddress": "",
-      "SampleBlockSize": "100"
+      "SampleBlockSize": "200"
     }
   },
   "Blackrock": {
     "setParameters": {
       "NSPInstances": "1",
-      "SamplingRate": "1000",
-      "SampleBlockSize": "50"
+      "SamplingRate": "2000",
+      "SampleBlockSize": "100"
     }
   },
   "Grapevine": {
     "setParameters": {
       "SamplingRate": "",
-      "SampleBlockSize": "48"
+      "SampleBlockSize": "96"
     }
   },
   "FilePlayback": {

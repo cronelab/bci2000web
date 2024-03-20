@@ -1,4 +1,4 @@
-Application:Application%20Window:ApplicationWindow int WindowWidth= 2048 //1920
-Application:Application%20Window:ApplicationWindow int WindowHeight= 1152 //1080
-Application:Application%20Window:ApplicationWindow int WindowLeft= -4608
-Application:Application%20Window:ApplicationWindow int WindowTop= -72 
+Application:Application%20Window:ApplicationWindow int WindowWidth= 1920 // 2048
+Application:Application%20Window:ApplicationWindow int WindowHeight= 1080 // 1152
+Application:Application%20Window:ApplicationWindow int WindowLeft= -5560 // -5560
+Application:Application%20Window:ApplicationWindow int WindowTop= 0 // -72
