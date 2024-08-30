@@ -1,67 +1,50 @@
 import { useState, useContext, useEffect } from "react";
-import { Row, Col, Navbar, Container, Form, Button } from "react-bootstrap";
-import ConnectionState from "../components/ConnectionState";
-import Toolbox from "../components/Toolbox";
-import {
-  ReplayParadigms,
-  ReplayTasks,
-} from "../components/ToolboxComps/Replay";
-import Paradigms from "../components/Paradigms";
-import Tasks from "../components/Tasks";
+import { Row, Col, Navbar, Container, Form, Button, Tabs, Tab } from "react-bootstrap";
 import localconfig from "../server/config/localconfig.json";
 import { useStore } from "../components/store";
-import Notes from "../components/Notes";
+import ExperimentConfiguration from "../components/ExperimentConfiguration";
 import Head from "next/head";
 
 export default function BCI2000Web() {
   useEffect(() => {
     useStore.setState({ config: localconfig });
+    document.documentElement.setAttribute('data-bs-theme', theme ? "dark" : "light");
   }, []);
 
+  const [theme, setTheme] = useState(useStore.getState().config.darkMode);
   return (
-    <div className="App" style={{ width: "85%" }}>
+    <div className="App myContainer" data-bs-theme={theme ? "dark" : "light"} >
       <Head>
         <title>BCI2000Web</title>
       </Head>
-      <Navbar variant="light" fixed="top">
-        <Navbar.Brand>
-          <a
+      <Navbar fixed="top" className="justify-content-between">
+        <Navbar.Brand className="title justify-content-between">
+          <a 
             style={{
-              fontSize: "28px",
-              textDecoration: "none !important",
-              color: "#f9ebee",
+              fontSize: "32px", 
+              //textDecoration: "none !important",
+              color: "#070027",
             }}
           >
             BCI2000
           </a>
         </Navbar.Brand>
+          <Button id="themeBtn" variant={theme ? "outline-light" : "outline-dark"} onClick={(e) => {
+            setTheme(!theme);
+            document.documentElement.setAttribute('data-bs-theme', !theme ? "dark" : "light")
+            }}>{ theme ? "Light Mode": "Dark Mode"}</Button>
       </Navbar>
-      <Container fluid>
-        <Row style={{ width: "100%" }}>
-          <Col sm={3} md={3}>
-            <ConnectionState />
-            <Toolbox />
-          </Col>
-          <Col>
-            {useStore.getState().replayMode ? (
-              <ReplayParadigms />
-            ) : (
-              <Paradigms />
-            )}
-          </Col>
-          <Col>
-            {useStore.getState().replayMode &&
-            useStore.getState().replayTask != null ? (
-              <ReplayTasks />
-            ) : (
-              <Tasks />
-            )}
-          </Col>
-          <Col>
-            <Notes></Notes>
-          </Col>
-        </Row>
-      </Container>
+
+      <Tabs
+        defaultActiveKey="home"
+        id="tabs"
+        className="mb-3"
+      >
+        <Tab eventKey="home" title="Configuration">
+          <ExperimentConfiguration />
+        </Tab>
+      </Tabs>
+
 
       <Navbar fixed="bottom">
         <h4 style={{ margin: "0 auto" }}>

@@ -32,10 +32,7 @@ const Toolbox = () => {
               <h3 className="text-center">Toolbox</h3>
             </Card.Title>
           </Card.Header>
-          <Button onClick={() => useStore.getState().bci.resetSystem()}>
-            Reset
-          </Button>
-          <Button onClick={() => setShowModal(true)}>CAR</Button>
+          <Button variant="primary" onClick={() => setShowModal(true)}>CAR</Button>
           <Dropdown>
             <Dropdown.Toggle style={{ width: "100%" }}>Replay</Dropdown.Toggle>
             <Dropdown.Menu>

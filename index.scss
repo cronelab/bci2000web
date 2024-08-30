@@ -2,16 +2,99 @@
 
 html {
   position: relative;
-  min-height: 100%;
 }
+
+$bg-light: #eff3f7;
+$bg-dark: #161e25;
+//$navbar-bg: #fff780;
+
+
 body {
   margin-bottom: 60px;
-  background-color: #fff5fa;
-  padding-top: 75px;
-  padding-bottom: 20px;
+  //background-color: #eff3f7;
+  background-color: #{$bg-light};
+  //padding-top: 74px;
+  //padding-bottom: 20px
+  padding-left: 0px;
+  padding-right: 0px;
+
+  border-radius: 10px;
+  border-top: #070027;
+  //border-color: #070027;
+}
+.wrapWords {
+  word-wrap: break-word;
+}
+
+.myContainer {
+  padding-top: 85px;
+}
+
+.primary {
+  border-width: 1px;
+  border-radius: 10px;
+}
+$bg-light: #eff3f7;
+$bg-dark: #161e25;
+
+[data-bs-theme=light] {
+  background-color: #{$bg-light};
+  --navbar-bg: #fff780;
+
+  .btn-primary {
+    --bs-btn-bg: #585fb9;
+    --bs-btn-border-color: #505050;
+    --bs-btn-hover-bg: #0c1cf1;
+  }
+  //$primary:#585fb9;
+}
+$primary-dark: #000442;
+$secondary-dark: #f7f096;
+[data-bs-theme=dark] {
+  background-color: #{$bg-dark};
+  --navbar-bg: #f7f096;
+ // $primary:#000442;
+
+  // .btn {
+  //   background-color: #000442;
+  //   border-color: #3b3b3b;
+  // }
+  .btn-primary {
+    --bs-btn-bg: #{$primary-dark};
+    --bs-btn-border-color: #3b3b3b;
+    --bs-btn-hover-bg: #010211;
+  }
+  .btn-secondary {
+    --bs-btn-bg: #{$secondary-dark};
+    --bs-btn-border-color: #3b3b3b;
+    --bs-btn-hover-bg: #000dc5;
+    --bs-btn-color: #1d1d1d;
+    --bs-btn-hover-bg: #d1c300;
+    --bs-btn-hover-color: #1d1d1d;
+
+  }
+}
+// [data-bs-theme="dark"] {
+//   --bs-primary: #{$primary-dark};
+//   --bs-primary-bg-subtle: #{$primary-dark};
+//   --bs-primary-bg-subtle-dark: #{$primary-dark};
+  
+// }
+// .card {
+//     color:#000327;
+// }
+.systemButtons {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  width: 80%;
 }
 .navbar-light {
-  background-color: #ff809d;
+  color:#070027;
+  font-weight: bold;
+  background-color: var(--navbar-bg);
+  font-size:"4px";
+  padding-left: 30px;
+  padding-right: 10px;
 }
 
 .footer {
@@ -19,7 +102,7 @@ body {
   bottom: 0;
   width: 100%;
   height: 60px;
-  background-color: #ffe9ed;
+  //background-color: #f0f0f0;
   .container {
     margin-top: 20px;
   }

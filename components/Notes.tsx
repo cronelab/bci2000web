@@ -56,7 +56,7 @@ const Notes = () => {
           />
         </Form.Group>
       </Form>
-      <Button variant="primary" type="submit" onClick={() => sendNotes()}>
+      <Button type="submit" onClick={() => sendNotes()}>
         Submit
       </Button>
     </>

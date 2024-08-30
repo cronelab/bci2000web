@@ -15,6 +15,12 @@ const Tasks = () => {
     (state) => state.task,
     (ss) => setTask(ss)
   );
+  const valid = (attribute) => {
+    if (attribute != null && attribute.length >= 1)
+      return true;
+    else
+      return false;
+  }
 
   const blockSelect = async (task, currentBlock) => {
     useStore.setState({
@@ -26,15 +32,16 @@ const Tasks = () => {
     script += `Startup System localhost; `;
 
     //Add task states/events
-    if (task.addEvents.length >= 1)
+    if (valid(task.addEvents))
       task.addEvents.forEach((e) => (script += `Add Event ${e}; `));
-    if (task.addStates.length >= 1)
+    if (valid(task.addStates))
       task.addStates.forEach((state) => (script += `Add State ${state}; `));
-    task.addParameters.map((tskPrm) => (script += `Add parameter ${tskPrm}; `));
+    if (valid(task.addParameters))
+        task.addParameters.map((tskPrm) => (script += `Add parameter ${tskPrm}; `));
 
     //Ask user if they want to log keyboard/mouse/etc and write that data to the source module
     //Start source module
-    if (task.userPrompt.length > 0) {
+    if (valid(task.userPrompt)) {
       if (confirm(`${Object.keys(task.userPrompt[0])}`) == true) {
         script += `Start executable ${config.source} --local ${Object.values(
           task.userPrompt[0]
@@ -46,22 +53,22 @@ const Tasks = () => {
       script += `Start executable ${config.source} --local; `;
     }
     //Start processing module
-    if (task.executables.processing != null) {
+    if (task.executables.processing != null && task.executables.processing != "") {
       script += `Start executable ${task.executables.processing} --local; `;
     } else {
       script += `Start executable DummySignalProcessing --local; `;
     }
     //Start application module
-    if (task.executables.application != null) {
+    if (task.executables.application != null && task.executables.application != "") {
       script += `Start executable ${task.executables.application} --local; `;
     } else {
       script += `Start executable DummyApplication --local; `;
     }
 
+    script += "Wait for Connected; ";
     console.log(`${config.subject}`);
     script += `Set parameter SubjectName ${config.subject}; `;
 
-    script += "Wait for Connected; ";
 
     script += `Set parameter SubjectSession ${currentBlock.block}; `;
     script += `Set parameter DataFile ${config.subject}/${task.title.replace(
@@ -92,9 +99,11 @@ const Tasks = () => {
         (script += `Set parameter ${tskPrm} ${task.setParameters[tskPrm]}; `)
     );
 
-    script += `Set parameter WSSourceServer *:20100; `;
-    script += `Set parameter WSSpectralOutputServer *:20203; `;
+    //script += `Set parameter WSSourceServer *:20100; `;
+    //script += `Set parameter WSSpectralOutputServer *:20203; `;
     useStore.setState({ bciConfig: script });
+    useStore.getState().bci.execute(useStore.getState().bciConfig);
+    //useStore.getState().bci.execute("start websocket localhost:1879");
   };
 
   return (

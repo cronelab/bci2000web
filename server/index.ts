@@ -33,22 +33,14 @@ app.prepare().then(async () => {
     });
     wss.on("connection", async (ws) => {
       ws.onmessage = (e) => {
-        let msg = JSON.parse(e.data.toString());
-        if (msg.opcode == "E") {
-          operator.stdin.write(`${msg.contents}; \n`);
-          operator.stdout.on("data", (data) => {
-            ws.send(
-              JSON.stringify({
-                opcode: "O",
-                id: msg.id,
-                response: data
-                  .toString()
-                  .replaceAll("BCI2000Shell> ", "")
-                  .trim(),
-              })
-            );
-          });
-        }
+        operator.stdin.write(`${e.data.toString()}; \n`);
+        operator.stdout.on("data", (data) => {
+          ws.send(data
+            .toString()
+            .replaceAll("BCI2000Shell> ", "")
+            .trim(),
+          );
+        });
       };
     });
   }
