@@ -6,8 +6,8 @@ import SSRProvider from 'react-bootstrap/SSRProvider';
 export default function MyApp({ Component, pageProps }) {
   return (
     <SSRProvider>
-      <Container style={{ marginTop: 5 }} fluid={true}>
-        <Component {...pageProps} />
+      <Container style={{ padding: 0 }} fluid={true}>
+        <Component {...pageProps}/>
       </Container>
       </SSRProvider>
   );

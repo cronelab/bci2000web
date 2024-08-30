@@ -1,7 +1,5 @@
 import create from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
-import { persist } from "zustand/middleware";
-// import { mountStoreDevtool } from "simple-zustand-devtools";
 import { BCI2K_OperatorConnection } from "bci2k";
 
 export const useStore = create(
@@ -10,7 +8,7 @@ export const useStore = create(
     task: {
       title: "",
       description: "",
-      Blocks: "",
+      Blocks: ""
     },
     tasks: [],
     bci: new BCI2K_OperatorConnection(),
@@ -22,6 +20,8 @@ export const useStore = create(
       operatorPath: "",
       HostIP: "",
       webPort: 80,
+      editable: false,
+      darkMode: true
     },
     block: {
       title: "",
@@ -36,12 +36,6 @@ export const useStore = create(
     researcher: "",
     badChannels: "",
     comments: "",
-  }))
 
-  // ,
-  // {
-  //   name: 'test',
-  // }
-  // )
+  }))
 );
-// mountStoreDevtool("Store", useStore);

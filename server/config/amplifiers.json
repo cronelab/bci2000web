@@ -2,20 +2,23 @@
   "SignalGenerator": {
     "setParameters": {
       "SamplingRate": "1000"
-    }
+    },
+    "loadParameters": ["../parms/fragments/amplifiers/SignalGenerator.prm"]
   },
-  "NihonKohden": {
+  "NihonKohdenSource": {
     "setParameters": {
       "DeviceAddress": "",
       "SampleBlockSize": "100"
-    }
+    },
+    "loadParameters": ["../parms/fragments/amplifiers/NihonKohden.prm"]
   },
   "Blackrock": {
     "setParameters": {
       "NSPInstances": "1",
       "SamplingRate": "1000",
       "SampleBlockSize": "60"
-    }
+    },
+    "loadParameters": ["../parms/fragments/amplifiers/Blackrock.prm"]
   },
   "Grapevine": {
     "setParameters": {

@@ -31,7 +31,7 @@
     }
   },
   "Task_2": {
-    "title": "New Task Format",
+    "title": "New Task Format 2",
     "description": "Structure your tasks as follows.",
     "executables": {
       "processing": "Spectral_WS",

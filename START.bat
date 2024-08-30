@@ -1,2 +1,1 @@
-npm run server
-pause
+node -r esbuild-register server/index.ts
